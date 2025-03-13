@@ -55,7 +55,7 @@
                 this.y = y;
                 this.size = Math.random() * 1.5 + 0.5;  // Particles between 1 and 2.5 pixels
 
-                this.speedX = (Math.random() - 0.5) * 3;
+                this.speedX = (Math.random() - 0.5) * 3;    // Handles the speed of the particles
                 this.speedY = (Math.random() - 0.5) * 3;
             }
 
@@ -84,8 +84,8 @@
                 const dy = particles[i].y - particles[j].y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 300) {
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 150})`;
+                if (distance < 200) {
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 200})`;
                     ctx.lineWidth = 0.5;
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
@@ -120,7 +120,7 @@
         }
 
         // Generate initial particles
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 150; i++) { // initally it was 100
             particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
         }
 
