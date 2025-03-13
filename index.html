@@ -3,118 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>Interactive Particles</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            background-color: #0d0d0d;
             overflow: hidden;
-            color: white;
-            text-align: center;
-            
         }
-        #particles-js {
+        canvas {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
-            background-color: #311047;
-            z-index: -1;
-        }
-        .content {
-            position: relative;
-            z-index: 1;
-            top: 40%;
-            font-size: 2rem;
+            height: 100%;
         }
     </style>
 </head>
 <body>
-
-    <div id="particles-js"></div>
+    <canvas id="particleCanvas"></canvas>
     
-    <div class="content">
-        <h1>Welcome to My Portfolio</h1>
-        <p>Work's due</p>
-    </div>
+    <script>
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
 
-    <!-- <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": { "enable": true, "value_area": 800 }
-                },
-                "color": { "value": "#280d3a" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5 },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4 },
-                "move": { "enable": true, "speed": 6 }
-            },
-            "interactivity": {
-                "events": {
-                    "onhover": { "enable": true, "mode": "repulse" },
-                    "onclick": { "enable": true, "mode": "push" }
-                }
-            },
-            "retina_detect": true
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const mouse = { x: null, y: null };
+
+        // Track mouse movement
+        window.addEventListener("mousemove", (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
         });
-    </script> -->
 
-<script>
-  particlesJS("particles-js", {
-    "particles": {
-      "number": {
-        "value": 80, 
-        "density": { "enable": true, "value_area": 900 }
-      },
-      "color": { "value": "#ffffff" },
-      "shape": {
-        "type": "circle",
-        "stroke": { "width": 0, "color": "#000000" }
-      },
-      "opacity": { "value": 0.5 },
-      "size": { "value": 2, "random": true },
-      "line_linked": { 
-        "enable": true,
-        "distance": 140,
-        "color": "#ffffff",
-        "opacity": 0.4,
-        "width": 1
-      },
-      "move": { 
-        "enable": true, 
-        "speed": 3,  /* Increased speed */
-        "direction": "none",
-        "random": false,
-        "straight": false
-      }
-    },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": { 
-          "enable": true,
-          "mode": "grab" /* Lines highlight on hover */
-        },
-        "onclick": {
-          "enable": true,
-          "mode": "push" /* Adds particles on click */
+        // Click to add new particles
+        window.addEventListener("click", (event) => {
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle(event.x, event.y));
+            }
+        });
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = (Math.random() - 0.5) * 3;
+                this.speedY = (Math.random() - 0.5) * 3;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse attraction effect
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 120) {
+                    this.x += dx * 0.02;
+                    this.y += dy * 0.02;
+                }
+
+                // Bounce off edges
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
         }
-      },
-      "modes": {
-        "grab": { "distance": 180, "line_linked": { "opacity": 1 } },
-        "push": { "particles_nb": 3 }
-      }
-    },
-    "retina_detect": true
-  });
-</script>
 
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 150})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
 
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => p.update());
+            particles.forEach((p) => p.draw());
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
 
+        // Generate initial particles
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+
+        animate();
+
+        // Resize canvas dynamically
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
