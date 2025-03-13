@@ -14,12 +14,13 @@
             overflow: hidden;
             color: white;
             text-align: center;
+            
         }
         #particles-js {
             position: absolute;
             width: 100%;
             height: 100vh;
-            background-color: #000;
+            background-color: #311047;
             z-index: -1;
         }
         .content {
@@ -39,14 +40,14 @@
         <p>Work's due</p>
     </div>
 
-    <script>
+    <!-- <script>
         particlesJS("particles-js", {
             "particles": {
                 "number": {
                     "value": 80,
                     "density": { "enable": true, "value_area": 800 }
                 },
-                "color": { "value": "#ffffff" },
+                "color": { "value": "#280d3a" },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5 },
                 "size": { "value": 3, "random": true },
@@ -61,7 +62,59 @@
             },
             "retina_detect": true
         });
-    </script>
+    </script> -->
+
+<script>
+  particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 80, 
+        "density": { "enable": true, "value_area": 900 }
+      },
+      "color": { "value": "#ffffff" },
+      "shape": {
+        "type": "circle",
+        "stroke": { "width": 0, "color": "#000000" }
+      },
+      "opacity": { "value": 0.5 },
+      "size": { "value": 2, "random": true },
+      "line_linked": { 
+        "enable": true,
+        "distance": 140,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": { 
+        "enable": true, 
+        "speed": 3,  /* Increased speed */
+        "direction": "none",
+        "random": false,
+        "straight": false
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": { 
+          "enable": true,
+          "mode": "grab" /* Lines highlight on hover */
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push" /* Adds particles on click */
+        }
+      },
+      "modes": {
+        "grab": { "distance": 180, "line_linked": { "opacity": 1 } },
+        "push": { "particles_nb": 3 }
+      }
+    },
+    "retina_detect": true
+  });
+</script>
+
+
 
 </body>
 </html>
