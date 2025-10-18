@@ -1,0 +1,33 @@
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fontsource/bbh-sans-hegarty": "^5.2.1",
+    "@gsap/react": "^2.1.2",
+    "framer-motion": "^12.23.24",
+    "gray-matter": "^4.0.3",
+    "gsap": "^3.13.0",
+    "next": "^14.2.33",
+    "next-themes": "^0.4.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^5.5.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "10.4.19",
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.2.3",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.3"
+  }
+}

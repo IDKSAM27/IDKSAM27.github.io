@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;700&family=Pacifico&family=Russo+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-bbh-sans: "BBH Sans Hegarty", system-ui, sans-serif;
+    --color-text: theme('colors.text-light');
+    --color-accent: theme('colors.accent-light');
+    --theme-bg: theme('colors.hero-1-light'); /* Or your primary light bg */
+  }
+
+  .dark {
+    --color-text: theme('colors.text-dark');
+    --color-accent: theme('colors.accent-dark');
+    --theme-bg: theme('colors.hero-1-dark'); /* Or your primary dark bg */
+  }
+}
+
+body {
+  font-family: theme('fontFamily.body');
+  @apply bg-hero-1-light dark:bg-hero-1-dark overflow-x-hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-heading;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px #4E5C58; /* Light mode accent */
+}
+
+.dark .text-outline {
+  -webkit-text-stroke: 1px #FDE047; /* Dark mode accent */
+}
+
+.text-fake-outline {
+  color: transparent;
+  text-shadow:
+    1px 1px 0 var(--color-accent),
+   -1px 1px 0 var(--color-accent),
+    1px -1px 0 var(--color-accent),
+   -1px -1px 0 var(--color-accent);
+}
