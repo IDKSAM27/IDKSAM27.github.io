@@ -3,8 +3,8 @@ import { FiGrid, FiCode, FiEdit3, FiSmile } from 'react-icons/fi';
 import ScrollLink from './ScrollLink'; // Import our new component
 
 const navItems = [
-  { href: '#projects', icon: FiGrid, label: 'Projects' },
   { href: '#skills', icon: FiCode, label: 'Skills' },
+  { href: '#projects', icon: FiGrid, label: 'Projects' },
   { href: '/blog', icon: FiEdit3, label: 'Blog' },
 ];
 

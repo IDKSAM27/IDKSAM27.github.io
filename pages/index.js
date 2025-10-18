@@ -32,7 +32,7 @@ export default function Home() {
             <div className="flex-grow flex items-center justify-center -mt-16">
                 <Hero />
             </div>
-            <div className="pb-24 md:pb-12">
+            <div className="pb-32 md:pb-12">
                 <HeroSocials />
             </div>
           </div>

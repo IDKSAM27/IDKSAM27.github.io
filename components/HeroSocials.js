@@ -5,9 +5,9 @@ import gsap from 'gsap';
 
 const socials = [
   { href: 'https://github.com/idksam27', label: 'GitHub', icon: FaGithub },
-  { href: 'https://linkedin.com/in/your-username', label: 'LinkedIn', icon: FaLinkedin },
-  { href: 'https://twitter.com/your-username', label: 'Twitter / X', icon: FaTwitter },
-  { href: 'mailto:youremail@example.com', label: 'Email', icon: FaEnvelope },
+  { href: 'https://www.linkedin.com/in/sampreet-patil-681015264/', label: 'LinkedIn', icon: FaLinkedin },
+  { href: 'https://x.com/OG_Sampreet', label: 'Twitter / X', icon: FaTwitter },
+  { href: 'mailto:sampreetpatil270@gmail.com', label: 'Email', icon: FaEnvelope },
 ];
 
 const SocialButton = ({ href, label, icon: Icon }) => {
@@ -56,7 +56,7 @@ const HeroSocials = () => {
     //    and centers the icon bar within it.
     <div className="w-full flex justify-center">
       <div
-        className="hero-social-icons-container flex items-center space-x-4 
+        className="hero-social-icons-container flex items-center space-x-4
                    bg-black/40 backdrop-blur-sm 
                    border border-white/10 
                    py-3 px-6 rounded-2xl 
