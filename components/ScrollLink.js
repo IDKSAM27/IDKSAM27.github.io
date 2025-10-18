@@ -1,30 +1,40 @@
+// components/ScrollLink.js
+
 import { useRouter } from 'next/router';
 import gsap from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { useEffect } from 'react'; // 1. Import useEffect
 
-gsap.registerPlugin(ScrollToPlugin);
+// 2. DO NOT import or register the plugin here
 
 const ScrollLink = ({ children, href, ...props }) => {
   const router = useRouter();
 
+  // 3. Register the plugin only on the client-side, once the component mounts
+  useEffect(() => {
+    // We create a temporary async function to handle the dynamic import
+    const registerScrollToPlugin = async () => {
+      const { ScrollToPlugin } = await import('gsap/ScrollToPlugin');
+      gsap.registerPlugin(ScrollToPlugin);
+    };
+    registerScrollToPlugin();
+  }, []); // The empty dependency array ensures this runs only once on the client
+
+  // All of your existing click handling logic remains the same
   const handleClick = (e) => {
     e.preventDefault();
     const targetId = href.substring(1); // Removes '#'
 
-    // If we're not on the home page, navigate there first.
     if (router.pathname !== '/') {
       router.push('/').then(() => {
-        // After the page navigates, wait a moment for the DOM to update, then scroll.
         setTimeout(() => {
           gsap.to(window, {
             duration: 1,
             scrollTo: { y: `#${targetId}`, offsetY: 0 },
             ease: 'power2.inOut',
           });
-        }, 100); // A small delay ensures the element is available.
+        }, 100);
       });
     } else {
-      // If we are already on the home page, just scroll.
       gsap.to(window, {
         duration: 1,
         scrollTo: { y: `#${targetId}`, offsetY: 0 },
