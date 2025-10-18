@@ -7,7 +7,7 @@ import HeaderButton from './HeaderButton';
 
 const Header = () => {
   return (
-    <header className="container mx-auto px-3 py-3 flex justify-between items-center">
+    <header className="container mx-auto px-3 py-3 lg:px-20 flex justify-between items-center">
       <Link href="/">
         <Logo />
       </Link>
@@ -21,7 +21,7 @@ const Header = () => {
         <div className="ml-4"><ThemeToggle /></div>
       </nav>
 
-      {/* THE FIX: Mobile Theme Toggle (only visible on mobile) */}
+      {/* Mobile Theme Toggle (only visible on mobile) */}
       <div className="md:hidden">
         <ThemeToggle />
       </div>

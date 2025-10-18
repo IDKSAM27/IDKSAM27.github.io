@@ -91,14 +91,14 @@ const ProjectsSection = () => {
   }, { scope: container });
 
   return (
-    <section ref={container} id="projects" className="py-24 md:py-32">
+    // PADDING EDITED HERE: `px-4` is removed
+    <section ref={container} id="projects" className="py-24 md:py-32 lg:px-20">
       <div className="w-full">
-        {/* Add section-title class to match SkillsSection */}
         <h2 className="section-title text-4xl font-heading text-center mb-16 tracking-tight">
           Featured Projects
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} />
           ))}

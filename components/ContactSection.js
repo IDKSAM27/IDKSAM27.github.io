@@ -11,7 +11,8 @@ const ContactSection = () => {
   const handleMouseLeave = () => setIsSurprised(false);
 
   return (
-    <div className="grid md:grid-cols-2 items-center gap-16 md:gap-8">
+    // ADD RESPONSIVE PADDING HERE
+    <div className="grid md:grid-cols-2 items-center gap-16 md:gap-8 px-4 lg:px-20">
       {/* Left side: Text and Socials */}
       <div className="text-center md:text-left">
         <h2 className="text-4xl lg:text-5xl font-bold text-text-light dark:text-text-dark mb-12 font-heading">
@@ -46,11 +47,9 @@ const ContactSection = () => {
         </div>
       </div>
 
-      {/* Right side: SVG Avatar */}
       <div className="flex justify-center items-center">
-        {/* THIS IS THE NEW WRAPPER - Adjust max-w values as needed */}
-        <div className="w-full max-w-5xl md:max-w-5xl lg:max-w-5xl">
-          <InteractiveAvatar />
+        <div className="w-full max-w-5xl">
+          <InteractiveAvatar isSurprised={isSurprised} />
         </div>
       </div>
     </div>
