@@ -1,17 +1,15 @@
-// components/ContactSection.js
 import { useState } from 'react';
 import InteractiveAvatar from './InteractiveAvatar';
 import { FaTwitter, FaLinkedin, FaEnvelope, FaGithub } from 'react-icons/fa'; // Icon library
 
 const ContactSection = () => {
-  // State to control the SVG's "oh" emotion
+  // Tried to handle the 'oh' moment
   const [isSurprised, setIsSurprised] = useState(false);
 
   const handleMouseEnter = () => setIsSurprised(true);
   const handleMouseLeave = () => setIsSurprised(false);
 
   return (
-    // ADD RESPONSIVE PADDING HERE
     <div className="grid md:grid-cols-2 items-center gap-16 md:gap-8 px-4 lg:px-20">
       {/* Left side: Text and Socials */}
       <div className="text-center md:text-left">

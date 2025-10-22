@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FiGrid, FiCode, FiEdit3, FiSmile } from 'react-icons/fi';
-import ScrollLink from './ScrollLink'; // Import our new component
+import ScrollLink from './ScrollLink'; 
 
 const navItems = [
   { href: '#skills', icon: FiCode, label: 'Skills' },
@@ -33,8 +33,7 @@ const MobileNavLink = ({ href, icon: Icon, label }) => {
   );
 };
 
-const MobileNav = ({ project }) => { // Make sure you receive the project prop if needed, otherwise remove it
-    // ... (rest of the component logic remains the same, mapping over navItems)
+const MobileNav = ({ project }) => { 
     return (
         <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-hero-1-light dark:bg-hero-1-dark border-t-2 border-black dark:border-white z-40">
             <div className="container mx-auto h-full">

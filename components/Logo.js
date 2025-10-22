@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -9,7 +8,7 @@ const Logo = () => {
   useGSAP(() => {
     const paths = gsap.utils.toArray(container.current.querySelectorAll('path'));
 
-    // We calculate the length for each path beforehand
+    // Calculate the length for each path beforehand
     paths.forEach(path => {
       const length = path.getTotalLength();
       path.style.strokeDasharray = length;

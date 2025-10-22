@@ -1,4 +1,3 @@
-// components/InteractiveAvatar.js
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { CustomEase } from "gsap/CustomEase";
@@ -13,7 +12,6 @@ const InteractiveAvatar = () => {
     useEffect(() => {
         const context = gsap.context(() => {
             const meTl = gsap.timeline({
-                // 3. Configure with ScrollTrigger
                 scrollTrigger: {
                     trigger: svgRef.current,
                     start: "top 80%", // Animation starts when the top of the SVG is 80% down the viewport

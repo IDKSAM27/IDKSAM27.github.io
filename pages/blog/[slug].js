@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Seo from '../../components/Seo'; // Import the SEO component
+import Seo from '../../components/Seo'; 
 
 import fs from 'fs';
 import path from 'path';

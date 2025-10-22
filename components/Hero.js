@@ -1,4 +1,3 @@
-// components/Hero.js
 import ComplexComputerGraphic from './ComplexComputerGraphic';
 
 const Hero = () => {

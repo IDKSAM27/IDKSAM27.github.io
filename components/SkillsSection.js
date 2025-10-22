@@ -1,4 +1,3 @@
-// components/SkillsSection.js
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -7,7 +6,6 @@ import SkillPill from './SkillPill';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Organize skills into a structured object for easy mapping
 const skillGroups = [
   {
     title: "Programming",
@@ -35,7 +33,6 @@ const SkillsSection = () => {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Animate the main section title
     gsap.from(container.current.querySelector('.section-title'), {
       scrollTrigger: {
         trigger: container.current,
@@ -47,7 +44,6 @@ const SkillsSection = () => {
       ease: "power3.out",
     });
 
-    // Animate each skill group as it enters the view
     const groups = container.current.querySelectorAll('.skill-group');
     groups.forEach((group) => {
       gsap.from(group, {

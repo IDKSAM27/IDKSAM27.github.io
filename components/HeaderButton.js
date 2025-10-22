@@ -1,13 +1,12 @@
-// components/HeaderButton.js
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
-import { useRouter } from 'next/router'; // 1. Import useRouter
+import { useRouter } from 'next/router'; 
 import ScrollLink from './ScrollLink';
 
 const HeaderButton = ({ children, href }) => {
-  const router = useRouter(); // 3. Get the router instance
+  const router = useRouter(); 
   const buttonRef = useRef(null);
   const timeline = useRef();
 
@@ -20,7 +19,6 @@ const HeaderButton = ({ children, href }) => {
       });
   }, { scope: buttonRef });
 
-  // 2. The hover handlers for the animation are restored
   const onEnter = () => {
     if (timeline.current) {
       timeline.current.kill();
@@ -36,18 +34,6 @@ const HeaderButton = ({ children, href }) => {
       timeline.current.reverse();
     }
   };
-
-  // 3. The click handler for scrolling is kept
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   // For the blog link, we don't scroll, we navigate
-  //   if (href === '/blog') {
-  //     window.location.href = href;
-  //     return;
-  //   }
-  //   const targetId = href.substring(2);
-  //   scrollToSection(targetId);
-  // };
 
  const isInternalLink = href.startsWith('/#');
   const targetId = isInternalLink ? href.substring(1) : href;

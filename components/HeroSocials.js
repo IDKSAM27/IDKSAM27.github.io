@@ -50,10 +50,6 @@ const SocialButton = ({ href, label, icon: Icon }) => {
 
 const HeroSocials = () => {
   return (
-    // THE FIX:
-    // 1. All absolute positioning classes have been removed.
-    // 2. We add `w-full flex justify-center` so that it takes up the full width
-    //    and centers the icon bar within it.
     <div className="w-full flex justify-center">
       <div
         className="hero-social-icons-container flex items-center space-x-4

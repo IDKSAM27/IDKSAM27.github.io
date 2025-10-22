@@ -4,7 +4,6 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import MobileNav from '../../components/MobileNav';
 
-// We need these imports here now
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';

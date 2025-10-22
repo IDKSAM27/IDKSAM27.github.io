@@ -38,9 +38,7 @@ const FunButton = () => {
         className="absolute inset-0 bg-text-light dark:bg-gray-300 rounded-md transform translate-x-1 translate-y-1"
       />
 
-      {/* The Button Face with corrected border */}
       <div
-        // THE FIX: Added dark:border-black to make it visible against the white shadow
         className="button-face relative bg-accent-light dark:bg-accent-dark rounded-md border-2 border-text-light dark:border-black"
       >
         <span

@@ -1,4 +1,3 @@
-// components/Header.js
 import Link from 'next/link';
 import FunButton from './FunButton';
 import ThemeToggle from './ThemeToggle';

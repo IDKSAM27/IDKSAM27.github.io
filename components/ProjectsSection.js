@@ -91,7 +91,6 @@ const ProjectsSection = () => {
   }, { scope: container });
 
   return (
-    // PADDING EDITED HERE: `px-4` is removed
     <section ref={container} id="projects" className="py-24 md:py-32 lg:px-20">
       <div className="w-full">
         <h2 className="section-title text-4xl font-heading text-center mb-16 tracking-tight">

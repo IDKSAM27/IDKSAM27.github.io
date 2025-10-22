@@ -1,10 +1,9 @@
-// components/Seo.js
 import Head from 'next/head';
 
 const Seo = ({
   title = "Sampreet Patil | Software Developer",
   description = "A CS grad who likes turning abstract problems into clean, scalable code, I also write about it on my blog.",
-  imageUrl = "https://www.sampreetpatil.com/public/og-image.png", // IMPORTANT: Create and place an image here
+  imageUrl = "https://www.sampreetpatil.com/public/og-image.png",
   url = "https://www.sampreetpatil.com"
 }) => {
   return (
