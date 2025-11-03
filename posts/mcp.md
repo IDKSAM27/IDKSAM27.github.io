@@ -1,6 +1,6 @@
 ---
 title: 'MCP (Model Context Protocol)'
-date: '2025-11-2'
+date: '2025-11-02'
 excerpt: 'MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.'
 ---
 
