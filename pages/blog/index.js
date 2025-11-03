@@ -24,7 +24,8 @@ export async function getStaticProps() {
     };
   });
 
-  const sortedPosts = allPostsData.sort((a, b) => (a.date > b.date ? 1 : -1));
+  const sortedPosts = allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // const sortedPosts = allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date)); // a more robust way to handle wrong ISO format dates (like 2025-11-2)
 
   return {
     props: {
