@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InteractiveAvatar from './InteractiveAvatar';
-import { FaTwitter, FaLinkedin, FaEnvelope, FaGithub } from 'react-icons/fa'; // Icon library
+import { FaLinkedin, FaEnvelope, FaGithub } from 'react-icons/fa'; // Icon library
+import { FaXTwitter } from 'react-icons/fa6'; // Latest X logo
 
 const ContactSection = () => {
   // Tried to handle the 'oh' moment
@@ -30,8 +31,8 @@ const ContactSection = () => {
           or give me a shout on social media.
         </p>
         <div className="flex justify-center md:justify-start space-x-6">
-          <a href="https://x.com/OG_Sampreet" target="_blank" aria-label="Twitter" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-text-light dark:text-text-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors">
-            <FaTwitter size="2rem" />
+          <a href="https://x.com/OG_Sampreet" target="_blank" aria-label="X" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-text-light dark:text-text-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors">
+            <FaXTwitter size="2rem" />
           </a>
           <a href="https://www.linkedin.com/in/sampreet-patil-681015264/" aria-label="LinkedIn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-text-light dark:text-text-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors">
             <FaLinkedin size="2rem" />

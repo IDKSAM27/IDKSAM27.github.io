@@ -1,12 +1,13 @@
 import { useRef } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 const socials = [
   { href: 'https://github.com/idksam27', label: 'GitHub', icon: FaGithub },
   { href: 'https://www.linkedin.com/in/sampreet-patil-681015264/', label: 'LinkedIn', icon: FaLinkedin },
-  { href: 'https://x.com/OG_Sampreet', label: 'Twitter / X', icon: FaTwitter },
+  { href: 'https://x.com/OG_Sampreet', label: 'X', icon: FaXTwitter },
   { href: 'mailto:sampreetpatil270@gmail.com', label: 'Email', icon: FaEnvelope },
 ];
 
