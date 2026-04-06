@@ -17,7 +17,7 @@ const skillGroups = [
   },
   {
     title: "Frameworks & Web",
-    skills: ["FastAPI", "Flask", "Flutter", "React", "Node.js"]
+    skills: ["Next.js", "React", "FastAPI", "Flask", "Flutter", "Node.js"]
   },
   {
     title: "Tools & Platforms",
