@@ -166,7 +166,7 @@ const SkillWheel = ({ isOpen, onClose }) => {
                   exit={{ opacity: 0, scale: 0.8 }}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-white font-heading font-black text-[17px] lg:text-[27px] uppercase tracking-tighter"
+                  className="fill-white font-heading font-black text-[13px] lg:text-[16px] uppercase tracking-tighter"
                   style={{ pointerEvents: 'none' }}
                 >
                   {sectors[activeSector].title.includes('&') ? (
@@ -194,13 +194,12 @@ const SkillWheel = ({ isOpen, onClose }) => {
               )}
             </AnimatePresence>
 
-            {/* CHOOSE MODULE LABEL (WHEN NOTHING SELECTED) */}
             {activeSector === null && (
                <text x={cx} y={cy} textAnchor="middle" dominantBaseline="middle" className="fill-slate-400 font-heading font-bold text-[12px] uppercase tracking-[0.3em]">
                   CHOOSE MODULE
                </text>
             )}
-          </svg>
+           </svg>
         </motion.div>
 
         {/* Skill List Readout (Responsive positioning) */}
