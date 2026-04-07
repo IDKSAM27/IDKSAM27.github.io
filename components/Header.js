@@ -13,7 +13,7 @@ const Header = () => {
 
       {/* Desktop Navigation (hidden on mobile) */}
       <nav className="hidden md:flex items-center space-x-2">
-        <HeaderButton href="/#skills">Skills</HeaderButton>
+        <HeaderButton href="/#experience">Experience</HeaderButton>
         <HeaderButton href="/#projects">Projects</HeaderButton>
         <HeaderButton href="/blog">Blog</HeaderButton>
         <div className="ml-2"><FunButton /></div>

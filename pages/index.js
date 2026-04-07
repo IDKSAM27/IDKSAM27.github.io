@@ -47,13 +47,15 @@ export default function Home() {
         </section>
 
 
-        {/* SKILLS SECTION */}
+        {/* EXPERIENCE SECTION */}
         <section 
-          id="skills" 
-          className="relative min-h-screen flex flex-col justify-center bg-skills-light dark:bg-skills-dark scroll-mt-16"
+          id="experience" 
+          className="relative min-h-screen flex flex-col items-center justify-center bg-skills-light dark:bg-skills-dark scroll-mt-16 overflow-hidden"
         >
-          <div className="container mx-auto px-4">
-            <SkillsSection />
+          <div className="container mx-auto px-4 flex-grow flex flex-col">
+             <div className="flex-grow flex items-center justify-center">
+                <SkillsSection />
+             </div>
           </div>
         </section>
 
@@ -61,10 +63,12 @@ export default function Home() {
         {/* PROJECTS SECTION */}
         <section 
           id="projects" 
-          className="relative min-h-screen flex flex-col justify-center items-center bg-projects-light dark:bg-projects-dark scroll-mt-16"
+          className="relative min-h-screen flex flex-col items-center justify-center bg-projects-light dark:bg-projects-dark scroll-mt-16 overflow-hidden"
         >
-          <div className="container mx-auto px-4">
-            <ProjectsSection />
+          <div className="container mx-auto px-4 flex-grow flex flex-col">
+             <div className="flex-grow flex items-center justify-center">
+                <ProjectsSection />
+             </div>
           </div>
         </section>
 
@@ -72,9 +76,12 @@ export default function Home() {
         {/* CONTACT SECTION */}
         <section 
           id="contact"
-          className="relative min-h-screen flex flex-col justify-center bg-contact-light dark:bg-contact-dark scroll-mt-16">
-          <div className="container mx-auto px-4">
-            <ContactSection />
+          className="relative min-h-screen flex flex-col bg-contact-light dark:bg-contact-dark scroll-mt-16 overflow-hidden"
+        >
+          <div className="container mx-auto px-4 flex-grow flex flex-col">
+             <div className="flex-grow flex items-center justify-center">
+                <ContactSection />
+             </div>
           </div>
           <Footer />
         </section>

@@ -30,7 +30,7 @@ const SkillPill = ({ skill }) => {
       ref={pillRef}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="skill-pill-container bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full px-5 py-2 text-md font-medium cursor-pointer"
+      className="skill-pill-container bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full px-5 py-2 text-md font-heading font-medium cursor-pointer"
     >
       {skill}
     </div>
