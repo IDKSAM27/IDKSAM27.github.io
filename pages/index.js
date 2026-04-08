@@ -34,7 +34,7 @@ export default function Home() {
           
           <Header />
           
-          <div className="container mx-auto px-4 flex-grow flex flex-col">
+          <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
             {/* THIS IS THE CORRECTED LINE: `-mt-16` is removed */}
             <div className="flex-grow flex items-center justify-center">
                 <Hero />
@@ -52,7 +52,7 @@ export default function Home() {
           id="experience" 
           className="relative min-h-screen flex flex-col items-center justify-center bg-skills-light dark:bg-skills-dark scroll-mt-16 overflow-hidden"
         >
-          <div className="container mx-auto px-4 flex-grow flex flex-col">
+          <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
              <div className="flex-grow flex items-center justify-center">
                 <SkillsSection />
              </div>
@@ -65,7 +65,7 @@ export default function Home() {
           id="projects" 
           className="relative min-h-screen flex flex-col items-center justify-center bg-projects-light dark:bg-projects-dark scroll-mt-16 overflow-hidden"
         >
-          <div className="container mx-auto px-4 flex-grow flex flex-col">
+          <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
              <div className="flex-grow flex items-center justify-center">
                 <ProjectsSection />
              </div>
@@ -78,7 +78,7 @@ export default function Home() {
           id="contact"
           className="relative min-h-screen flex flex-col bg-contact-light dark:bg-contact-dark scroll-mt-16 overflow-hidden"
         >
-          <div className="container mx-auto px-4 flex-grow flex flex-col">
+          <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
              <div className="flex-grow flex items-center justify-center">
                 <ContactSection />
              </div>

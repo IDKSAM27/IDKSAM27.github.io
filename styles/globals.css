@@ -11,13 +11,22 @@
     --font-bbh-sans: "BBH Sans Hegarty", system-ui, sans-serif;
     --color-text: theme('colors.text-light');
     --color-accent: theme('colors.accent-light');
-    --theme-bg: theme('colors.hero-1-light'); /* Or your primary light bg */
+    --theme-bg: theme('colors.hero-1-light');
+    /* Or your primary light bg */
+  }
+
+  /* Scale down for laptop/desktop views */
+  @media (min-width: 1024px) {
+    html {
+      font-size: 85%;
+    }
   }
 
   .dark {
     --color-text: theme('colors.text-dark');
     --color-accent: theme('colors.accent-dark');
-    --theme-bg: theme('colors.hero-1-dark'); /* Or your primary dark bg */
+    --theme-bg: theme('colors.hero-1-dark');
+    /* Or your primary dark bg */
   }
 }
 
@@ -26,24 +35,31 @@ body {
   @apply bg-hero-1-light dark:bg-hero-1-dark overflow-x-hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-heading;
 }
 
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 1px #4E5C58; /* Light mode accent */
+  -webkit-text-stroke: 1px #4E5C58;
+  /* Light mode accent */
 }
 
 .dark .text-outline {
-  -webkit-text-stroke: 1px #FDE047; /* Dark mode accent */
+  -webkit-text-stroke: 1px #FDE047;
+  /* Dark mode accent */
 }
 
 .text-fake-outline {
   color: transparent;
   text-shadow:
     1px 1px 0 var(--color-accent),
-   -1px 1px 0 var(--color-accent),
+    -1px 1px 0 var(--color-accent),
     1px -1px 0 var(--color-accent),
-   -1px -1px 0 var(--color-accent);
+    -1px -1px 0 var(--color-accent);
 }

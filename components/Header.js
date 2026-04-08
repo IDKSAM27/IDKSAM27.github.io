@@ -6,7 +6,7 @@ import HeaderButton from './HeaderButton';
 
 const Header = () => {
   return (
-    <header className="container mx-auto px-3 py-3 lg:px-20 flex justify-between items-center">
+    <header className="container mx-auto px-4 py-4 lg:px-32 flex justify-between items-center">
       <Link href="/">
         <Logo />
       </Link>

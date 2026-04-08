@@ -56,7 +56,7 @@ const Hero = () => {
   }, { scope: container });
 
   return (
-    <div ref={container} className="w-full px-4 md:px-12 lg:px-20">
+    <div ref={container} className="w-full px-4 md:px-12 lg:px-32">
       <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16">
 
         {/* Sidebar Label (Hidden on mobile for better Hero spacing) */}
