@@ -55,6 +55,37 @@ h6 {
   /* Dark mode accent */
 }
 
+/* --- BLOG MARKDOWN STYLES --- */
+.prose :not(pre) > code {
+  @apply bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-1.5 py-0.5 rounded-md font-medium text-[0.875em] transition-colors;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "" !important;
+}
+
+.prose pre {
+  @apply rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 !important;
+}
+
+/* 4. Table Styling for Markdown */
+.prose table {
+  @apply w-full border-collapse border border-slate-300 dark:border-slate-700 my-8 overflow-hidden rounded-lg;
+}
+
+.prose th, .prose td {
+  @apply border border-slate-300 dark:border-slate-700 px-4 py-2 text-left;
+}
+
+.prose th {
+  @apply bg-slate-100 dark:bg-slate-800 font-bold;
+}
+
+.prose tr:nth-child(even) {
+  @apply bg-slate-50/50 dark:bg-slate-800/30;
+}
+
 .text-fake-outline {
   color: transparent;
   text-shadow:

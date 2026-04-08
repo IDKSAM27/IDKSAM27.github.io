@@ -82,8 +82,8 @@ export default function Home() {
              <div className="flex-grow flex items-center justify-center">
                 <ContactSection />
              </div>
+             <Footer className="relative z-10 lg:-mt-16" />
           </div>
-          <Footer />
         </section>
       </main>
       
