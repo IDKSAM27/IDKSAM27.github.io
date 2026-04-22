@@ -11,6 +11,7 @@
   "dependencies": {
     "@fontsource/bbh-sans-hegarty": "^5.2.1",
     "@gsap/react": "^2.1.2",
+    "@next/third-parties": "^16.2.4",
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
     "gsap": "^3.13.0",

@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'next-themes';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import '../styles/globals.css';
 
 import '@fontsource/bbh-sans-hegarty/400.css';
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
       <main className={`${inter.variable} ${pacifico.variable}`}>
         <Component {...pageProps} />
       </main>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
     </ThemeProvider>
   );
 }
