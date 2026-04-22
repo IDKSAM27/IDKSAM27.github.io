@@ -3,7 +3,7 @@ import Head from 'next/head';
 const Seo = ({
   title = "Sampreet Patil | Software Developer",
   description = "A CS grad who likes turning abstract problems into clean, scalable code, specializing in AI & Machine Learning.",
-  imageUrl = "https://www.sampreetpatil.com/logo-square.png",
+  imageUrl = "https://www.sampreetpatil.com/og-square.png",
   url = "https://www.sampreetpatil.com",
   keywords = "Sampreet Patil, Software Developer, AI & Machine Learning, GenAI, Backend Developer, Next.js, Multimodal AI, Portfolio"
 }) => {
