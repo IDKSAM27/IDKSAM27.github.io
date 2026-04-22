@@ -3,7 +3,7 @@ import Head from 'next/head';
 const Seo = ({
   title = "Sampreet Patil | Software Developer",
   description = "A CS grad who likes turning abstract problems into clean, scalable code, specializing in AI & Machine Learning.",
-  imageUrl = "https://www.sampreetpatil.com/og-image.png",
+  imageUrl = "https://www.sampreetpatil.com/logo-square.png",
   url = "https://www.sampreetpatil.com",
   keywords = "Sampreet Patil, Software Developer, AI & Machine Learning, GenAI, Backend Developer, Next.js, Multimodal AI, Portfolio"
 }) => {
@@ -39,9 +39,11 @@ const Seo = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />
+      <meta property="og:image:width" content="1280" />
+      <meta property="og:image:height" content="1280" />
 
       {/* Twitter */}
-      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:card" content="summary" />
       <meta property="twitter:url" content={url} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
