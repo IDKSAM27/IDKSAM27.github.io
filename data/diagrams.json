@@ -1,0 +1,10 @@
+[
+  {
+    "slug": "scalablefastapi-backend",
+    "title": "How to Structure a fast, scalable backend using Python and FastAPI",
+    "description": "Learn how to structure a clean, scalable FastAPI backend for real-world applications.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TE7Fj_lEY7g",
+    "image": "/images/diagrams/scalablefastapi-backend.png",
+    "date": "2026-06-18"
+  }
+]

@@ -93,7 +93,7 @@ const Hero = () => {
                 <span className="text-accent-light dark:text-accent-dark">Patil.</span>
               </h1>
               <h2 className="hero-subtitle text-4xl md:text-6xl font-heading text-slate-400 dark:text-slate-600 tracking-tighter mt-4">
-                Developer.
+                Backend & Security Engineer.
               </h2>
             </div>
 
@@ -111,7 +111,7 @@ const Hero = () => {
             </p>
 
             {/* SKILLS ARMORY TRIGGER BUTTON */}
-            <div className="armory-btn pt-4 flex justify-center lg:justify-start">
+            <div className="armory-btn pt-1 pb-8 lg:pb-0 flex justify-center lg:justify-start">
               <button
                 onClick={() => setIsWheelOpen(true)}
                 className="group relative inline-flex items-center gap-3 px-6 py-3 lg:px-8 lg:py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-heading text-lg lg:text-xl rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-2xl"

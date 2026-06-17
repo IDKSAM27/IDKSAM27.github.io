@@ -66,7 +66,11 @@ h6 {
 }
 
 .prose pre {
-  @apply rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 !important;
+  @apply rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-inherit;
 }
 
 /* 4. Table Styling for Markdown */

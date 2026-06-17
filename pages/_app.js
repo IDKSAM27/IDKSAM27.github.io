@@ -3,6 +3,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import '../styles/globals.css';
 
 import '@fontsource/bbh-sans-hegarty/400.css';
+import 'highlight.js/styles/github-dark.css';
 
 import { Inter, Pacifico } from 'next/font/google';
 
