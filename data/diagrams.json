@@ -1,10 +1,52 @@
 [
   {
+    "slug": "jwt-authentication",
+    "title": "JWT Authentication Explained Like You're Building Google",
+    "description": "What exactly is a JWT, and why is it used in almost every modern web application? In this video, we break down JWT (JSON Web Token) authentication from first principles and follow the complete authentication flow.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ocPOkS_HLyw",
+    "image": "/images/diagrams/summary.png",
+    "images": [
+      {
+        "src": "/images/diagrams/problem.png",
+        "title": "The Problem with Sessions",
+        "description": "Understanding why stateful session-based authentication struggles to scale across multiple servers."
+      },
+      {
+        "src": "/images/diagrams/threepartsofJWT.png",
+        "title": "The Anatomy of a JWT",
+        "description": "Breaking down the Header, Payload, and Signature that make up a JSON Web Token."
+      },
+      {
+        "src": "/images/diagrams/signature.png",
+        "title": "How the Signature Works",
+        "description": "Visualizing how HMAC SHA256 (HS256) signs the token to prevent tampering, while remaining unencrypted."
+      },
+      {
+        "src": "/images/diagrams/jwtcycle.png",
+        "title": "The Full Authentication Cycle",
+        "description": "Login → Verify Credentials → Generate JWT → Send Token → Store Token → Send Token with Requests → Verify Signature → Authorize User."
+      },
+      {
+        "src": "/images/diagrams/summary.png",
+        "title": "Summary & Best Practices",
+        "description": "A recap of the stateless authentication architecture and security best practices."
+      }
+    ],
+    "date": "2026-06-19"
+  },
+  {
     "slug": "scalablefastapi-backend",
     "title": "How to Structure a fast, scalable backend using Python and FastAPI",
     "description": "Learn how to structure a clean, scalable FastAPI backend for real-world applications.",
     "youtubeUrl": "https://www.youtube.com/watch?v=TE7Fj_lEY7g",
     "image": "/images/diagrams/scalablefastapi-backend.png",
+    "images": [
+      {
+        "src": "/images/diagrams/scalablefastapi-backend.png",
+        "title": "Architecture Overview",
+        "description": "The complete flow from Client through the API Layer and into Business Logic."
+      }
+    ],
     "date": "2026-06-18"
   }
 ]
