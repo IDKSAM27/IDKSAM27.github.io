@@ -1,5 +1,20 @@
 [
   {
+    "slug": "oauth2-explained-visually",
+    "title": "OAuth 2.0 Explained Visually (The Missing Piece After JWT)",
+    "description": "How does OAuth 2.0 actually work, and why do you need it if you already have JWTs? In this video, we visually break down the OAuth 2.0 authorization framework and its core flows.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0WkCRMt-w9k",
+    "image": "/images/diagrams/OAuth2.0.png",
+    "images": [
+      {
+        "src": "/images/diagrams/OAuth2.0.png",
+        "title": "OAuth 2.0 Visual Flow",
+        "description": "Visualizing the authorization handshake and how it integrates with JWTs to secure modern applications."
+      }
+    ],
+    "date": "2026-06-21"
+  },
+  {
     "slug": "jwt-authentication",
     "title": "JWT Authentication Explained Like You're Building Google",
     "description": "What exactly is a JWT, and why is it used in almost every modern web application? In this video, we break down JWT (JSON Web Token) authentication from first principles and follow the complete authentication flow.",
