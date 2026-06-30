@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "dev": "next dev",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@fontsource/bbh-sans-hegarty": "^5.2.1",
     "@gsap/react": "^2.1.2",
     "@next/third-parties": "^16.2.4",
+    "@opennextjs/cloudflare": "^1.20.1",
     "framer-motion": "^12.38.0",
     "gray-matter": "^2.0.1",
     "gsap": "^3.13.0",
@@ -34,6 +39,7 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.2",
     "postcss": "^8.5.15",
-    "tailwindcss": "3.4.3"
+    "tailwindcss": "3.4.3",
+    "wrangler": "^4.106.0"
   }
 }
