@@ -110,22 +110,28 @@ const HomeLabWidget = () => {
                     code.sampreetpatil.com
                     <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
                   </span>
-                  <span className="text-[10px] text-amber-500 border border-amber-500/20 px-2 py-0.5 rounded uppercase font-semibold tracking-wider flex-shrink-0 ml-auto">
-                    Secure
-                  </span>
+                  <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
                 <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Personal code server environment hosted on home lab's node.
+                  {isSandboxOnline
+                    ? "Personal code server environment hosted on home lab's node."
+                    : "Personal code server environment hosted on home lab's node (Offline)."}
                 </p>
                 <div className="pt-1">
-                  <a
-                    href="https://code.sampreetpatil.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-lg text-accent-light dark:text-accent-dark font-semibold hover:underline"
-                  >
-                    Access Console <FaExternalLinkAlt className="text-xs" />
-                  </a>
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://code.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-lg text-accent-light dark:text-accent-dark font-semibold hover:underline"
+                    >
+                      Access Console <FaExternalLinkAlt className="text-xs" />
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center text-slate-400 dark:text-slate-600 text-lg font-semibold cursor-not-allowed select-none">
+                      Offline
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
