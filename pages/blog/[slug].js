@@ -3,28 +3,15 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Seo from '../../components/Seo'; 
-
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import remarkRehype from 'remark-rehype';
-import rehypeHighlight from 'rehype-highlight';
-import rehypeStringify from 'rehype-stringify';
-
-const postsDirectory = path.join(process.cwd(), 'posts');
+import postsData from '../../data/posts.json';
 
 // This function tells Next.js which paths (pages) to generate
 export async function getStaticPaths() {
-  const fileNames = fs.readdirSync(postsDirectory);
-  const paths = fileNames.map((fileName) => {
-    return {
-      params: {
-        slug: fileName.replace(/\.md$/, ''),
-      },
-    };
-  });
+  const paths = postsData.map((post) => ({
+    params: {
+      slug: post.slug,
+    },
+  }));
   return {
     paths,
     fallback: false, // Means other routes should 404.
@@ -33,32 +20,16 @@ export async function getStaticPaths() {
 
 // This function gets the data for a specific post
 export async function getStaticProps({ params }) {
-  const fullPath = path.join(postsDirectory, `${params.slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-  // Use gray-matter to parse the post metadata
-  const matterResult = matter(fileContents);
-
-  // Use remark to convert markdown into an HTML string
-  const processedContent = await remark()
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
+  const post = postsData.find((p) => p.slug === params.slug);
 
   // Combine the data with the slug and contentHtml
   return {
     props: {
-      postData: {
-        slug: params.slug,
-        contentHtml,
-        ...matterResult.data,
-      },
+      postData: post || null,
     },
   };
 }
+
 
 // This is the React component that renders the post
 const Post = ({ postData }) => {

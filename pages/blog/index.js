@@ -3,36 +3,22 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import MobileNav from '../../components/MobileNav';
-
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import postsData from '../../data/posts.json';
 
 export async function getStaticProps() {
-  // All the logic from lib/posts.js is now directly inside here
-  const postsDirectory = path.join(process.cwd(), 'posts');
-  const fileNames = fs.readdirSync(postsDirectory);
-
-  const allPostsData = fileNames.map((fileName) => {
-    const id = fileName.replace(/\.md$/, '');
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const matterResult = matter(fileContents);
-    return {
-      id,
-      ...matterResult.data,
-    };
-  });
-
-  const sortedPosts = allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
-  // const sortedPosts = allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date)); // a more robust way to handle wrong ISO format dates (like 2025-11-2)
+  // Strip out contentHtml for the index page to reduce payload size
+  const allPostsData = postsData.map(({ slug, contentHtml, ...rest }) => ({
+    id: slug,
+    ...rest
+  }));
 
   return {
     props: {
-      allPostsData: sortedPosts,
+      allPostsData,
     },
   };
 }
+
 
 
 const BlogHome = ({ allPostsData }) => {
