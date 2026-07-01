@@ -83,7 +83,7 @@ const SkillWheel = ({ isOpen, onClose }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={initiateClose}
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-2xl pointer-events-auto"
+        className="absolute inset-0 bg-slate-950/95 lg:bg-slate-950/70 lg:backdrop-blur-2xl pointer-events-auto"
       />
 
       {/* Main Responsive Wrapper */}
@@ -223,7 +223,7 @@ const SkillWheel = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Main Block Content */}
-                <div className="relative bg-slate-950/60 backdrop-blur-2xl border border-white/10 pt-4 px-6 pb-6 lg:pt-10 lg:px-8 lg:pb-10 rounded-tr-[50px] shadow-[0_30px_60px_rgba(0,0,0,0.8)] overflow-hidden font-heading text-slate-300">
+                <div className="relative bg-slate-950/90 lg:bg-slate-950/60 lg:backdrop-blur-2xl border border-white/10 pt-4 px-6 pb-6 lg:pt-10 lg:px-8 lg:pb-10 rounded-tr-[50px] shadow-[0_30px_60px_rgba(0,0,0,0.8)] overflow-hidden font-heading text-slate-300">
                    {/* Scanline Effect */}
                    <div className="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]" />
                    

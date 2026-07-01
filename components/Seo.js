@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 const Seo = ({
-  title = "Sampreet Patil | Software Developer",
+  title = "Sampreet Patil | Dev",
   description = "A CS grad who likes turning abstract problems into clean, scalable code, specializing in AI & Machine Learning.",
   imageUrl = "https://www.sampreetpatil.com/og-square.png",
   url = "https://www.sampreetpatil.com",

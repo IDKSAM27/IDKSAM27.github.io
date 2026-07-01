@@ -8,6 +8,7 @@ import ContactSection from '../components/ContactSection';
 import HeroSocials from '../components/HeroSocials';
 import Seo from '../components/Seo';
 import MobileNav from '../components/MobileNav';
+import HomeLabWidget from '../components/HomeLabWidget';
 
 
 export default function Home() {
@@ -88,6 +89,7 @@ export default function Home() {
       </main>
       
       {/* <HeroSocials /> */}
+      <HomeLabWidget />
       <MobileNav />
     </div>
   );
