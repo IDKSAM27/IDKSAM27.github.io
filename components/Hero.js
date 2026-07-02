@@ -2,12 +2,9 @@ import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ComplexComputerGraphic from './ComplexComputerGraphic';
-import SkillWheel from './SkillWheel';
-import { AnimatePresence } from 'framer-motion';
 
 const Hero = () => {
   const container = useRef(null);
-  const [isWheelOpen, setIsWheelOpen] = useState(false);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -110,33 +107,10 @@ const Hero = () => {
               </a>.
             </p>
 
-            {/* SKILLS ARMORY TRIGGER BUTTON */}
-            <div className="armory-btn pt-1 pb-8 lg:pb-0 flex justify-center lg:justify-start">
-              <button
-                onClick={() => setIsWheelOpen(true)}
-                className="group relative inline-flex items-center gap-3 px-6 py-3 lg:px-8 lg:py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-heading text-lg lg:text-xl rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-2xl"
-              >
-                <div className="absolute inset-0 bg-accent-light dark:bg-accent-dark translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <span className="relative z-10">Skills Armory</span>
-                <div className="relative z-10 w-8 h-8 rounded-full border-2 border-current flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
-                  <span className="text-xs">⇗</span>
-                </div>
-              </button>
-            </div>
           </div>
 
         </div>
       </div>
-
-      {/* THE GTA SKILL WHEEL POPUP */}
-      <AnimatePresence>
-        {isWheelOpen && (
-          <SkillWheel
-            isOpen={isWheelOpen}
-            onClose={() => setIsWheelOpen(false)}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 };
