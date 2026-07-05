@@ -123,8 +123,8 @@ const ErrorLayout = ({ statusCode }) => {
               >
                 <div className="absolute inset-0 bg-accent-light dark:bg-accent-dark translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <span className="relative z-10">{config.actionText}</span>
-                <div className="relative z-10 w-6 h-6 rounded-full border border-current flex items-center justify-center group-hover:-translate-x-1 transition-transform duration-300">
-                  <span className="text-xs">←</span>
+                <div className="relative z-10 flex items-center justify-center group-hover:-translate-x-1 transition-transform duration-300">
+                  <span className="text-lg">←</span>
                 </div>
               </Link>
 
