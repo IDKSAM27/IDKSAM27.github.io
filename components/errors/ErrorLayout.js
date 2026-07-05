@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import Seo from '../Seo';
 import DizzyAvatar from './DizzyAvatar';
+import ConnectionRequestModal from './ConnectionRequestModal';
 
 const errorConfig = {
   401: {
@@ -51,6 +53,13 @@ const errorConfig = {
     showRefresh: true,
     refreshText: "Ping Server"
   },
+  1033: {
+    title: "Server Unreachable",
+    message: "It seems my personal server is currently taking a nap or experiencing connection issues. Please try again later or request a connection if you need urgent access.",
+    actionText: "Return Home",
+    showRefresh: true,
+    refreshText: "Retry Connection"
+  },
   fallback: {
     title: "Anomaly Detected",
     message: "An unexpected error occurred. Even my avatar is confused. Let's head back to dry land and start over.",
@@ -62,6 +71,7 @@ const errorConfig = {
 
 const ErrorLayout = ({ statusCode }) => {
   const config = errorConfig[statusCode] || errorConfig.fallback;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-hero-1-light dark:bg-hero-1-dark text-text-light dark:text-text-dark transition-colors duration-300">
@@ -118,6 +128,15 @@ const ErrorLayout = ({ statusCode }) => {
                 </div>
               </Link>
 
+              {statusCode === 1033 && (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent-light dark:bg-accent-dark text-white font-heading text-lg lg:text-xl rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-xl"
+                >
+                  <span className="relative z-10">Request Connection</span>
+                </button>
+              )}
+
               {config.showRefresh && (
                 <button
                   onClick={() => window.location.reload()}
@@ -130,6 +149,12 @@ const ErrorLayout = ({ statusCode }) => {
           </div>
 
         </div>
+
+        {/* Connection Request Modal */}
+        <ConnectionRequestModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+        />
       </main>
 
       <Footer />
