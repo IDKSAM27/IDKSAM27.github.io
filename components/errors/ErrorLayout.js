@@ -136,7 +136,7 @@ const ErrorLayout = ({ statusCode }) => {
               {statusCode === 1033 && (
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent-light dark:bg-accent-dark text-white font-heading text-lg lg:text-xl rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-xl"
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent-light dark:bg-accent-dark text-white dark:text-slate-900 font-heading text-lg lg:text-xl rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-xl"
                 >
                   <span className="relative z-10">Request Connection</span>
                 </button>
