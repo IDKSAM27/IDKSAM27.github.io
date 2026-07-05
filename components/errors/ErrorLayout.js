@@ -72,6 +72,11 @@ const errorConfig = {
 const ErrorLayout = ({ statusCode }) => {
   const config = errorConfig[statusCode] || errorConfig.fallback;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // For 1033 (Tunnel Down), we want to escape the dead tunnel subdomain and return to the main site
+  const homeLink = (statusCode === 1033 && process.env.NODE_ENV === 'production') 
+    ? "https://sampreetpatil.com" 
+    : "/";
 
   return (
     <div className="relative min-h-screen flex flex-col bg-hero-1-light dark:bg-hero-1-dark text-text-light dark:text-text-dark transition-colors duration-300">
@@ -118,7 +123,7 @@ const ErrorLayout = ({ statusCode }) => {
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-2 lg:pt-4">
               <Link
-                href="/"
+                href={homeLink}
                 className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-heading text-lg lg:text-xl rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-xl"
               >
                 <div className="absolute inset-0 bg-accent-light dark:bg-accent-dark translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
