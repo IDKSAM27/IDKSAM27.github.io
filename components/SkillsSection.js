@@ -183,7 +183,10 @@ const ExperienceSection = () => {
 
                         <div className="aspect-video bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded flex items-center justify-center p-6">
                           <div className="text-white text-center">
-                            <h4 className="text-2xl font-heading mb-1">Enstine</h4>
+                            <div className="flex flex-col items-center justify-center gap-2 mb-2">
+                              <img src="/enstine-mark.svg" alt="Enstine Mark" className="w-16 h-16" />
+                              <h4 className="text-3xl font-heading">Enstine</h4>
+                            </div>
                             <p className="text-[10px] font-body uppercase tracking-widest opacity-80">AI Academic Backbone</p>
                           </div>
                         </div>
