@@ -73,9 +73,14 @@ const HomeLabWidget = () => {
               {/* Public Tunnel */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark">
+                  <a
+                    href="https://public.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                  >
                     public.sampreetpatil.com
-                  </span>
+                  </a>
                   <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
                 <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -106,10 +111,15 @@ const HomeLabWidget = () => {
               {/* Private Tunnel */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark flex items-center gap-2">
+                  <a
+                    href="https://code.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                  >
                     code.sampreetpatil.com
                     <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
-                  </span>
+                  </a>
                   <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
                 <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -133,6 +143,33 @@ const HomeLabWidget = () => {
                     </span>
                   )}
                 </div>
+              </div>
+
+              <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
+
+              {/* Collaborative Drawing */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <a
+                    href="https://draw.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                  >
+                    draw.sampreetpatil.com
+                  </a>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Whiteboarding & diagramming
+                  </p>
+                </div>
+                <a
+                  href="https://draw.sampreetpatil.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded border-2 border-accent-light dark:border-accent-dark text-accent-light dark:text-accent-dark hover:bg-accent-light/10 dark:hover:bg-accent-dark/10 transition-colors"
+                >
+                  <FaExternalLinkAlt className="text-xs" />
+                </a>
               </div>
             </div>
           </motion.div>
