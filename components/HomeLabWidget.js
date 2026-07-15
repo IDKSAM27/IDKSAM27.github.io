@@ -51,10 +51,10 @@ const HomeLabWidget = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 15 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 right-0 w-80 sm:w-[380px] bg-hero-1-light dark:bg-hero-1-dark border-2 border-slate-900 dark:border-slate-700 rounded-lg shadow-2xl p-6 overflow-hidden text-slate-800 dark:text-slate-200 font-sans"
+            className="absolute bottom-16 right-0 w-80 sm:w-[380px] bg-hero-1-light dark:bg-hero-1-dark border-2 border-slate-900 dark:border-slate-700 rounded-lg shadow-2xl p-4 overflow-hidden text-slate-800 dark:text-slate-200 font-sans"
           >
             {/* Popover Header */}
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 dark:border-slate-800 mb-6">
+            <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-slate-800 mb-3">
               <div className="flex items-center gap-2.5">
                 <FaServer className="text-accent-light dark:text-accent-dark text-lg" />
                 <span className="font-heading text-lg text-text-light dark:text-text-dark">Lab</span>
@@ -69,32 +69,32 @@ const HomeLabWidget = () => {
             </div>
 
             {/* List of Tunnels */}
-            <div className="space-y-5">
+            <div className="space-y-3">
               {/* Public Tunnel */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between gap-3">
                   <a
                     href="https://public.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
                   >
                     public.sampreetpatil.com
                   </a>
                   <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
                   {isSandboxOnline
                     ? "Code server sandbox container (5GB ephemeral node)."
                     : "Code server sandbox container (Offline)."}
                 </p>
-                <div className="pt-1">
+                <div>
                   {isSandboxOnline ? (
                     <a
                       href="https://public.sampreetpatil.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-lg text-accent-light dark:text-accent-dark font-semibold hover:underline"
+                      className="inline-flex items-center gap-1.5 text-base text-accent-light dark:text-accent-dark font-bold hover:underline"
                     >
                       Launch Sandbox <FaExternalLinkAlt className="text-xs" />
                     </a>
@@ -109,31 +109,31 @@ const HomeLabWidget = () => {
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
 
               {/* Private Tunnel */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between gap-3">
                   <a
                     href="https://code.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
                   >
                     code.sampreetpatil.com
                     <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
                   </a>
                   <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
                   {isSandboxOnline
                     ? "Personal code server environment hosted on home lab's node."
                     : "Personal code server environment hosted on home lab's node (Offline)."}
                 </p>
-                <div className="pt-1">
+                <div>
                   {isSandboxOnline ? (
                     <a
                       href="https://code.sampreetpatil.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-lg text-accent-light dark:text-accent-dark font-semibold hover:underline"
+                      className="inline-flex items-center gap-1.5 text-base text-accent-light dark:text-accent-dark font-bold hover:underline"
                     >
                       Access Console <FaExternalLinkAlt className="text-xs" />
                     </a>
@@ -154,12 +154,16 @@ const HomeLabWidget = () => {
                     href="https://music.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
                   >
                     music.sampreetpatil.com
                   </a>
-                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Personal music player & playlists
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                    Personal music player.
+                    <br />
+                    username: <code className="font-mono text-sm">guest</code>
+                    <br />
+                    password: <code className="font-mono text-sm">guest</code>
                   </p>
                 </div>
                 <a
@@ -181,11 +185,11 @@ const HomeLabWidget = () => {
                     href="https://draw.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
                   >
                     draw.sampreetpatil.com
                   </a>
-                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
                     Whiteboarding & diagramming
                   </p>
                 </div>
