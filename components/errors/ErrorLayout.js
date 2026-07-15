@@ -88,7 +88,7 @@ const ErrorLayout = ({ statusCode }) => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-hero-2-light/30 dark:bg-hero-2-dark/10 blur-[120px] transition-colors" />
       </div>
 
-      <Header />
+      <Header homeHref={homeLink} />
 
       <main className="flex-grow flex items-start lg:items-center justify-center pt-2 pb-16 lg:py-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-20 items-center">

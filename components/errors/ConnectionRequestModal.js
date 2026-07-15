@@ -74,10 +74,10 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in duration-200">
+      <div className="relative w-full max-w-md bg-hero-1-light dark:bg-hero-1-dark rounded-3xl shadow-2xl p-6 sm:p-8 border border-slate-900/10 dark:border-accent-dark/25 animate-in fade-in zoom-in duration-200">
         <button
           onClick={handleCloseModal}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+          className="absolute top-5 right-5 flex h-5 w-5 items-center justify-center text-sm leading-none text-slate-500 dark:text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors"
           aria-label="Close"
         >
           ✕
@@ -86,12 +86,12 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
         {status === 'success' ? (
           <div className="text-center py-8">
             <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">✓</div>
-            <h3 className="text-2xl font-heading font-bold text-slate-900 dark:text-white mb-2">Request Sent!</h3>
+            <h3 className="text-2xl font-heading font-bold text-accent-light dark:text-accent-dark mb-2">Request Sent!</h3>
             <p className="text-slate-600 dark:text-slate-400 font-medium">I'll be notified and will try to get the server back up soon.</p>
           </div>
         ) : (
           <>
-            <h3 className="text-2xl font-heading font-bold text-slate-900 dark:text-white mb-2">Request Access</h3>
+            <h3 className="text-2xl font-heading font-bold text-accent-light dark:text-accent-dark mb-2">Request Access</h3>
             <p className="text-slate-600 dark:text-slate-400 mb-6 font-medium">
               {cooldownTime
                 ? `You've already sent a request recently. Please try again in ${cooldownTime} minutes.`
@@ -118,7 +118,7 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your Name"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-transparent text-slate-900 dark:text-white focus:border-accent-light dark:focus:border-accent-dark focus:outline-none transition-colors disabled:opacity-50"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-900/20 dark:border-slate-600 bg-hero-2-light/30 dark:bg-hero-2-dark/60 text-text-light dark:text-text-dark placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-accent-light dark:focus:border-accent-dark focus:outline-none transition-colors disabled:opacity-50"
                 />
               </div>
               <div>
@@ -131,7 +131,7 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-transparent text-slate-900 dark:text-white focus:border-accent-light dark:focus:border-accent-dark focus:outline-none transition-colors disabled:opacity-50"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-900/20 dark:border-slate-600 bg-hero-2-light/30 dark:bg-hero-2-dark/60 text-text-light dark:text-text-dark placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-accent-light dark:focus:border-accent-dark focus:outline-none transition-colors disabled:opacity-50"
                 />
               </div>
 
@@ -139,7 +139,7 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-heading text-lg rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-md disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-accent-light dark:bg-accent-dark text-white dark:text-slate-900 font-heading text-lg rounded-xl hover:scale-[1.02] hover:bg-accent-light/90 dark:hover:bg-yellow-300 active:scale-[0.98] transition-transform shadow-md disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center gap-2"
                 >
                   {status === 'loading' ? (
                     <>

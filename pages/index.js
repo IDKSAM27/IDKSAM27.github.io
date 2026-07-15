@@ -51,7 +51,7 @@ export default function Home() {
         {/* EXPERIENCE SECTION */}
         <section 
           id="experience" 
-          className="relative min-h-screen flex flex-col items-center justify-center bg-skills-light dark:bg-skills-dark scroll-mt-16 overflow-hidden"
+          className="relative min-h-screen flex flex-col items-center justify-center bg-skills-light dark:bg-skills-dark overflow-hidden"
         >
           <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
              <div className="flex-grow flex items-center justify-center">
@@ -64,7 +64,7 @@ export default function Home() {
         {/* PROJECTS SECTION */}
         <section 
           id="projects" 
-          className="relative min-h-screen flex flex-col items-center justify-center bg-projects-light dark:bg-projects-dark scroll-mt-16 overflow-hidden"
+          className="relative min-h-screen flex flex-col items-center justify-center bg-projects-light dark:bg-projects-dark overflow-hidden"
         >
           <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
              <div className="flex-grow flex items-center justify-center">
@@ -77,7 +77,7 @@ export default function Home() {
         {/* CONTACT SECTION */}
         <section 
           id="contact"
-          className="relative min-h-screen flex flex-col bg-contact-light dark:bg-contact-dark scroll-mt-16 overflow-hidden"
+          className="relative min-h-screen flex flex-col bg-contact-light dark:bg-contact-dark overflow-hidden"
         >
           <div className="container mx-auto px-4 lg:px-32 flex-grow flex flex-col">
              <div className="flex-grow flex items-center justify-center">
