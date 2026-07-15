@@ -159,7 +159,8 @@ const HomeLabWidget = () => {
                     music.sampreetpatil.com
                   </a>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
-                    Personal music player.
+                    24-bit / 48 kHz FLAC library.{" "}
+                    <em>(For anyone wondering: FLAC is music, not a breakfast cereal.)</em>
                     <br />
                     username: <code className="font-mono text-sm">guest</code>
                     <br />
