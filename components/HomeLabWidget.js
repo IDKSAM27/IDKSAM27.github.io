@@ -69,7 +69,7 @@ const HomeLabWidget = () => {
             </div>
 
             {/* List of Tunnels */}
-            <div className="space-y-8">
+            <div className="space-y-5">
               {/* Public Tunnel */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
@@ -143,6 +143,33 @@ const HomeLabWidget = () => {
                     </span>
                   )}
                 </div>
+              </div>
+
+              <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
+
+              {/* Music Player */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <a
+                    href="https://music.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base sm:text-lg font-semibold tracking-tight text-text-light dark:text-text-dark underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                  >
+                    music.sampreetpatil.com
+                  </a>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Personal music player & playlists
+                  </p>
+                </div>
+                <a
+                  href="https://music.sampreetpatil.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded border-2 border-accent-light dark:border-accent-dark text-accent-light dark:text-accent-dark hover:bg-accent-light/10 dark:hover:bg-accent-dark/10 transition-colors"
+                >
+                  <FaExternalLinkAlt className="text-xs" />
+                </a>
               </div>
 
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />

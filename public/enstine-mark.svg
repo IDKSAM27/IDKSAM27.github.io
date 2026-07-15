@@ -1,22 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="46 41 124 124" width="100%" height="100%">
   <style>
     .circle-anim {
-      stroke-dasharray: 100 120;
-      stroke-dashoffset: 120;
-      animation: draw-circle 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 101;
+      opacity: 0;
+      animation:
+        draw-circle 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate,
+        fade-circle 3.5s linear infinite alternate;
     }
     .line-anim {
-      stroke-dasharray: 100 120;
-      stroke-dashoffset: 120;
-      animation: draw-line 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 101;
+      opacity: 0;
+      animation:
+        draw-line 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate,
+        fade-line 3.5s linear infinite alternate;
     }
     @keyframes draw-circle {
-      0%, 15% { stroke-dashoffset: 120; }
+      0%, 15% { stroke-dashoffset: 101; }
       45%, 100% { stroke-dashoffset: 0; }
     }
     @keyframes draw-line {
-      0%, 45% { stroke-dashoffset: 120; }
+      0%, 45% { stroke-dashoffset: 101; }
       75%, 100% { stroke-dashoffset: 0; }
+    }
+    @keyframes fade-circle {
+      0%, 18% { opacity: 0; }
+      28%, 88% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes fade-line {
+      0%, 48% { opacity: 0; }
+      58%, 88% { opacity: 1; }
+      100% { opacity: 0; }
     }
   </style>
   <path class="circle-anim" pathLength="100" d="M 138 78 C 138 50, 95 48, 85 78 C 76 108, 108 128, 128 116 C 148 104, 148 80, 128 72" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
