@@ -11,6 +11,22 @@ const HomeLabWidget = () => {
   // Read sandbox status directly from Environment Variable (defaults to true if not explicitly false)
   const isSandboxOnline = process.env.NEXT_PUBLIC_SANDBOX_ONLINE !== 'false';
 
+  // Open the lab popup directly when visiting /#lab.
+  useEffect(() => {
+    const openFromHash = () => {
+      const hash = window.location.hash.toLowerCase();
+
+      if (hash === '#lab' || hash === '#home-lab' || hash === '#homelab') {
+        setIsOpen(true);
+        setShowTooltip(false);
+      }
+    };
+
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, []);
+
   // Close when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
