@@ -203,6 +203,34 @@ const HomeLabWidget = () => {
                   <FaExternalLinkAlt className="text-xs" />
                 </a>
               </div>
+
+              <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
+
+              {/* Photos */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <a
+                    href="https://photos.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                  >
+                    photos.sampreetpatil.com
+                    <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                  </a>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                    Private photo library (Shared with friends & family).
+                  </p>
+                </div>
+                <a
+                  href="https://photos.sampreetpatil.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded border-2 border-accent-light dark:border-accent-dark text-accent-light dark:text-accent-dark hover:bg-accent-light/10 dark:hover:bg-accent-dark/10 transition-colors"
+                >
+                  <FaExternalLinkAlt className="text-xs" />
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
