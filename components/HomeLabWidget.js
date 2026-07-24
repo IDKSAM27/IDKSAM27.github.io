@@ -1,12 +1,50 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaServer, FaLock, FaTimes, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaServer, FaLock, FaTimes, FaExternalLinkAlt, FaChevronDown } from 'react-icons/fa';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+
+const labExPath = "M17.2 0a1.2 1.2 0 0 1 1.2 1.2v4a1.2 1.2 0 0 1-1.2 1.2h-.402v1.212l6.976 9.687a1.2 1.2 0 0 1 .22.576L24 18v4.8a1.2 1.2 0 0 1-1.2 1.2H1.2A1.2 1.2 0 0 1 0 22.8V18c0-.252.08-.497.226-.701l6.975-9.687V6.4H6.8a1.2 1.2 0 0 1-1.194-1.084L5.6 5.2v-4A1.2 1.2 0 0 1 6.8 0zM16 2.4H8V4h.4a1.2 1.2 0 0 1 1.195 1.084l.006.116v2.703c0 .315-.1.622-.283.877L2.4 18.386V21.6h19.2v-3.213L14.681 8.78a1.5 1.5 0 0 1-.277-.743l-.006-.134V5.2a1.2 1.2 0 0 1 1.2-1.2H16zm-.48 14.4a1.2 1.2 0 0 1 0 2.4h-2.88a1.2 1.2 0 0 1 0-2.4zm-6.137-4.449 2.135 2.135a1.2 1.2 0 0 1 0 1.697l-2.135 2.135a1.2 1.2 0 1 1-1.697-1.697l1.286-1.286-1.286-1.286a1.2 1.2 0 0 1-.078-1.612l.078-.086a1.2 1.2 0 0 1 1.697 0";
+
+const LabMark = () => (
+  <span className="relative block h-14 w-14 flex-shrink-0 text-text-light dark:text-text-dark">
+    <motion.svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="absolute inset-0 h-full w-full"
+    >
+      <motion.path
+        d={labExPath}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="0.75"
+        initial={{ pathLength: 0, opacity: 1 }}
+        animate={{ pathLength: 1, opacity: 0 }}
+        transition={{
+          pathLength: { duration: 0.95, ease: 'easeInOut' },
+          opacity: { delay: 0.95, duration: 0.16 },
+        }}
+      />
+    </motion.svg>
+    <motion.img
+      src="/labex.svg"
+      alt=""
+      aria-hidden="true"
+      className="absolute inset-0 h-full w-full object-contain dark:invert"
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.96, duration: 0.2, ease: 'easeOut' }}
+    />
+  </span>
+);
 
 const HomeLabWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const widgetRef = useRef(null);
+  const listRef = useRef(null);
 
   // Read sandbox status directly from Environment Variable (defaults to true if not explicitly false)
   const isSandboxOnline = process.env.NEXT_PUBLIC_SANDBOX_ONLINE !== 'false';
@@ -54,6 +92,39 @@ const HomeLabWidget = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setShowScrollHint(false);
+      return;
+    }
+
+    const listElement = listRef.current;
+    if (!listElement) return;
+
+    let hideTimer;
+
+    const updateScrollHint = () => {
+      const hasOverflow = listElement.scrollHeight > listElement.clientHeight + 1;
+      const isAtBottom = listElement.scrollTop + listElement.clientHeight >= listElement.scrollHeight - 4;
+
+      setShowScrollHint(hasOverflow && !isAtBottom);
+      clearTimeout(hideTimer);
+
+      if (hasOverflow && !isAtBottom) {
+        hideTimer = setTimeout(() => setShowScrollHint(false), 3300);
+      }
+    };
+
+    const frameId = requestAnimationFrame(updateScrollHint);
+    window.addEventListener('resize', updateScrollHint);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      clearTimeout(hideTimer);
+      window.removeEventListener('resize', updateScrollHint);
+    };
+  }, [isOpen]);
+
   return (
     <div
       ref={widgetRef}
@@ -67,10 +138,10 @@ const HomeLabWidget = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 15 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 right-0 w-80 sm:w-[380px] bg-hero-1-light dark:bg-hero-1-dark border-2 border-slate-900 dark:border-slate-700 rounded-lg shadow-2xl p-4 overflow-hidden text-slate-800 dark:text-slate-200 font-sans"
+            className="absolute bottom-16 right-0 flex max-h-[calc(100vh-10.5rem)] w-80 flex-col overflow-hidden rounded-lg border-2 border-slate-900 bg-hero-1-light p-4 font-sans text-slate-800 shadow-2xl dark:border-slate-700 dark:bg-hero-1-dark dark:text-slate-200 sm:w-[380px] md:max-h-[calc(100vh-7.5rem)]"
           >
             {/* Popover Header */}
-            <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-slate-800 mb-3">
+            <div className="mb-3 flex flex-shrink-0 items-center justify-between border-b border-slate-200 pb-2.5 dark:border-slate-800">
               <div className="flex items-center gap-2.5">
                 <FaServer className="text-accent-light dark:text-accent-dark text-lg" />
                 <span className="font-heading text-lg text-text-light dark:text-text-dark">Lab</span>
@@ -85,7 +156,36 @@ const HomeLabWidget = () => {
             </div>
 
             {/* List of Tunnels */}
-            <div className="space-y-3">
+            <div
+              ref={listRef}
+              onScroll={() => setShowScrollHint(false)}
+              className="lab-popover-scroll -mr-[10px] min-h-0 flex-1 space-y-3 overflow-y-auto pr-[9px]"
+            >
+              {/* Dashboard */}
+              <motion.a
+                href="https://dash.sampreetpatil.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open home lab dashboard"
+                className="group flex items-center gap-3 py-2 text-left text-text-light dark:text-text-dark outline-none focus-visible:ring-2 focus-visible:ring-accent-light dark:focus-visible:ring-accent-dark"
+                whileTap={{ scale: 0.99 }}
+              >
+                <LabMark />
+                <span className="min-w-0 flex-1 text-left">
+                  <span className="block font-heading text-xl leading-none tracking-normal text-text-light dark:text-text-dark">
+                    Dashboard
+                  </span>
+                  <span className="mt-1 block text-sm font-medium leading-snug text-slate-600 dark:text-slate-400">
+                    Homelab control center
+                  </span>
+                </span>
+                <span className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10">
+                  <FaExternalLinkAlt className="text-xs" />
+                </span>
+              </motion.a>
+
+              <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
+
               {/* Public Tunnel */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-3">
@@ -165,7 +265,7 @@ const HomeLabWidget = () => {
 
               {/* Music Player */}
               <div className="flex items-center justify-between gap-3">
-                <div className="space-y-1">
+                <div className="min-w-0 flex-1 space-y-1">
                   <a
                     href="https://music.sampreetpatil.com"
                     target="_blank"
@@ -187,7 +287,7 @@ const HomeLabWidget = () => {
                   href="https://music.sampreetpatil.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded border-2 border-accent-light dark:border-accent-dark text-accent-light dark:text-accent-dark hover:bg-accent-light/10 dark:hover:bg-accent-dark/10 transition-colors"
+                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                 >
                   <FaExternalLinkAlt className="text-xs" />
                 </a>
@@ -197,7 +297,7 @@ const HomeLabWidget = () => {
 
               {/* Collaborative Drawing */}
               <div className="flex items-center justify-between gap-3">
-                <div className="space-y-1">
+                <div className="min-w-0 flex-1 space-y-1">
                   <a
                     href="https://draw.sampreetpatil.com"
                     target="_blank"
@@ -214,7 +314,35 @@ const HomeLabWidget = () => {
                   href="https://draw.sampreetpatil.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded border-2 border-accent-light dark:border-accent-dark text-accent-light dark:text-accent-dark hover:bg-accent-light/10 dark:hover:bg-accent-dark/10 transition-colors"
+                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
+                >
+                  <FaExternalLinkAlt className="text-xs" />
+                </a>
+              </div>
+
+              <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
+
+              {/* PDF Tools */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0 flex-1 space-y-1">
+                  <a
+                    href="https://pdf.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                  >
+                    pdf.sampreetpatil.com
+                    <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                  </a>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                    Private PDF tools and document workspace.
+                  </p>
+                </div>
+                <a
+                  href="https://pdf.sampreetpatil.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                 >
                   <FaExternalLinkAlt className="text-xs" />
                 </a>
@@ -224,7 +352,7 @@ const HomeLabWidget = () => {
 
               {/* Photos */}
               <div className="flex items-center justify-between gap-3">
-                <div className="space-y-1">
+                <div className="min-w-0 flex-1 space-y-1">
                   <a
                     href="https://photos.sampreetpatil.com"
                     target="_blank"
@@ -242,12 +370,71 @@ const HomeLabWidget = () => {
                   href="https://photos.sampreetpatil.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded border-2 border-accent-light dark:border-accent-dark text-accent-light dark:text-accent-dark hover:bg-accent-light/10 dark:hover:bg-accent-dark/10 transition-colors"
+                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                 >
                   <FaExternalLinkAlt className="text-xs" />
                 </a>
               </div>
             </div>
+
+            <AnimatePresence>
+              {showScrollHint && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center"
+                >
+                  <motion.div
+                    className="text-accent-light drop-shadow-sm dark:text-accent-dark"
+                    initial={{ opacity: 0, y: -4, scale: 0.94 }}
+                    animate={{
+                      opacity: [0, 1, 0.78, 1, 0.78, 1, 0],
+                      y: [-4, 0, 4, 0, 4, 0, 8],
+                      scale: [0.94, 1.1, 1, 1.1, 1, 1.1, 0.96],
+                    }}
+                    exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                    transition={{ duration: 3.1, ease: 'easeInOut' }}
+                  >
+                    <FaChevronDown className="text-4xl [stroke:currentColor] [stroke-width:24]" />
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
+
+            <style jsx>{`
+              .lab-popover-scroll {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(15, 23, 42, 0.55) transparent;
+              }
+
+              .lab-popover-scroll::-webkit-scrollbar {
+                width: 1px;
+              }
+
+              .lab-popover-scroll::-webkit-scrollbar-track {
+                background: transparent;
+              }
+
+              .lab-popover-scroll::-webkit-scrollbar-thumb {
+                background: rgba(15, 23, 42, 0.42);
+                border-radius: 999px;
+              }
+
+              .lab-popover-scroll:hover::-webkit-scrollbar-thumb {
+                background: rgba(15, 23, 42, 0.68);
+              }
+
+              :global(.dark) .lab-popover-scroll {
+                scrollbar-color: rgba(226, 232, 240, 0.58) transparent;
+              }
+
+              :global(.dark) .lab-popover-scroll::-webkit-scrollbar-thumb {
+                background: rgba(226, 232, 240, 0.42);
+              }
+
+              :global(.dark) .lab-popover-scroll:hover::-webkit-scrollbar-thumb {
+                background: rgba(226, 232, 240, 0.68);
+              }
+            `}</style>
           </motion.div>
         )}
       </AnimatePresence>
