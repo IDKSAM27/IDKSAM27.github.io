@@ -5,12 +5,12 @@ import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip
 
 const labExPath = "M17.2 0a1.2 1.2 0 0 1 1.2 1.2v4a1.2 1.2 0 0 1-1.2 1.2h-.402v1.212l6.976 9.687a1.2 1.2 0 0 1 .22.576L24 18v4.8a1.2 1.2 0 0 1-1.2 1.2H1.2A1.2 1.2 0 0 1 0 22.8V18c0-.252.08-.497.226-.701l6.975-9.687V6.4H6.8a1.2 1.2 0 0 1-1.194-1.084L5.6 5.2v-4A1.2 1.2 0 0 1 6.8 0zM16 2.4H8V4h.4a1.2 1.2 0 0 1 1.195 1.084l.006.116v2.703c0 .315-.1.622-.283.877L2.4 18.386V21.6h19.2v-3.213L14.681 8.78a1.5 1.5 0 0 1-.277-.743l-.006-.134V5.2a1.2 1.2 0 0 1 1.2-1.2H16zm-.48 14.4a1.2 1.2 0 0 1 0 2.4h-2.88a1.2 1.2 0 0 1 0-2.4zm-6.137-4.449 2.135 2.135a1.2 1.2 0 0 1 0 1.697l-2.135 2.135a1.2 1.2 0 1 1-1.697-1.697l1.286-1.286-1.286-1.286a1.2 1.2 0 0 1-.078-1.612l.078-.086a1.2 1.2 0 0 1 1.697 0";
 
-const LabMark = () => (
+const LabMark = ({ animateLogo }) => (
   <span className="relative block h-14 w-14 flex-shrink-0 text-text-light dark:text-text-dark">
     <motion.svg
-      viewBox="0 0 24 24"
+      viewBox="-1 -1 26 26"
       aria-hidden="true"
-      className="absolute inset-0 h-full w-full"
+      className="absolute inset-0 h-full w-full overflow-visible"
     >
       <motion.path
         d={labExPath}
@@ -18,12 +18,12 @@ const LabMark = () => (
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="0.75"
+        strokeWidth="1"
         initial={{ pathLength: 0, opacity: 1 }}
-        animate={{ pathLength: 1, opacity: 0 }}
+        animate={animateLogo ? { pathLength: 1, opacity: 0 } : { pathLength: 0, opacity: 1 }}
         transition={{
           pathLength: { duration: 0.95, ease: 'easeInOut' },
-          opacity: { delay: 0.95, duration: 0.16 },
+          opacity: { delay: animateLogo ? 0.95 : 0, duration: 0.16 },
         }}
       />
     </motion.svg>
@@ -33,14 +33,15 @@ const LabMark = () => (
       aria-hidden="true"
       className="absolute inset-0 h-full w-full object-contain dark:invert"
       initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.96, duration: 0.2, ease: 'easeOut' }}
+      animate={animateLogo ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
+      transition={{ delay: animateLogo ? 0.96 : 0, duration: 0.2, ease: 'easeOut' }}
     />
   </span>
 );
 
 const HomeLabWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPopoverReady, setIsPopoverReady] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const widgetRef = useRef(null);
@@ -94,6 +95,17 @@ const HomeLabWidget = () => {
 
   useEffect(() => {
     if (!isOpen) {
+      setIsPopoverReady(false);
+      return;
+    }
+
+    const logoTimer = setTimeout(() => setIsPopoverReady(true), 180);
+    return () => clearTimeout(logoTimer);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsPopoverReady(false);
       setShowScrollHint(false);
       return;
     }
@@ -134,11 +146,11 @@ const HomeLabWidget = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 15 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-4 bottom-36 top-[calc(env(safe-area-inset-top)+1rem)] flex w-auto flex-col overflow-hidden rounded-lg border-2 border-slate-900 bg-hero-1-light p-4 font-sans text-slate-800 shadow-2xl dark:border-slate-700 dark:bg-hero-1-dark dark:text-slate-200 md:absolute md:inset-x-auto md:top-auto md:bottom-16 md:right-0 md:max-h-[calc(100dvh-7.5rem)] md:w-[380px]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-x-4 bottom-36 top-[calc(env(safe-area-inset-top)+1rem)] flex w-auto transform-gpu flex-col overflow-hidden rounded-lg border-2 border-slate-900 bg-hero-1-light p-4 font-sans text-slate-800 shadow-xl will-change-transform dark:border-slate-700 dark:bg-hero-1-dark dark:text-slate-200 md:absolute md:inset-x-auto md:top-auto md:bottom-16 md:right-0 md:max-h-[calc(100dvh-7.5rem)] md:w-[380px] md:shadow-2xl"
           >
             {/* Popover Header */}
             <div className="mb-3 flex flex-shrink-0 items-center justify-between border-b border-slate-200 pb-2.5 dark:border-slate-800">
@@ -148,7 +160,10 @@ const HomeLabWidget = () => {
               </div>
 
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsPopoverReady(false);
+                  setIsOpen(false);
+                }}
                 className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-100 transition-colors p-1"
               >
                 <FaTimes size="1.1rem" />
@@ -170,7 +185,7 @@ const HomeLabWidget = () => {
                 className="group flex items-center gap-3 py-2 text-left text-text-light dark:text-text-dark outline-none focus-visible:ring-2 focus-visible:ring-accent-light dark:focus-visible:ring-accent-dark"
                 whileTap={{ scale: 0.99 }}
               >
-                <LabMark />
+                <LabMark animateLogo={isPopoverReady} />
                 <span className="min-w-0 flex-1 text-left">
                   <span className="block font-heading text-xl leading-none tracking-normal text-text-light dark:text-text-dark">
                     Dashboard
@@ -444,7 +459,10 @@ const HomeLabWidget = () => {
         <TooltipTrigger
           render={
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsPopoverReady(false);
+                setIsOpen((current) => !current);
+              }}
               className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-2 border-slate-900 dark:border-slate-700 shadow-2xl flex items-center justify-center relative hover:scale-105 active:scale-95 transition-transform group"
             >
               <FaServer size="1.2rem" className="group-hover:rotate-6 transition-transform" />
