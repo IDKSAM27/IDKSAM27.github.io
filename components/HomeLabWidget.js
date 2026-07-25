@@ -420,27 +420,27 @@ const HomeLabWidget = () => {
                       {
                         hostname: 'jellyfin.sampreetpatil.com',
                         href: 'https://jellyfin.sampreetpatil.com',
-                        description: 'Private Jellyfin media server.',
+                        description: 'Self-hosted streaming for movies, shows, and personal media.',
                       },
                       {
                         hostname: 'qb.sampreetpatil.com',
                         href: 'https://qb.sampreetpatil.com',
-                        description: 'Private qBittorrent web console.',
+                        description: 'Private qBittorrent console for managing downloads remotely.',
                       },
                       {
                         hostname: 'prowlarr.sampreetpatil.com',
                         href: 'https://prowlarr.sampreetpatil.com',
-                        description: 'Private Prowlarr indexer manager.',
+                        description: 'Indexer hub that keeps the media automation stack connected.',
                       },
                       {
                         hostname: 'tv.sampreetpatil.com',
                         href: 'https://tv.sampreetpatil.com',
-                        description: 'Private Sonarr TV management.',
+                        description: 'Sonarr dashboard for tracking and organizing TV libraries.',
                       },
                       {
                         hostname: 'movies.sampreetpatil.com',
                         href: 'https://movies.sampreetpatil.com',
-                        description: 'Private Radarr movie management.',
+                        description: 'Radarr workspace for curating and managing movie collections.',
                       },
                     ].map((service, index) => (
                       <div key={service.hostname} className="space-y-3">
