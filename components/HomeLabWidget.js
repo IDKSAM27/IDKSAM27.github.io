@@ -44,6 +44,7 @@ const HomeLabWidget = () => {
   const [isPopoverReady, setIsPopoverReady] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
+  const [showMoreServices, setShowMoreServices] = useState(false);
   const widgetRef = useRef(null);
   const listRef = useRef(null);
 
@@ -107,6 +108,7 @@ const HomeLabWidget = () => {
     if (!isOpen) {
       setIsPopoverReady(false);
       setShowScrollHint(false);
+      setShowMoreServices(false);
       return;
     }
 
@@ -390,6 +392,89 @@ const HomeLabWidget = () => {
                   <FaExternalLinkAlt className="text-xs" />
                 </a>
               </div>
+
+              <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
+
+              <button
+                type="button"
+                onClick={() => setShowMoreServices((current) => !current)}
+                aria-expanded={showMoreServices}
+                className="flex w-full items-center justify-between gap-3 py-1 text-left text-base font-extrabold tracking-tight text-accent-light outline-none transition-colors hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-accent-light dark:text-accent-dark dark:hover:text-slate-50 dark:focus-visible:ring-accent-dark"
+              >
+                <span>{showMoreServices ? 'Show less' : 'Show more'}</span>
+                <FaChevronDown
+                  className={`text-sm transition-transform duration-200 ${showMoreServices ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              <AnimatePresence initial={false}>
+                {showMoreServices && (
+                  <motion.div
+                    className="space-y-3 overflow-hidden"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {[
+                      {
+                        hostname: 'jellyfin.sampreetpatil.com',
+                        href: 'https://jellyfin.sampreetpatil.com',
+                        description: 'Private Jellyfin media server.',
+                      },
+                      {
+                        hostname: 'qb.sampreetpatil.com',
+                        href: 'https://qb.sampreetpatil.com',
+                        description: 'Private qBittorrent web console.',
+                      },
+                      {
+                        hostname: 'prowlarr.sampreetpatil.com',
+                        href: 'https://prowlarr.sampreetpatil.com',
+                        description: 'Private Prowlarr indexer manager.',
+                      },
+                      {
+                        hostname: 'tv.sampreetpatil.com',
+                        href: 'https://tv.sampreetpatil.com',
+                        description: 'Private Sonarr TV management.',
+                      },
+                      {
+                        hostname: 'movies.sampreetpatil.com',
+                        href: 'https://movies.sampreetpatil.com',
+                        description: 'Private Radarr movie management.',
+                      },
+                    ].map((service, index) => (
+                      <div key={service.hostname} className="space-y-3">
+                        {index > 0 && <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />}
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="min-w-0 flex-1 space-y-1">
+                            <a
+                              href={service.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-slate-900 underline-offset-2 decoration-accent-light transition-all hover:underline dark:text-slate-50 dark:decoration-accent-dark sm:text-xl"
+                            >
+                              <span className="min-w-0 truncate">{service.hostname}</span>
+                              <FaLock className="flex-shrink-0 text-xs text-amber-500 sm:text-sm" />
+                            </a>
+                            <p className="text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
+                              {service.description}
+                            </p>
+                          </div>
+                          <a
+                            href={service.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Open ${service.hostname}`}
+                            className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
+                          >
+                            <FaExternalLinkAlt className="text-xs" />
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <AnimatePresence>
