@@ -76,7 +76,7 @@ const ProjectsSection = () => {
       force3D: true,
     });
 
-    // Content animation
+    // Project card entrance animations
     const items = container.current.querySelectorAll('.project-card-wrapper');
     items.forEach((item, index) => {
       gsap.from(item, {
@@ -93,6 +93,23 @@ const ProjectsSection = () => {
         force3D: true,
       });
     });
+
+    // Homelab card entrance — same animation as project cards
+    const homelabCard = container.current.querySelector('.homelab-card-wrapper');
+    if (homelabCard) {
+      gsap.from(homelabCard, {
+        scrollTrigger: {
+          trigger: homelabCard,
+          start: 'top 75%',
+        },
+        opacity: 0,
+        y: 40,
+        rotate: -1,
+        duration: 0.5,
+        ease: 'power3.out',
+        force3D: true,
+      });
+    }
   }, { scope: container });
 
   return (
@@ -156,7 +173,10 @@ const ProjectsSection = () => {
 
         </div>
 
-        <HomeLabShowcase />
+        {/* Homelab showcase with matching card entrance animation */}
+        <div className="homelab-card-wrapper" style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}>
+          <HomeLabShowcase />
+        </div>
       </div>
     </div>
   );

@@ -205,11 +205,11 @@
   .group h4 { margin-top: 2rem; }
   .serviceGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .service { min-height: 178px; grid-template-columns: minmax(0, 1fr) 1rem; grid-template-rows: 6rem auto; align-items: start; gap: .8rem .35rem; padding: .85rem; }
-  .serviceVisual { grid-column: 1 / 3; width: 6rem; height: 6rem; padding: 0; }
+  .serviceVisual { grid-column: 1 / 3; width: 6rem; height: 6rem; padding: 0; justify-self: center; }
   .serviceCopy { align-self: end; }
   .service strong { font-size: 1.05rem; }
   .service small { margin-top: .35rem; font-size: .64rem; line-height: 1.35; }
-  .serviceArrow { grid-column: 2; grid-row: 2; }
+  .serviceArrow { position: absolute; bottom: .85rem; right: .85rem; grid-column: unset; grid-row: unset; }
   .directoryFooter { align-items: flex-start; flex-direction: column; gap: .8rem; }
 }
 
