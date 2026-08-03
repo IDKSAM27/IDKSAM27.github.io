@@ -3,6 +3,14 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ComplexComputerGraphic from './ComplexComputerGraphic';
 
+// ─── Desktop hero horizontal offset ────────────────────────────────────────
+// Change ONLY this value to shift the hero left/right on lg+ screens.
+// Tailwind left-padding scale: pl-0=0px  pl-4=16px  pl-8=32px  pl-16=64px
+//                              pl-20=80px  pl-24=96px  pl-32=128px
+// Right padding stays at lg:pr-16 so the graphic has breathing room.
+const HERO_DESKTOP_LEFT_PADDING = 'lg:pl-4';
+// ─────────────────────────────────────────────────────────────────────────────
+
 const Hero = () => {
   const container = useRef(null);
 
@@ -53,7 +61,7 @@ const Hero = () => {
   }, { scope: container });
 
   return (
-    <div ref={container} className="w-full px-4 md:px-12 lg:px-32">
+    <div ref={container} className={`w-full px-4 md:px-12 lg:pr-16 ${HERO_DESKTOP_LEFT_PADDING}`}>
       <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16">
 
         {/* Sidebar Label (Hidden on mobile for better Hero spacing) */}
@@ -72,18 +80,8 @@ const Hero = () => {
         {/* Main Content - Stacks vertically on Mobile/Tablet, side-by-side on LG Desktop */}
         <div className="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
-          {/* Graphic Content - Centered above on small screens, left-aligned on LG. HIDDEN ON MOBILE/TABLET */}
-          <div className="hero-graphic lg:col-span-5 hidden lg:flex justify-center lg:block">
-            <div className="relative">
-              <div className="absolute inset-0 bg-accent-light/10 dark:bg-accent-dark/5 blur-3xl rounded-full" />
-              <div className="relative transition-transform duration-700">
-                <ComplexComputerGraphic />
-              </div>
-            </div>
-          </div>
-
-          {/* Text Content - Centered on small screens, left-aligned on LG */}
-          <div className="lg:col-span-7 space-y-6 order-last lg:order-none text-center lg:text-left">
+          {/* Text Content - Left column on LG desktop, stacked first on mobile */}
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div>
               <h1 className="hero-title text-6xl sm:text-7xl lg:text-9xl font-heading tracking-tighter leading-[0.85] text-text-light dark:text-text-dark">
                 Sampreet <br />
@@ -107,6 +105,16 @@ const Hero = () => {
               </a>.
             </p>
 
+          </div>
+
+          {/* Graphic Content - Right column on LG desktop. HIDDEN ON MOBILE/TABLET */}
+          <div className="hero-graphic lg:col-span-5 hidden lg:flex justify-center lg:block">
+            <div className="relative">
+              <div className="absolute inset-0 bg-accent-light/10 dark:bg-accent-dark/5 blur-3xl rounded-full" />
+              <div className="relative transition-transform duration-700">
+                <ComplexComputerGraphic />
+              </div>
+            </div>
           </div>
 
         </div>
