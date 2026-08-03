@@ -16,8 +16,9 @@ const Header = ({ homeHref = "/", smoothScroll = true }) => {
 
       {/* Desktop Navigation (hidden on mobile) */}
       <nav className="hidden md:flex items-center space-x-2">
-        <HeaderButton href={withHomeBase("/#experience")} smoothScroll={smoothScroll}>Experience</HeaderButton>
+        <HeaderButton href={withHomeBase("/#experience")} smoothScroll={smoothScroll}>Exp</HeaderButton>
         <HeaderButton href={withHomeBase("/#projects")} smoothScroll={smoothScroll}>Projects</HeaderButton>
+        <HeaderButton href="/engineering" smoothScroll={false}>Docs</HeaderButton>
         <HeaderButton href={withHomeBase("/blog")} smoothScroll={smoothScroll}>Blog</HeaderButton>
         <div className="ml-2"><FunButton /></div>
         <div className="ml-4"><ThemeToggle /></div>
