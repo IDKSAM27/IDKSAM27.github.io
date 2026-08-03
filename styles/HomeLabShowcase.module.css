@@ -1,0 +1,224 @@
+.showcase {
+  --lab-ink: #17201e;
+  --lab-muted: #52625e;
+  --lab-line: rgba(23, 32, 30, 0.22);
+  --lab-paper: #e2ece9;
+  --lab-ghost: #c5d1cd;
+  --lab-pad: clamp(1.75rem, 4.8vw, 4.5rem);
+  position: relative;
+  isolation: isolate;
+  margin-top: clamp(6rem, 11vw, 10rem);
+  padding: var(--lab-pad);
+  overflow: hidden;
+  border: 2px solid var(--lab-ink);
+  background: var(--lab-paper);
+  color: var(--lab-ink);
+  box-shadow: 10px 10px 0 rgba(23, 32, 30, 0.14);
+}
+
+:global(.dark) .showcase {
+  --lab-ink: #e2e8f0;
+  --lab-muted: #aeb8b5;
+  --lab-line: rgba(226, 232, 240, 0.2);
+  --lab-paper: #1a2421;
+  --lab-ghost: #3b4743;
+  border-color: var(--lab-ink);
+  box-shadow: 10px 10px 0 rgba(253, 224, 71, 0.16);
+}
+
+.showcase::after {
+  content: 'LAB / 24';
+  position: absolute;
+  top: .7rem;
+  right: var(--lab-pad);
+  z-index: -1;
+  color: var(--lab-ghost);
+  font: 400 clamp(3.4rem, 8vw, 7.5rem)/1 var(--font-bbh-sans), sans-serif;
+  letter-spacing: -.045em;
+  pointer-events: none;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: end;
+  padding: clamp(1rem, 2vw, 2rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.kicker {
+  margin: 0 0 1.1rem;
+  color: #4e5c58;
+  font-family: var(--font-pacifico), cursive;
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+:global(.dark) .kicker { color: #fde047; }
+
+.title {
+  max-width: 11ch;
+  margin: 0;
+  font-family: var(--font-bbh-sans), sans-serif;
+  font-size: clamp(3.25rem, 7vw, 7rem);
+  font-weight: 400;
+  line-height: .87;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+
+.title span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--lab-ink);
+}
+
+.summary { padding-bottom: .25rem; }
+.summary > p { margin: 0; color: var(--lab-muted); font-size: clamp(.95rem, 1.45vw, 1.1rem); line-height: 1.65; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.25rem; margin-top: 1.6rem; }
+.actions a { min-height: 44px; display: inline-flex; align-items: center; color: var(--lab-ink); font-weight: 700; text-decoration: none; }
+.primaryAction { gap: .65rem; }
+.actionIcon { width: 2.35rem; height: 2.35rem; display: grid; place-items: center; border: 1px solid var(--lab-ink); transition: color .18s ease, background .18s ease, transform .18s ease; }
+.primaryAction:hover .actionIcon { background: var(--lab-ink); color: var(--lab-paper); transform: translate(2px, -2px); }
+.secondaryAction { gap: .45rem; color: var(--lab-muted) !important; font-size: .78rem; }
+.secondaryAction svg { transition: transform .18s ease; }
+.secondaryAction:hover svg { transform: translateX(3px); }
+
+.architecture {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid var(--lab-line);
+}
+
+.architecture > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: .85rem;
+  padding: 1.4rem clamp(.85rem, 1.8vw, 1.5rem);
+  border-right: 1px solid var(--lab-line);
+}
+.architecture > div:last-child { border-right: 0; }
+
+.architectureMark { display: block; width: 2.5rem; height: 2.5rem; flex-shrink: 0; }
+.architectureMark .mark,
+.architectureMark .monogram { width: 2.5rem; height: 2.5rem; }
+.architectureText { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+.architectureText span { color: var(--lab-ink); font-size: .95rem; font-weight: 700; letter-spacing: .01em; text-transform: uppercase; }
+.architecture .architectureMark { color: inherit; }
+.architecture strong { color: var(--lab-muted); font-size: .76rem; font-weight: 500; line-height: 1.3; }
+
+.mark, .monogram {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.mark {
+  background-color: var(--mark-color);
+  -webkit-mask: var(--mark-url) center / contain no-repeat;
+  mask: var(--mark-url) center / contain no-repeat;
+}
+
+.monogram { color: var(--lab-muted); font: 400 2.65rem/1 var(--font-bbh-sans), sans-serif; text-transform: uppercase; }
+
+.directory { margin-top: clamp(2.3rem, 4vw, 3.5rem); border-top: 2px solid var(--lab-ink); }
+.directory summary { min-height: 92px; display: grid; grid-template-columns: minmax(0, 1fr) 3.25rem; gap: 1.25rem; align-items: center; cursor: pointer; list-style: none; }
+.directory summary::-webkit-details-marker { display: none; }
+.directory summary > span:first-child { font-family: var(--font-bbh-sans), sans-serif; font-size: clamp(1.55rem, 3vw, 2.65rem); line-height: 1; }
+.directory summary small { display: block; margin-bottom: .4rem; color: var(--lab-muted); font-family: var(--font-inter), sans-serif; font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.toggle { width: 3.25rem; height: 3.25rem; display: grid; place-items: center; border: 1px solid var(--lab-ink); transition: color .2s ease, background .2s ease, transform .2s ease; }
+.directory summary:hover .toggle { background: var(--lab-ink); color: var(--lab-paper); }
+.directory[open] .toggle { transform: rotate(45deg); }
+
+.groups { padding: .5rem 0 3rem; border-top: 1px solid var(--lab-line); }
+.group { min-width: 0; }
+.group h4 { margin: 2.4rem 0 .8rem; color: var(--lab-muted); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; }
+.serviceGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--lab-line); border-left: 1px solid var(--lab-line); }
+.service {
+  position: relative;
+  min-height: 108px;
+  display: grid;
+  grid-template-columns: clamp(5.5rem, 8vw, 7.25rem) minmax(0, 1fr) 1.25rem;
+  gap: clamp(.9rem, 1.8vw, 1.35rem);
+  align-items: center;
+  padding: 1rem clamp(.9rem, 1.8vw, 1.35rem) 1rem 1rem;
+  border-right: 1px solid var(--lab-line);
+  border-bottom: 1px solid var(--lab-line);
+  background: var(--lab-paper);
+  color: var(--lab-ink);
+  text-decoration: none;
+  transition: background .18s ease;
+}
+.service:hover { background: color-mix(in srgb, var(--lab-paper) 90%, var(--lab-ink)); }
+.serviceVisual { width: clamp(5.5rem, 8vw, 7.25rem); height: clamp(5.5rem, 8vw, 7.25rem); display: grid; place-items: center; padding: .25rem; background: transparent; }
+.serviceCopy { min-width: 0; }
+.service strong { display: block; font-family: var(--font-bbh-sans), sans-serif; font-size: clamp(1.15rem, 1.8vw, 1.45rem); font-weight: 400; line-height: 1; }
+.service small { display: block; margin-top: .45rem; overflow-wrap: anywhere; color: var(--lab-muted); font-size: .7rem; line-height: 1.4; }
+.serviceArrow { align-self: start; display: grid; place-items: center; margin-top: .15rem; color: var(--lab-muted); transition: color .18s ease, transform .18s ease; }
+.service:hover .serviceArrow { color: var(--lab-ink); transform: translate(2px, -2px); }
+
+.directoryFooter { display: flex; justify-content: space-between; gap: 2rem; align-items: center; padding-top: 1.5rem; border-top: 1px solid var(--lab-line); }
+.directoryFooter p { max-width: 38rem; margin: 0; color: var(--lab-muted); font-size: .75rem; line-height: 1.55; }
+.directoryFooter a { flex: none; min-height: 44px; display: inline-flex; align-items: center; gap: .5rem; color: var(--lab-ink); font-size: .76rem; font-weight: 700; text-decoration: none; }
+.directoryFooter a svg { transition: transform .18s ease; }
+.directoryFooter a:hover svg { transform: translateX(3px); }
+
+.showcase :where(a, summary):focus-visible { outline: 2px solid #4e5c58; outline-offset: 4px; }
+:global(.dark) .showcase :where(a, summary):focus-visible { outline-color: #fde047; }
+
+@media (max-width: 900px) {
+  .intro { grid-template-columns: 1fr; gap: 1.75rem; }
+  .summary { max-width: 38rem; }
+  .architecture { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .architecture > div:nth-child(2) { padding-right: 0; border-right: 0; }
+  .architecture > div:nth-child(-n + 2) { border-bottom: 1px solid var(--lab-line); }
+  .architecture > div:nth-child(3) { padding-left: 0; }
+  .service { grid-template-columns: 5.25rem minmax(0, 1fr) 1.1rem; }
+  .serviceVisual { width: 5.25rem; height: 5.25rem; }
+}
+
+@media (max-width: 640px) {
+  .showcase { --lab-pad: 1.1rem; margin-inline: 0; padding: var(--lab-pad); border-width: 1px; box-shadow: 6px 6px 0 rgba(23, 32, 30, 0.14); }
+  .showcase::after { top: 0; right: var(--lab-pad); font-size: 3.15rem; }
+  .intro { gap: 1.6rem; padding: 2.3rem 0 2.4rem; }
+  .title { font-size: clamp(3.05rem, 15vw, 4.6rem); }
+  .summary > p { font-size: .94rem; }
+  .actions { align-items: stretch; flex-direction: column; gap: .2rem; margin-top: 1.2rem; }
+  .actions a { justify-content: space-between; }
+  .primaryAction { border-bottom: 1px solid var(--lab-line); padding-bottom: .5rem; }
+  .secondaryAction { align-self: flex-start; gap: .5rem; }
+  .architecture { grid-template-columns: 1fr 1fr; }
+  .architecture > div { padding: 1rem .65rem; }
+  .architecture > div:nth-child(odd) { padding-left: 0; }
+  .architecture > div:nth-child(even) { padding-right: 0; }
+  .architectureMark { width: 2rem; height: 2rem; }
+  .architecture strong { font-size: .7rem; }
+  .directory { margin-top: 2.2rem; }
+  .directory summary { min-height: 82px; grid-template-columns: minmax(0, 1fr) 2.8rem; gap: .75rem; padding-top: 1rem; }
+  .directory summary > span:first-child { font-size: clamp(1.4rem, 7vw, 1.8rem); }
+  .toggle { width: 2.8rem; height: 2.8rem; }
+  .groups { padding-bottom: 2.25rem; }
+  .group h4 { margin-top: 2rem; }
+  .serviceGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .service { min-height: 178px; grid-template-columns: minmax(0, 1fr) 1rem; grid-template-rows: 6rem auto; align-items: start; gap: .8rem .35rem; padding: .85rem; }
+  .serviceVisual { grid-column: 1 / 3; width: 6rem; height: 6rem; padding: 0; }
+  .serviceCopy { align-self: end; }
+  .service strong { font-size: 1.05rem; }
+  .service small { margin-top: .35rem; font-size: .64rem; line-height: 1.35; }
+  .serviceArrow { grid-column: 2; grid-row: 2; }
+  .directoryFooter { align-items: flex-start; flex-direction: column; gap: .8rem; }
+}
+
+@media (max-width: 390px) {
+  .service { min-height: 168px; padding: .7rem; }
+  .serviceVisual { width: 5.25rem; height: 5.25rem; }
+  .monogram { font-size: 2.35rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actionIcon, .secondaryAction svg, .toggle, .service, .serviceArrow, .directoryFooter a svg { transition: none; }
+}

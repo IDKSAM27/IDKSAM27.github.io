@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProjectCard from './ProjectCard';
+import HomeLabShowcase from './HomeLabShowcase';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -154,6 +155,8 @@ const ProjectsSection = () => {
             </div>
 
         </div>
+
+        <HomeLabShowcase />
       </div>
     </div>
   );

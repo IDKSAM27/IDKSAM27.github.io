@@ -78,3 +78,19 @@ test('responsive and accessible documentation primitives are present', async () 
   assert.match(shell, /<Header[^>]+prefetch=\{false\}/);
   assert.match(shell, /<MobileNav[^>]+prefetch=\{false\}/);
 });
+
+test('homepage Homelab showcase is complete, local, and Cloudflare-safe', async () => {
+  const projects = await read('components/ProjectsSection.js');
+  assert.match(projects, /<HomeLabShowcase\s*\/>/);
+
+  const showcase = await read('components/HomeLabShowcase.js');
+  for (const slug of expectedServices) assert.match(showcase, new RegExp(`'${slug.replaceAll('-', '\\-')}'`), `homepage showcase is missing ${slug}`);
+  assert.match(showcase, /<details[^>]+className=\{styles\.directory\}/);
+  assert.match(showcase, /prefetch=\{false\}/);
+  assert.doesNotMatch(showcase, /https?:\/\/[^'"`\s]+\.svg/i, 'homepage must not hotlink project marks');
+
+  const css = await read('styles/HomeLabShowcase.module.css');
+  assert.match(css, /mask:\s*var\(--mark-url\)/);
+  assert.match(css, /@media \(max-width:\s*640px\)/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+});

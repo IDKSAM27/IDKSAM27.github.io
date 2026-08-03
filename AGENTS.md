@@ -19,8 +19,8 @@ The `/engineering` area is an additive extension to the existing portfolio.
 - Preserve the existing homepage, blog, diagrams, portfolio content, section order, Header, Footer, Logo, theme behavior, animations, HomeLab widget, error pages, typography, colors, and mobile behavior.
 - Do not redesign existing routes to match the documentation.
 - Do not replace the portfolio with a documentation site.
-- Do not add the future homepage Engineering showcase yet. The owner explicitly deferred the fancy homepage entry section until the documentation extension is complete and reviewed.
-- When that future homepage section is requested, it should be a visually strong, portfolio-native entry point into `/engineering`, not a generic documentation card.
+- The owner later explicitly requested the homepage Homelab showcase. It now appears below the project grid and its “more” tile, without changing the existing top-level homepage section order.
+- The showcase must remain a visually strong, portfolio-native presentation of the Homelab itself—not a generic documentation card, a hardware inventory, or a claim that the lab merely exists to support portfolio projects.
 - `/engineering` should use the existing website’s visual language: BBH Sans Hegarty headings, Inter body copy, Pacifico accent/logo usage, the existing light/dark palette, existing Header and Footer, and the existing theme toggle.
 - Documentation body text must remain comfortably readable even though the portfolio uses oversized display typography.
 - The UI must be professional, editorial, and documentation-oriented.
@@ -43,7 +43,7 @@ Implemented:
 - Next.js 16.2.12, React 19.2.8, Tailwind CSS 4.3.3, TypeScript 6.0.3, ESLint 9.39.5.
 - Fumadocs Core/UI 16.14.0 and Fumadocs MDX 15.2.2.
 - OpenNext Cloudflare 1.20.2.
-- Self-hosted Fumadocs/Orama search endpoint at `/api/search`.
+- Build-time Fumadocs/Orama search index at `/api/search`, queried client-side.
 - Editorial responsive documentation shell.
 - Engineering landing page.
 - Homelab, Development, Infrastructure, Uses, and Decisions sections.
@@ -56,12 +56,13 @@ Implemented:
 - Canonical metadata, OpenGraph/Twitter metadata, `TechArticle` and `BreadcrumbList` JSON-LD.
 - Generated App Router sitemap and robots routes.
 - Locally bundled project SVG marks and a license/source note.
+- A full-width homepage Homelab showcase below the existing project cards, with four capability summaries, an infrastructure flow, verified high-level facts, and a native expandable directory for all 24 services and tools.
+- Official-color rendering for locally bundled project SVG marks in the homepage directory; unsupported marks use restrained text monograms rather than invented logos.
 - Automated documentation integrity and secret-pattern tests.
 - Windows-safe combined Next/OpenNext build script.
 
 Explicitly not implemented:
 
-- The future homepage Engineering showcase/entry point.
 - Deployment or publishing.
 - Any change to the actual homelab.
 - Credential rotation; the owner must rotate any live credentials that existed in the private snapshot.
@@ -99,6 +100,8 @@ Explicitly not implemented:
 - `components/engineering/Provenance.tsx`: provenance label and descriptions.
 - `components/engineering/SearchButton.tsx`: opens Fumadocs search UI.
 - `components/engineering/ServiceMark.tsx`: local project SVG or text-monogram fallback.
+- `components/HomeLabShowcase.js`: portfolio-native homepage Homelab feature, topology flow, capability summary, and 24-service disclosure directory.
+- `styles/HomeLabShowcase.module.css`: scoped light/dark, responsive, accessibility, colored SVG-mask, and directory styling for the homepage feature.
 - `styles/engineering.css`: Engineering layout, typography, responsiveness, accessibility, tables, diagrams, navigation, and dark mode.
 - `lib/engineering/services.ts`: canonical sanitized service metadata.
 - `lib/engineering/topics.ts`: canonical long-form topic content and Mermaid sources.
@@ -826,19 +829,15 @@ Do not commit `.next`, `.open-next`, `.source`, private snapshots, logs, databas
 9. Browser-test real breakpoints when a browser backend is available.
 10. Do not deploy, commit, push, or create a PR unless the owner explicitly asks.
 
-## Likely next request
+## Homepage Homelab showcase
 
-The most likely follow-up is a visual review/fix pass followed by the deferred homepage Engineering showcase.
-
-When implementing that showcase:
-
-- Keep all existing homepage sections and order unless the owner explicitly approves a placement change.
-- Use the portfolio’s expressive visual language, not the Engineering sidebar/page layout copied onto the homepage.
-- Create a distinct, polished entry into `/engineering` with a concise explanation of the personal cloud/engineering field notes.
-- Reuse existing animation practices with reduced-motion support.
-- Avoid a generic card grid.
-- Test the homepage at all existing responsive widths.
-- Do not expose infrastructure details, domains, or security warnings directly in a promotional homepage teaser unless deliberately selected.
+- Placement: inside `ProjectsSection`, immediately after the two-column project grid and its “more” tile, before the existing Contact section.
+- Narrative: a substantial self-hosted personal cloud spanning photos, media, utilities, automation, observability, and documented operations. It is not framed as “the systems behind the projects” and does not overemphasize the host hardware.
+- Visual structure: one large square-cornered editorial field using the existing Homelab palette, oversized BBH Sans headline, Pacifico eyebrow, thin rules, an icon-led four-stage operational flow, and an expansive native `<details>` directory. It intentionally avoids a second card grid.
+- Directory: all 24 typed services are grouped into Personal cloud, Media automation, Observability, and Operations and data. Every entry links to its canonical `/engineering/homelab/services/*` page with `prefetch={false}`.
+- Marks: local SVGs from `public/engineering/icons/` are rendered as CSS masks using official Simple Icons colors. Services without a legitimate bundled mark use restrained monograms. Do not hotlink marks or invent brand logos.
+- Safety: the homepage presents only high-level, already documented facts. It does not expose raw domains, ports, credentials, or pretend to show live uptime.
+- Responsive behavior: four capability columns collapse to two and then one; the operational flow becomes a single vertical sequence; the service directory becomes one column; all disclosure and link targets remain keyboard/touch accessible.
 
 ## Definition of done for this extension
 
@@ -855,4 +854,4 @@ The Engineering documentation is ready for deployment only when:
 - The owner reviews the documentation tone and approves the content.
 - Current dependency advisories are reviewed against the latest stable releases.
 
-Until the owner explicitly requests it, deployment and the homepage Engineering showcase remain out of scope.
+Deployment remains out of scope until the owner explicitly requests it.
