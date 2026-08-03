@@ -2,11 +2,9 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
-import { useRouter } from 'next/router'; 
 import ScrollLink from './ScrollLink';
 
-const HeaderButton = ({ children, href }) => {
-  const router = useRouter(); 
+const HeaderButton = ({ children, href, smoothScroll = true }) => {
   const buttonRef = useRef(null);
   const timeline = useRef();
 
@@ -35,7 +33,7 @@ const HeaderButton = ({ children, href }) => {
     }
   };
 
- const isInternalLink = href.startsWith('/#');
+ const isInternalLink = smoothScroll && href.startsWith('/#');
   const targetId = isInternalLink ? href.substring(1) : href;
 
   const buttonContent = (
