@@ -9,12 +9,12 @@ export function DocumentFrame({ title, description, section, provenance, section
   return (
     <div className="eng-document-grid">
       <article className="eng-article">
-        <nav className="eng-breadcrumbs" aria-label="Breadcrumb"><Link href="/engineering">Engineering</Link><span>/</span><span>{section}</span></nav>
+        <nav className="eng-breadcrumbs" aria-label="Breadcrumb"><Link href="/engineering" prefetch={false}>Engineering</Link><span>/</span><span>{section}</span></nav>
         <header className="eng-article-header"><p className="eng-eyebrow">{section}</p><h1>{title}</h1><p className="eng-dek">{description}</p><Provenance value={provenance} /></header>
         <nav className="eng-inline-toc" aria-label="On this page"><span>On this page</span>{sections.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}</nav>
         <div className="eng-article-body">{children}</div>
         <footer className="eng-article-meta"><p>Last reviewed: <time dateTime="2026-08-03">{reviewed}</time></p><p>Facts may change with configuration updates; links point to canonical local pages.</p></footer>
-        {(previous || next) && <nav className="eng-page-turn" aria-label="Previous and next pages">{previous ? <Link href={previous.href}><ArrowLeft size={17} /><span><small>Previous</small>{previous.title}</span></Link> : <span />}{next ? <Link href={next.href}><span><small>Next</small>{next.title}</span><ArrowRight size={17} /></Link> : <span />}</nav>}
+        {(previous || next) && <nav className="eng-page-turn" aria-label="Previous and next pages">{previous ? <Link href={previous.href} prefetch={false}><ArrowLeft size={17} /><span><small>Previous</small>{previous.title}</span></Link> : <span />}{next ? <Link href={next.href} prefetch={false}><span><small>Next</small>{next.title}</span><ArrowRight size={17} /></Link> : <span />}</nav>}
       </article>
       <aside className="eng-toc" aria-label="On this page"><p>On this page</p>{sections.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}<a href="#references">References <ExternalLink size={12} /></a></aside>
     </div>

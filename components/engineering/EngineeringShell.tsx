@@ -17,7 +17,7 @@ function NavBranch({ item, close }: { item: NavItem; close: () => void }) {
   const containsActive = item.children?.some((child) => pathname === child.href || pathname.startsWith(`${child.href}/`));
   return (
     <li className="eng-nav-branch">
-      <Link href={item.href} className="eng-nav-link" data-active={active || undefined} onClick={close}>{item.title}</Link>
+      <Link href={item.href} prefetch={false} className="eng-nav-link" data-active={active || undefined} onClick={close}>{item.title}</Link>
       {item.children && (
         <details open={Boolean(containsActive)}>
           <summary aria-label={`Toggle ${item.title} pages`}><ChevronDown size={15} aria-hidden="true" /></summary>
@@ -31,7 +31,7 @@ function NavBranch({ item, close }: { item: NavItem; close: () => void }) {
 function DocsNavigation({ close }: { close: () => void }) {
   return (
     <>
-      <div className="eng-nav-heading"><Link href="/engineering" onClick={close}>Engineering field notes</Link><span>Documentation extension</span></div>
+      <div className="eng-nav-heading"><Link href="/engineering" prefetch={false} onClick={close}>Engineering field notes</Link><span>Documentation extension</span></div>
       <SearchButton />
       <nav aria-label="Engineering documentation"><ul className="eng-nav-tree">{engineeringNavigation.map((item) => <NavBranch key={item.href} item={item} close={close} />)}</ul></nav>
     </>

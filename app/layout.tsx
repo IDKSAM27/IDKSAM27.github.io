@@ -18,7 +18,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${pacifico.variable}`}>
-        <RootProvider theme={{ attribute: 'class', defaultTheme: 'system', enableSystem: true }} search={{ options: { api: '/api/search' } }}>
+        <RootProvider
+          theme={{ attribute: 'class', defaultTheme: 'system', enableSystem: true }}
+          search={{ preload: false, options: { type: 'static', api: '/api/search' } }}
+        >
           {children}
         </RootProvider>
       </body>

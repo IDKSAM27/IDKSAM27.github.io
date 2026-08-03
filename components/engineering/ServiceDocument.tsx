@@ -17,7 +17,7 @@ const securityReference: Record<string, [string, string]> = {
 
 export default function ServiceDocument({ service }: { service: ServiceDoc }) {
   const position = services.findIndex((entry) => entry.slug === service.slug);
-  const relations = (names: string[]) => names.length ? <ul>{names.map((name) => { const target = hrefForName(name); return <li key={name}>{target ? <Link href={`/engineering/homelab/services/${target.slug}`}>{name}</Link> : name}</li>; })}</ul> : <p>None documented.</p>;
+  const relations = (names: string[]) => names.length ? <ul>{names.map((name) => { const target = hrefForName(name); return <li key={name}>{target ? <Link href={`/engineering/homelab/services/${target.slug}`} prefetch={false}>{name}</Link> : name}</li>; })}</ul> : <p>None documented.</p>;
   return (
     <DocumentFrame title={service.name} description={service.summary} section={`Homelab · ${service.category}`} provenance={service.provenance ?? 'verified'} sections={sections} previous={position > 0 ? { href: `/engineering/homelab/services/${services[position - 1].slug}`, title: services[position - 1].name } : { href: '/engineering/homelab/services', title: 'Service catalog' }} next={position < services.length - 1 ? { href: `/engineering/homelab/services/${services[position + 1].slug}`, title: services[position + 1].name } : undefined}>
       <Section id="overview" title="Overview and rationale"><p className="eng-lead">{service.purpose}</p><p>{service.rationale}</p></Section>
@@ -32,7 +32,7 @@ export default function ServiceDocument({ service }: { service: ServiceDoc }) {
       <Section id="troubleshooting" title="Known issues and troubleshooting">{service.issues.length ? <ol>{service.issues.map((issue) => <li key={issue}>{issue}</li>)}</ol> : <p>No configuration-backed issue is recorded.</p>}<p>Start with container state, recent Docker logs, internal DNS resolution, the host-published port, and then the tunnel route. Avoid changing multiple layers before isolating the failing boundary.</p></Section>
       <Section id="alternatives" title="Alternatives"><ul>{service.alternatives.map((item) => <li key={item}>{item}</li>)}</ul></Section>
       <Section id="future" title="Future improvements"><Notice kind="proposal" title="Proposed, not implemented"><ul>{service.future.map((item) => <li key={item}>{item}</li>)}</ul></Notice></Section>
-      <Section id="references" title="References"><p><a href={service.officialUrl} rel="noreferrer" target="_blank">Official {service.name} documentation</a></p><p><Link href="/engineering/homelab/security-model">Canonical security model</Link> · <Link href="/engineering/homelab/docker-network">Canonical network model</Link> · <Link href="/engineering/homelab/storage-layout">Canonical storage model</Link></p></Section>
+      <Section id="references" title="References"><p><a href={service.officialUrl} rel="noreferrer" target="_blank">Official {service.name} documentation</a></p><p><Link href="/engineering/homelab/security-model" prefetch={false}>Canonical security model</Link> · <Link href="/engineering/homelab/docker-network" prefetch={false}>Canonical network model</Link> · <Link href="/engineering/homelab/storage-layout" prefetch={false}>Canonical storage model</Link></p></Section>
     </DocumentFrame>
   );
 }

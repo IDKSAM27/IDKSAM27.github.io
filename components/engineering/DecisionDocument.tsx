@@ -14,6 +14,6 @@ export default function DecisionDocument({ decision }: { decision: DecisionDoc }
     <Section id="tradeoffs" title="Tradeoffs"><ul>{decision.tradeoffs.map((item) => <li key={item}>{item}</li>)}</ul></Section>
     <Section id="consequences" title="Consequences"><ul>{decision.consequences.map((item) => <li key={item}>{item}</li>)}</ul></Section>
     <Section id="revisit-conditions" title="Revisit conditions"><ul>{decision.revisit.map((item) => <li key={item}>{item}</li>)}</ul></Section>
-    <Section id="references" title="References"><p><Link href="/engineering/decisions">All engineering decisions</Link> · <Link href="/engineering/homelab/architecture">Current architecture</Link></p></Section>
+    <Section id="references" title="References"><p><Link href="/engineering/decisions" prefetch={false}>All engineering decisions</Link> · <Link href="/engineering/homelab/architecture" prefetch={false}>Current architecture</Link></p></Section>
   </DocumentFrame>;
 }

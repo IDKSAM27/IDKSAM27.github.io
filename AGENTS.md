@@ -123,6 +123,22 @@ Explicitly not implemented:
 - `next.config.mjs` retains blog precompilation, wraps the config with Fumadocs MDX, initializes OpenNext development support, uses a single worker/CPU for reliable builds, and sets `output: 'standalone'`.
 - The build uses webpack deliberately on Windows because Turbopack’s OpenNext trace contains symlinks that Windows rejects without elevated symlink support.
 
+### Cloudflare Free-tier runtime safeguards
+
+The production site runs on the Cloudflare Workers Free plan, whose per-request CPU budget is much smaller than a typical Next.js server runtime. The Engineering extension is therefore deliberately build-heavy and runtime-light:
+
+- `open-next.config.ts` uses OpenNext's read-only `staticAssetsIncrementalCache` with `enableCacheInterception: true`. Prerendered page and RSC responses are bundled as Workers Static Assets instead of being rendered repeatedly inside the Worker.
+- `app/engineering/[...slug]/page.tsx` exports `dynamic = 'force-static'` and `dynamicParams = false`. Every valid documentation slug must come from `generateStaticParams`; unknown slugs fail closed instead of triggering on-demand rendering.
+- Every internal Next.js `Link` inside the Engineering documentation passes `prefetch={false}`. This is intentional. The dense navigation tree previously caused bursts of concurrent `?_rsc=...` prefetch requests that could exceed the Free-plan CPU limit. Navigation still uses normal client transitions when a visitor clicks.
+- Search is static and client-side. `app/api/search/route.ts` exports `server.staticGET` with `revalidate = false`, while `app/layout.tsx` configures Fumadocs search as `type: 'static'` with `preload: false`. The search index is generated once at build time, fetched only when search is opened, and queried in the browser.
+- `public/_headers` gives immutable Next.js build assets a one-year cache lifetime.
+- No R2 bucket, Durable Object, cache queue, or paid Workers plan is required for this read-only site configuration.
+- `scripts/engineering-content.test.mjs` rejects accidental removal of the static cache adapter, static route constraints, static search mode, or Engineering link prefetch suppression.
+
+The validated OpenNext build packages 112 prerender-cache files, including `/engineering/development/cloud` and `/api/search`, under `.open-next/cache` and reports `Bundling cache assets` before producing `.open-next/worker.js`.
+
+On Windows, a running `npm run dev` process can keep `.open-next/assets` open through the OpenNext development integration. Stop the repository's development server before running the production OpenNext build, otherwise packaging can fail with `EBUSY: resource busy or locked, rmdir '.open-next/assets'`. This is a local file-lock issue, not an application compilation failure.
+
 Current scripts:
 
 ```text

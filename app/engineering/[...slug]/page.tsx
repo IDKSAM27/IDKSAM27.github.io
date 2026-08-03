@@ -9,6 +9,12 @@ import { serviceBySlug, services } from '@/lib/engineering/services';
 import { topicBySlug, topics } from '@/lib/engineering/topics';
 
 type Params = Promise<{ slug: string[] }>;
+
+// Every public documentation path is emitted by generateStaticParams. Unknown
+// slugs should fail closed instead of triggering a runtime render in the Worker.
+export const dynamic = 'force-static';
+export const dynamicParams = false;
+
 function resolve(slug: string[]) {
   const path = slug.join('/');
   if (path === 'homelab/services') return { kind: 'catalog' as const, title: 'Service catalog', description: 'Every documented service in the personal cloud.' };

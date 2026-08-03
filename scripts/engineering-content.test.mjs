@@ -33,10 +33,36 @@ test('required local service marks and provenance labels exist', async () => {
 });
 
 test('navigation, search, metadata, and sanitization are wired', async () => {
-  assert.match(await read('app/api/search/route.ts'), /createSearchAPI\('simple'/);
+  const searchRoute = await read('app/api/search/route.ts');
+  assert.match(searchRoute, /createSearchAPI\('simple'/);
+  assert.match(searchRoute, /server\.staticGET/);
+  const appLayout = await read('app/layout.tsx');
+  assert.match(appLayout, /preload:\s*false/);
+  assert.match(appLayout, /type:\s*'static'/);
   assert.match(await read('app/engineering/[...slug]/page.tsx'), /BreadcrumbList/);
   assert.match(await read('app/engineering/[...slug]/page.tsx'), /TechArticle/);
   assert.match(await read('.gitignore'), /^prompt\.txt$/m); assert.match(await read('.gitignore'), /^homelab\/$/m);
+});
+
+test('Cloudflare free-tier safeguards keep documentation work static and deliberate', async () => {
+  const openNext = await read('open-next.config.ts');
+  assert.match(openNext, /staticAssetsIncrementalCache/);
+  assert.match(openNext, /enableCacheInterception:\s*true/);
+
+  const route = await read('app/engineering/[...slug]/page.tsx');
+  assert.match(route, /dynamic\s*=\s*'force-static'/);
+  assert.match(route, /dynamicParams\s*=\s*false/);
+
+  const linkFiles = [
+    ...(await filesUnder('app/engineering')).filter((file) => file.endsWith('.tsx')),
+    ...(await filesUnder('components/engineering')).filter((file) => file.endsWith('.tsx')),
+  ];
+  for (const file of linkFiles) {
+    const body = await readFile(file, 'utf8');
+    for (const [tag] of body.matchAll(/<Link\b[^>]*>/g)) {
+      assert.match(tag, /prefetch=\{false\}/, `${path.relative(root, file)} has a speculative documentation link: ${tag}`);
+    }
+  }
 });
 
 test('responsive and accessible documentation primitives are present', async () => {
