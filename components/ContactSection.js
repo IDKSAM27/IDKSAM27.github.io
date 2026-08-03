@@ -60,7 +60,7 @@ const ContactSection = () => {
   }, { scope: container });
 
   return (
-    <div ref={container} className="w-full pt-12 pb-8 sm:pt-16 sm:pb-12 md:pt-12 md:pb-12 px-4 md:px-12 lg:px-32 overflow-hidden">
+    <div ref={container} className="w-full pt-8 pb-8 sm:pt-16 sm:pb-12 md:pt-12 md:pb-12 px-4 md:px-12 lg:px-32 overflow-hidden">
       <div className="w-full">
         {/* Header Section */}
         <div className="mb-4 sm:mb-8">
@@ -129,7 +129,7 @@ const ContactSection = () => {
                 </div>
 
                 {/* Right: Interactive Avatar - Margin-top added for mobile/tablet stack */}
-                <div className="avatar-wrapper flex justify-center items-center mt-6 lg:mt-0 lg:-mt-40 xl:-mt-56">
+                <div className="avatar-wrapper flex justify-center items-center mt-2 lg:mt-0 lg:-mt-40 xl:-mt-56">
                     <div className="w-full max-w-sm md:max-w-md">
                         <InteractiveAvatar isSurprised={isSurprised} />
                     </div>
