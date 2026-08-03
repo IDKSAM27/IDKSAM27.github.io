@@ -68,14 +68,6 @@ const ProjectCard = ({ project }) => {
             >
               GitHub <span>↗</span>
             </a>
-            <a 
-              href={project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0 hover:scale-110 duration-200"
-            >
-               <span className="text-white dark:text-black">→</span>
-            </a>
           </div>
         </div>
       </div>

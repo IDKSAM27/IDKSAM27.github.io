@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import Link from 'next/link';
 import ScrollLink from './ScrollLink';
 
-const HeaderButton = ({ children, href, smoothScroll = true }) => {
+const HeaderButton = ({ children, href, smoothScroll = true, prefetch }) => {
   const buttonRef = useRef(null);
   const timeline = useRef();
 
@@ -55,7 +55,7 @@ const HeaderButton = ({ children, href, smoothScroll = true }) => {
           {buttonContent}
         </ScrollLink>
       ) : (
-        <Link href={href} className="relative px-4 py-2 group">
+        <Link href={href} prefetch={prefetch} className="relative px-4 py-2 group">
           {buttonContent}
         </Link>
       )}

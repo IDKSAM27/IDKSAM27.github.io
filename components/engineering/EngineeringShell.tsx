@@ -47,7 +47,7 @@ export default function EngineeringShell({ children }: { children: React.ReactNo
   return (
     <div className="eng-site">
       <div className="eng-header-wrapper">
-        <Header homeHref="/" smoothScroll={false} />
+        <Header homeHref="/" smoothScroll={false} prefetch={false} />
       </div>
       <div className="eng-mobile-bar">
         <button type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="engineering-navigation"><Menu size={19} /><span>Browse docs</span></button>
@@ -60,7 +60,7 @@ export default function EngineeringShell({ children }: { children: React.ReactNo
       </aside>
       <main id="main-content" className="eng-main">{children}</main>
       <Footer className="eng-footer" />
-      <MobileNav homeHref="/" smoothScroll={false} />
+      <MobileNav homeHref="/" smoothScroll={false} prefetch={false} />
     </div>
   );
 }

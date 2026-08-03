@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { FiGrid, FiCode, FiEdit3, FiSmile, FiBook } from 'react-icons/fi';
 import ScrollLink from './ScrollLink'; 
 
-const MobileNavLink = ({ href, icon: Icon, label, smoothScroll = true }) => {
+const MobileNavLink = ({ href, icon: Icon, label, smoothScroll = true, prefetch }) => {
   const isInternalLink = smoothScroll && href.startsWith('/#');
   const targetId = isInternalLink ? href.substring(1) : href;
 
@@ -22,13 +22,13 @@ const MobileNavLink = ({ href, icon: Icon, label, smoothScroll = true }) => {
       {linkContent}
     </ScrollLink>
   ) : (
-    <Link href={href} className={className}>
+    <Link href={href} prefetch={prefetch} className={className}>
       {linkContent}
     </Link>
   );
 };
 
-const MobileNav = ({ homeHref = "/", smoothScroll = true }) => { 
+const MobileNav = ({ homeHref = "/", smoothScroll = true, prefetch }) => {
   const homeBase = homeHref.endsWith("/") ? homeHref.slice(0, -1) : homeHref;
   const withHomeBase = (path) => homeBase === "" ? path : `${homeBase}${path}`;
 
@@ -44,7 +44,7 @@ const MobileNav = ({ homeHref = "/", smoothScroll = true }) => {
       <div className="container mx-auto h-full">
         <div className="grid grid-cols-5 h-full">
           {navItems.map((item) => (
-            <MobileNavLink key={item.label} {...item} smoothScroll={item.smoothScrollOverride !== undefined ? item.smoothScrollOverride : smoothScroll} />
+            <MobileNavLink key={item.label} {...item} prefetch={prefetch} smoothScroll={item.smoothScrollOverride !== undefined ? item.smoothScrollOverride : smoothScroll} />
           ))}
           <Link
             href="https://fun.sampreetpatil.com"

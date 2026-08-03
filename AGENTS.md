@@ -130,6 +130,7 @@ The production site runs on the Cloudflare Workers Free plan, whose per-request 
 - `open-next.config.ts` uses OpenNext's read-only `staticAssetsIncrementalCache` with `enableCacheInterception: true`. Prerendered page and RSC responses are bundled as Workers Static Assets instead of being rendered repeatedly inside the Worker.
 - `app/engineering/[...slug]/page.tsx` exports `dynamic = 'force-static'` and `dynamicParams = false`. Every valid documentation slug must come from `generateStaticParams`; unknown slugs fail closed instead of triggering on-demand rendering.
 - Every internal Next.js `Link` inside the Engineering documentation passes `prefetch={false}`. This is intentional. The dense navigation tree previously caused bursts of concurrent `?_rsc=...` prefetch requests that could exceed the Free-plan CPU limit. Navigation still uses normal client transitions when a visitor clicks.
+- `EngineeringShell` also passes `prefetch={false}` into the shared `Header` and `MobileNav`; their default behavior elsewhere is unchanged. This prevents the Engineering shell from repeatedly prefetching `/`, `/blog`, and `/engineering` through its portfolio navigation.
 - Search is static and client-side. `app/api/search/route.ts` exports `server.staticGET` with `revalidate = false`, while `app/layout.tsx` configures Fumadocs search as `type: 'static'` with `preload: false`. The search index is generated once at build time, fetched only when search is opened, and queried in the browser.
 - `public/_headers` gives immutable Next.js build assets a one-year cache lifetime.
 - No R2 bucket, Durable Object, cache queue, or paid Workers plan is required for this read-only site configuration.
@@ -211,6 +212,8 @@ Engineering layout behavior:
 - Mermaid canvases are horizontally pannable, and source is available in `<details>`.
 - Tables and long code values scroll or wrap without forcing page-wide horizontal overflow.
 - Dark mode uses the same global class-based theme as the portfolio.
+- Service project marks are offset below the Architecture section heading rather than crowding its underline.
+- Definition lists reserve a wider key column, a responsive 2–3.25rem column gap, and safe key wrapping so long domain names cannot collide with their values.
 
 Do not convert this into a card-grid dashboard. The current design intentionally uses large editorial headlines, index rows, whitespace, thin separators, and small provenance dots.
 

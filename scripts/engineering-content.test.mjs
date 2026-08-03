@@ -75,4 +75,6 @@ test('responsive and accessible documentation primitives are present', async () 
   const shell = await read('components/engineering/EngineeringShell.tsx');
   assert.match(shell, /aria-label="Engineering documentation"/);
   assert.match(shell, /aria-expanded=\{open\}/);
+  assert.match(shell, /<Header[^>]+prefetch=\{false\}/);
+  assert.match(shell, /<MobileNav[^>]+prefetch=\{false\}/);
 });
