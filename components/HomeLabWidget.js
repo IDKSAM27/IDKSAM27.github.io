@@ -442,6 +442,51 @@ const HomeLabWidget = () => {
                         href: 'https://movies.sampreetpatil.com',
                         description: 'Radarr workspace for curating and managing movie collections.',
                       },
+                      {
+                        hostname: 'kuma.sampreetpatil.com',
+                        href: 'https://kuma.sampreetpatil.com',
+                        description: 'Uptime Kuma monitor tracking availability of all lab services.',
+                      },
+                      {
+                        hostname: 'grafana.sampreetpatil.com',
+                        href: 'https://grafana.sampreetpatil.com',
+                        description: 'Grafana dashboards for metrics, logs, and system observability.',
+                      },
+                      {
+                        hostname: 'prometheus.sampreetpatil.com',
+                        href: 'https://prometheus.sampreetpatil.com',
+                        description: 'Prometheus metrics store scraping the full homelab stack.',
+                      },
+                      {
+                        hostname: 'alerts.sampreetpatil.com',
+                        href: 'https://alerts.sampreetpatil.com',
+                        description: 'Alertmanager routing firing alerts to Discord notifications.',
+                      },
+                      {
+                        hostname: 'loki.sampreetpatil.com',
+                        href: 'https://loki.sampreetpatil.com',
+                        description: 'Loki log aggregation receiving streams from Grafana Alloy.',
+                      },
+                      {
+                        hostname: 'blackbox.sampreetpatil.com',
+                        href: 'https://blackbox.sampreetpatil.com',
+                        description: 'Blackbox Exporter probing endpoints for uptime and latency.',
+                      },
+                      {
+                        hostname: 'portainer.sampreetpatil.com',
+                        href: 'https://portainer.sampreetpatil.com',
+                        description: 'Portainer UI for managing Docker containers and stacks remotely.',
+                      },
+                      {
+                        hostname: 'logs.sampreetpatil.com',
+                        href: 'https://logs.sampreetpatil.com',
+                        description: 'Dozzle live log viewer for all running Docker containers.',
+                      },
+                      {
+                        hostname: 'dev.sampreetpatil.com',
+                        href: 'https://dev.sampreetpatil.com',
+                        description: 'Local development tunnel exposed for remote access and testing.',
+                      },
                     ].map((service, index) => (
                       <div key={service.hostname} className="space-y-3">
                         {index > 0 && <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />}
