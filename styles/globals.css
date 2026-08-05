@@ -14,7 +14,13 @@
     --color-text: theme('colors.text-light');
     --color-accent: theme('colors.accent-light');
     --theme-bg: theme('colors.hero-1-light');
-    /* Or your primary light bg */
+  }
+
+  /* Scale down for mobile views */
+  @media (max-width: 767px) {
+    html {
+      font-size: 85%;
+    }
   }
 
   /* Scale down for laptop/desktop views */
@@ -28,7 +34,6 @@
     --color-text: theme('colors.text-dark');
     --color-accent: theme('colors.accent-dark');
     --theme-bg: theme('colors.hero-1-dark');
-    /* Or your primary dark bg */
   }
 }
 
