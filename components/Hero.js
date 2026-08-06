@@ -92,7 +92,7 @@ const Hero = () => {
               </h2>
             </div>
 
-            <p className="hero-description text-xl md:text-2xl font-medium leading-relaxed text-slate-600 dark:text-slate-400 max-w-xl">
+            <p className="hero-description text-xl md:text-2xl font-medium leading-relaxed text-slate-600 dark:text-slate-400 max-w-xl font-secondary">
               A CS grad specializing in Backend Systems & ML Architecture.
               I also write about tech on my&nbsp;
               <a

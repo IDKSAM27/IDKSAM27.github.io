@@ -94,7 +94,7 @@ const ExperienceSection = () => {
             Currently Building.
           </h2>
           <p
-            className="mt-8 text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed"
+            className="mt-8 text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed font-secondary"
             style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
           >
             I'm currently focused on developing AI-powered institutional intelligence at Angsys Tech,

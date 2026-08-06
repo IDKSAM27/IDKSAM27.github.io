@@ -18,11 +18,11 @@ const projects = [
   {
     title: "P.A.N.D-A",
     description: "Stands for Pandas Assistant for Natural Data-Analytics, It's an intelligent data analysis platform processing natural language queries into actionable insights",
-    technologies: ["Python", "Pandas", "Websockets", "React.js", "FastAPI" ],
+    technologies: ["Python", "Pandas", "Websockets", "React.js", "FastAPI"],
     liveLink: "#",
     githubLink: "https://github.com/IDKSAM27/P.A.N.D-A",
   },
-    {
+  {
     title: "MirrOx: Android Screen Mirroring",
     description: "A high-performance Android screen mirroring application built with Rust, utilizing ADB for communication and SDL2 for rendering.",
     technologies: ["Rust", "Android", "ADB", "SDL2"],
@@ -117,59 +117,59 @@ const ProjectsSection = () => {
       <div className="w-full">
         {/* Header Section */}
         <div className="mb-20">
-          <h2 
+          <h2
             className="section-title text-5xl sm:text-6xl md:text-8xl font-heading text-text-light dark:text-text-dark tracking-tighter"
             style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
           >
             Projects.
           </h2>
-          <p 
-            className="mt-8 text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed"
+          <p
+            className="mt-8 text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed font-secondary"
             style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
           >
-            A small collection of projects I've built, ranging from AI applications to system-level tools. 
+            A small collection of projects I've built, ranging from AI applications to system-level tools.
           </p>
         </div>
 
         {/* Layout with Sidebar Label */}
         <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-12">
-            
-            {/* Sidebar Label in "Cassie Evans" style */}
-            <div className="md:w-32 flex-shrink-0 pt-2">
-               <div className="flex items-center gap-4">
-                  <span 
-                    className="font-fun text-2xl rotate-[-4deg] text-accent-light dark:text-accent-dark whitespace-nowrap"
-                    style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
-                  >
-                    showcase
-                  </span>
-                  <div className="hidden md:block h-[2px] flex-grow bg-slate-300 dark:bg-slate-700 min-w-[30px]"></div>
-               </div>
-            </div>
 
-            {/* Project Grid */}
-            <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-               {projects.map((project, index) => (
-                  <div key={index} className="project-card-wrapper">
-                    <ProjectCard project={project} />
-                  </div>
-               ))}
-               
-               {/* "More coming" Placeholder card */}
-               <a 
-                  href="https://github.com/idksam27" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="project-card-wrapper block opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 group/more"
-               >
-                  <div className="h-full border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-8 flex flex-col items-center justify-center text-center space-y-4 group-hover/more:border-accent-light dark:group-hover/more:border-accent-dark transition-colors">
-                     <span className="font-fun text-4xl text-slate-400 group-hover/more:text-accent-light dark:group-hover/more:text-accent-dark transition-colors">more.</span>
-                     <p className="text-slate-500 dark:text-slate-400">
-                        Visit my <span className="font-bold underline">GitHub</span> for more projects and experiments.
-                     </p>
-                  </div>
-               </a>
+          {/* Sidebar Label in "Cassie Evans" style */}
+          <div className="md:w-32 flex-shrink-0 pt-2">
+            <div className="flex items-center gap-4">
+              <span
+                className="font-fun text-2xl rotate-[-4deg] text-accent-light dark:text-accent-dark whitespace-nowrap"
+                style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
+              >
+                showcase
+              </span>
+              <div className="hidden md:block h-[2px] flex-grow bg-slate-300 dark:bg-slate-700 min-w-[30px]"></div>
             </div>
+          </div>
+
+          {/* Project Grid */}
+          <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {projects.map((project, index) => (
+              <div key={index} className="project-card-wrapper">
+                <ProjectCard project={project} />
+              </div>
+            ))}
+
+            {/* "More coming" Placeholder card */}
+            <a
+              href="https://github.com/idksam27"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-card-wrapper block opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 group/more"
+            >
+              <div className="h-full border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-8 flex flex-col items-center justify-center text-center space-y-4 group-hover/more:border-accent-light dark:group-hover/more:border-accent-dark transition-colors">
+                <span className="font-fun text-4xl text-slate-400 group-hover/more:text-accent-light dark:group-hover/more:text-accent-dark transition-colors">more.</span>
+                <p className="text-slate-500 dark:text-slate-400">
+                  Visit my <span className="font-bold underline">GitHub</span> for more projects and experiments.
+                </p>
+              </div>
+            </a>
+          </div>
 
         </div>
 

@@ -5,7 +5,7 @@ import '../styles/globals.css';
 import '@fontsource/bbh-sans-hegarty/400.css';
 import 'highlight.js/styles/github-dark.css';
 
-import { Inter, Pacifico } from 'next/font/google';
+import { Inter, Pacifico, Syne } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,10 +18,16 @@ const pacifico = Pacifico({
   variable: '--font-pacifico',
 });
 
+const secondary = Syne({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-secondary',
+});
+
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="class">
-      <main className={`${inter.variable} ${pacifico.variable}`}>
+      <main className={`${inter.variable} ${pacifico.variable} ${secondary.variable}`}>
         <Component {...pageProps} />
       </main>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
