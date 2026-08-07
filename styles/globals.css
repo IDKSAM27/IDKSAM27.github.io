@@ -46,6 +46,20 @@ body {
   @apply bg-hero-1-light dark:bg-hero-1-dark overflow-x-hidden;
 }
 
+/* --- SUBTLE PATTERNS ROUGH CLOTH TEXTURE INTEGRATION --- */
+body,
+[class*="bg-hero-"],
+[class*="bg-skills-"],
+[class*="bg-projects-"],
+[class*="bg-contact-"],
+[class*="bg-homelab-"],
+[class*="showcase"],
+.eng-site,
+.eng-header-wrapper {
+  background-image: url('/rough-cloth.png');
+  background-repeat: repeat;
+}
+
 .font-secondary {
   font-family: var(--font-secondary-stack);
 }
