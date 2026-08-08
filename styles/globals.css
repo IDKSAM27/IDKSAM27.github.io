@@ -48,7 +48,7 @@ body {
 
 /* --- SUBTLE PATTERNS ROUGH CLOTH TEXTURE INTEGRATION --- */
 body,
-[class*="bg-hero-"],
+[class*="bg-hero-"]:not(.lab-popover),
 [class*="bg-skills-"],
 [class*="bg-projects-"],
 [class*="bg-contact-"],
@@ -58,6 +58,10 @@ body,
 .eng-header-wrapper {
   background-image: url('/rough-cloth.png');
   background-repeat: repeat;
+}
+
+.lab-popover {
+  background-image: none !important;
 }
 
 .font-secondary {

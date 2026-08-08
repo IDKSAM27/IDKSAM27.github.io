@@ -87,7 +87,7 @@ const Hero = () => {
                 Sampreet <br />
                 <span className="text-accent-light dark:text-accent-dark">Patil.</span>
               </h1>
-              <h2 className="hero-subtitle text-4xl md:text-6xl font-heading text-slate-400 dark:text-slate-600 tracking-tighter mt-4">
+              <h2 className="hero-subtitle text-4xl md:text-6xl font-heading text-slate-400 tracking-tighter mt-4">
                 Backend & Security Engineer.
               </h2>
             </div>

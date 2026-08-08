@@ -152,7 +152,8 @@ const HomeLabWidget = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-4 bottom-36 top-[calc(env(safe-area-inset-top)+1rem)] flex w-auto transform-gpu flex-col overflow-hidden rounded-lg border-2 border-slate-900 bg-hero-1-light p-4 font-sans text-slate-800 shadow-xl will-change-transform dark:border-slate-700 dark:bg-hero-1-dark dark:text-slate-200 md:absolute md:inset-x-auto md:top-auto md:bottom-16 md:right-0 md:max-h-[calc(100dvh-7.5rem)] md:w-[380px] md:shadow-2xl"
+            className="lab-popover fixed inset-x-4 bottom-36 top-[calc(env(safe-area-inset-top)+1rem)] flex w-auto transform-gpu flex-col overflow-hidden rounded-lg border-2 border-slate-900 bg-[#F9F6F1] p-4 font-sans text-slate-800 shadow-xl will-change-transform dark:border-slate-700 dark:bg-[#212121] dark:text-slate-200 md:absolute md:inset-x-auto md:top-auto md:bottom-16 md:right-0 md:max-h-[calc(100dvh-7.5rem)] md:w-[380px] md:shadow-2xl"
+            style={{ backgroundImage: 'none' }}
           >
             {/* Popover Header */}
             <div className="mb-3 flex flex-shrink-0 items-center justify-between border-b border-slate-200 pb-2.5 dark:border-slate-800">
