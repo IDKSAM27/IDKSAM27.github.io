@@ -40,7 +40,7 @@ const MobileNav = ({ homeHref = "/", smoothScroll = true, prefetch }) => {
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-hero-1-light dark:bg-hero-1-dark border-t-2 border-black dark:border-white z-40">
+    <div className="mobile-nav-bar md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#F9F6F1] dark:bg-[#212121] border-t-2 border-black dark:border-white z-40">
       <div className="container mx-auto h-full">
         <div className="grid grid-cols-5 h-full">
           {navItems.map((item) => (
