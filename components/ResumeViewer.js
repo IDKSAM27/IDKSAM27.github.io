@@ -47,7 +47,20 @@ export function ResumeButton({
   );
 }
 
-function PdfSurface({ scale, offset, dragging, onWheel, onDoubleClick, onPointerDown, onPointerMove, onPointerUp, onPointerCancel, onTouchStart, onTouchMove, onTouchEnd }) {
+function PdfSurface({
+  scale,
+  offset,
+  dragging,
+  onWheel,
+  onDoubleClick,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerCancel,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
+}) {
   const surfaceRef = useRef(null);
   const canvasRefs = useRef([]);
   const pageLayerRefs = useRef([]);
@@ -144,7 +157,7 @@ function PdfSurface({ scale, offset, dragging, onWheel, onDoubleClick, onPointer
         const containerWidth = surfaceRef.current?.clientWidth ?? window.innerWidth;
         const containerHeight = surfaceRef.current?.clientHeight ?? window.innerHeight;
         const fitScale = Math.min(containerWidth / pageMeta.width, containerHeight / pageMeta.height);
-        const renderScale = fitScale * scale;
+        const renderScale = fitScale;
         const viewport = page.getViewport({ scale: renderScale });
         const deviceScale = window.devicePixelRatio || 1;
 
@@ -209,7 +222,7 @@ function PdfSurface({ scale, offset, dragging, onWheel, onDoubleClick, onPointer
         task.cancel?.();
       }
     };
-  }, [pages, scale]);
+  }, [pages]);
 
   return (
     <div
@@ -228,30 +241,37 @@ function PdfSurface({ scale, offset, dragging, onWheel, onDoubleClick, onPointer
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      <div className={styles.pdfStack}>
-        {pages.map((page, index) => (
-          <div
-            key={page.number}
-            ref={(node) => {
-              pageLayerRefs.current[index] = node;
-            }}
-            className={styles.pdfPage}
-          >
-            <canvas
-              ref={(node) => {
-                canvasRefs.current[index] = node;
-              }}
-              className={styles.pdfCanvas}
-              aria-label={`Resume page ${page.number}`}
-            />
+      <div
+        className={styles.pdfScaleLayer}
+        style={{
+          transform: `scale(${scale})`,
+        }}
+      >
+        <div className={styles.pdfStack}>
+          {pages.map((page, index) => (
             <div
+              key={page.number}
               ref={(node) => {
-                linkLayerRefs.current[index] = node;
+                pageLayerRefs.current[index] = node;
               }}
-              className={styles.pdfLinkLayer}
-            />
-          </div>
-        ))}
+              className={styles.pdfPage}
+            >
+              <canvas
+                ref={(node) => {
+                  canvasRefs.current[index] = node;
+                }}
+                className={styles.pdfCanvas}
+                aria-label={`Resume page ${page.number}`}
+              />
+              <div
+                ref={(node) => {
+                  linkLayerRefs.current[index] = node;
+                }}
+                className={styles.pdfLinkLayer}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {pages.length === 0 ? <div className={styles.loadingState}>Loading resume...</div> : null}
     </div>
@@ -269,6 +289,16 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
   const [dragging, setDragging] = useState(false);
 
   const clampScale = useCallback((value) => Math.min(MAX_SCALE, Math.max(MIN_SCALE, value)), []);
+
+  const setZoomScale = useCallback(
+    (value) => {
+      setScale((current) => {
+        const nextValue = typeof value === 'function' ? value(current) : value;
+        return clampScale(Number(nextValue.toFixed(2)));
+      });
+    },
+    [clampScale]
+  );
 
   const resetView = useCallback(() => {
     setScale(1);
@@ -375,13 +405,13 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
 
       if (event.key === '+' || event.key === '=') {
         event.preventDefault();
-        setScale((current) => clampScale(Number((current + SCALE_STEP).toFixed(2))));
+        setZoomScale((current) => current + SCALE_STEP);
         return;
       }
 
       if (event.key === '-' || event.key === '_') {
         event.preventDefault();
-        setScale((current) => clampScale(Number((current - SCALE_STEP).toFixed(2))));
+        setZoomScale((current) => current - SCALE_STEP);
         return;
       }
 
@@ -397,16 +427,16 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [animateClose, animateOpen, clampScale, isOpen, resetView]);
+  }, [animateClose, animateOpen, isOpen, resetView, setZoomScale]);
 
   const handleWheel = (event) => {
     event.preventDefault();
     const delta = event.deltaY > 0 ? -SCALE_STEP : SCALE_STEP;
-    setScale((current) => clampScale(Number((current + delta).toFixed(2))));
+    setZoomScale((current) => current + delta);
   };
 
   const handleDoubleClick = () => {
-    setScale((current) => (current > 1 ? 1 : 1.5));
+    setZoomScale((current) => (current > 1 ? 1 : 1.5));
     setOffset({ x: 0, y: 0 });
   };
 
@@ -450,7 +480,8 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
     const [a, b] = event.touches;
     const distance = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
     const ratio = distance / pinchStateRef.current.distance;
-    setScale(clampScale(Number((pinchStateRef.current.scale * ratio).toFixed(2))));
+    const nextScale = clampScale(Number((pinchStateRef.current.scale * ratio).toFixed(2)));
+    setScale(nextScale);
   };
 
   const handleTouchEnd = () => {
@@ -467,11 +498,11 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
     () => ({
       label: 'Reset zoom',
       onClick: () => {
-        setScale(1);
+        setZoomScale(1);
         setOffset({ x: 0, y: 0 });
       },
     }),
-    []
+    [setZoomScale]
   );
 
   if (!mounted || !isOpen) return null;
@@ -495,13 +526,13 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
           >
             <FiDownload />
           </a>
-          <button type="button" className={styles.actionButton} onClick={() => setScale((current) => clampScale(Number((current - SCALE_STEP).toFixed(2))))} aria-label="Zoom out">
+          <button type="button" className={styles.actionButton} onClick={() => setZoomScale(scale - SCALE_STEP)} aria-label="Zoom out">
             <FiMinus />
           </button>
           <button type="button" className={styles.actionButton} onClick={zoomReset.onClick} aria-label={zoomReset.label}>
             <FiRefreshCw />
           </button>
-          <button type="button" className={styles.actionButton} onClick={() => setScale((current) => clampScale(Number((current + SCALE_STEP).toFixed(2))))} aria-label="Zoom in">
+          <button type="button" className={styles.actionButton} onClick={() => setZoomScale(scale + SCALE_STEP)} aria-label="Zoom in">
             <FiPlus />
           </button>
           <button type="button" className={`${styles.actionButton} ${styles.closeButton}`} onClick={animateClose} aria-label="Close resume">

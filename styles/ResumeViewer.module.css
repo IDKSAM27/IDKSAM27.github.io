@@ -122,6 +122,14 @@
   background: transparent;
 }
 
+.pdfScaleLayer {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 90ms linear;
+}
+
 .pdfStack {
   position: absolute;
   inset: 0;
