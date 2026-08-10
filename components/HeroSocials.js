@@ -53,7 +53,7 @@ const SocialButton = ({ href, label, icon: Icon }) => {
           </a>
         )}
       />
-      <TooltipContent>{label}</TooltipContent>
+      <TooltipContent variant="compact">{label}</TooltipContent>
     </Tooltip>
   );
 };
@@ -118,12 +118,12 @@ const HeroSocials = () => {
                 <ResumeButton
                   buttonRef={resumeButtonRef}
                   onOpen={openResume}
-                  onEnter={onResumeEnter}
-                  onLeave={onResumeLeave}
+                  onHoverEnter={onResumeEnter}
+                  onHoverLeave={onResumeLeave}
                 />
               )}
             />
-            <TooltipContent>Resume</TooltipContent>
+            <TooltipContent variant="compact">Resume</TooltipContent>
           </Tooltip>
           <SocialButton {...externalSocials[2]} />
           <SocialButton {...externalSocials[3]} />

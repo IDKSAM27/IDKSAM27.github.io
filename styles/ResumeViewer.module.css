@@ -1,6 +1,7 @@
 .resumeButton {
   position: relative;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
@@ -8,6 +9,8 @@
   border: none;
   cursor: pointer;
   border-radius: 0.5rem;
+  transform: translateZ(0);
+  will-change: transform;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -29,6 +32,8 @@
   height: 100%;
   color: #f5c842;
   transform-origin: center center;
+  transform: translateZ(0);
+  will-change: transform;
   animation: iconBreathe 2.8s ease-in-out infinite;
 }
 
@@ -94,6 +99,7 @@
   color: #0f172a;
   box-shadow: 0 8px 24px rgba(2, 6, 23, 0.12);
   cursor: pointer;
+  text-decoration: none;
   transition: transform 0.18s ease, background 0.18s ease;
 }
 

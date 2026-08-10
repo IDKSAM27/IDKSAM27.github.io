@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { FiFileText, FiMinus, FiPlus, FiRefreshCw, FiX } from 'react-icons/fi';
+import { FiDownload, FiFileText, FiMinus, FiPlus, FiRefreshCw, FiX } from 'react-icons/fi';
 import styles from '../styles/ResumeViewer.module.css';
 
 const MIN_SCALE = 0.75;
@@ -16,7 +16,15 @@ export function ResumePageIcon() {
   );
 }
 
-export function ResumeButton({ buttonRef, onOpen, onEnter, onLeave, ...rest }) {
+export function ResumeButton({
+  buttonRef,
+  onOpen,
+  onHoverEnter,
+  onHoverLeave,
+  onMouseEnter,
+  onMouseLeave,
+  ...rest
+}) {
   return (
     <button
       ref={buttonRef}
@@ -24,9 +32,15 @@ export function ResumeButton({ buttonRef, onOpen, onEnter, onLeave, ...rest }) {
       aria-label="View resume"
       className={styles.resumeButton}
       onClick={onOpen}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
       {...rest}
+      onMouseEnter={(event) => {
+        onHoverEnter?.(event);
+        onMouseEnter?.(event);
+      }}
+      onMouseLeave={(event) => {
+        onHoverLeave?.(event);
+        onMouseLeave?.(event);
+      }}
     >
       <ResumePageIcon />
     </button>
@@ -473,6 +487,14 @@ export default function ResumeViewer({ isOpen, origin, onClose }) {
     >
       <div ref={sheetRef} className={styles.viewerSheet}>
         <div className={styles.viewerActions}>
+          <a
+            className={styles.actionButton}
+            href={PDF_SRC}
+            download="Sampreet_Patil_Resume.pdf"
+            aria-label="Download resume"
+          >
+            <FiDownload />
+          </a>
           <button type="button" className={styles.actionButton} onClick={() => setScale((current) => clampScale(Number((current - SCALE_STEP).toFixed(2))))} aria-label="Zoom out">
             <FiMinus />
           </button>

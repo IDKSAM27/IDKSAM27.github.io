@@ -102,8 +102,16 @@ export function TooltipTrigger({ children, render }) {
   });
 }
 
-export function TooltipContent({ children, className = "" }) {
+export function TooltipContent({ children, className = "", variant = "default" }) {
   const { isOpen } = useContext(TooltipContext);
+  const contentClass =
+    variant === "compact"
+      ? `absolute bottom-full left-1/2 z-[99999] mb-4 inline-flex w-max max-w-none -translate-x-1/2 items-center justify-center rounded-2xl px-3 py-2 text-sm font-medium leading-none whitespace-nowrap shadow-2xl border border-slate-950/10 bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50 dark:border-white/10 transform-gpu origin-bottom ${className}`
+      : `absolute bottom-full right-0 z-[99999] mb-3.5 px-6 py-3.5 text-base md:text-lg font-normal rounded-2xl shadow-2xl border-2 whitespace-nowrap bg-white text-slate-900 border-slate-950 dark:bg-slate-950 dark:text-slate-50 dark:border-white ${className}`;
+  const arrowClass =
+    variant === "compact"
+      ? "absolute -bottom-[6px] left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-r border-b border-slate-950/10 bg-white dark:bg-slate-950 dark:border-white/10"
+      : "absolute -bottom-[7px] right-8 h-3.5 w-3.5 rotate-45 border-r-2 border-b-2 border-slate-950 bg-white dark:bg-slate-950 dark:border-white";
 
   return (
     <AnimatePresence>
@@ -119,11 +127,11 @@ export function TooltipContent({ children, className = "" }) {
             mass: 0.72,
             restDelta: 0.001,
           }}
-          className={`absolute bottom-full left-1/2 z-[99999] mb-4 inline-flex w-max max-w-none -translate-x-1/2 items-center justify-center rounded-2xl px-3 py-2 text-sm font-medium leading-none whitespace-nowrap shadow-2xl border border-slate-950/10 bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50 dark:border-white/10 transform-gpu origin-bottom ${className}`}
+          className={contentClass}
         >
           {children}
           {/* Arrow */}
-          <div className="absolute -bottom-[6px] left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-r border-b border-slate-950/10 bg-white dark:bg-slate-950 dark:border-white/10" />
+          <div className={arrowClass} />
         </motion.div>
       )}
     </AnimatePresence>
