@@ -32,7 +32,9 @@ export function Tooltip({ children, delayDuration = 100, open }) {
 
   return (
     <TooltipContext.Provider value={{ isOpen, show, hide, isControlled }}>
-      {children}
+      <span className="relative inline-flex items-center justify-center align-middle">
+        {children}
+      </span>
     </TooltipContext.Provider>
   );
 }
@@ -107,15 +109,21 @@ export function TooltipContent({ children, className = "" }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          className={`absolute bottom-full mb-3.5 right-0 z-[99999] px-6 py-3.5 text-base md:text-lg font-normal rounded-2xl shadow-2xl border-2 whitespace-nowrap bg-white text-slate-900 border-slate-950 dark:bg-slate-950 dark:text-slate-50 dark:border-white ${className}`}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{
+            type: "spring",
+            stiffness: 720,
+            damping: 26,
+            mass: 0.72,
+            restDelta: 0.001,
+          }}
+          className={`absolute bottom-full left-1/2 z-[99999] mb-4 inline-flex w-max max-w-none -translate-x-1/2 items-center justify-center rounded-2xl px-3 py-2 text-sm font-medium leading-none whitespace-nowrap shadow-2xl border border-slate-950/10 bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50 dark:border-white/10 transform-gpu origin-bottom ${className}`}
         >
           {children}
           {/* Arrow */}
-          <div className="absolute -bottom-[7px] right-8 w-3.5 h-3.5 bg-white border-r-2 border-b-2 border-slate-950 dark:bg-slate-950 dark:border-white rotate-45" />
+          <div className="absolute -bottom-[6px] left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-r border-b border-slate-950/10 bg-white dark:bg-slate-950 dark:border-white/10" />
         </motion.div>
       )}
     </AnimatePresence>
