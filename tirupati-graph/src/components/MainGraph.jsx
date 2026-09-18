@@ -13,7 +13,32 @@ const METRIC_LABELS = {
   approx_wait_hours: 'Approx Wait Time (Hours)',
 };
 
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function getDayOfWeek(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return '';
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+      const dateObj = new Date(year, month, day);
+      return DAY_NAMES[dateObj.getDay()] || '';
+    }
+  }
+  return '';
+}
+
+function formatDateWithDay(dateStr) {
+  if (!dateStr) return '';
+  const day = getDayOfWeek(dateStr);
+  return day ? `${dateStr} (${day})` : dateStr;
+}
+
 export default function MainGraph({ records, primaryMetric, secondaryMetric, smoothing }) {
+
+  const isDark = typeof window !== 'undefined' && document.documentElement.classList.contains('dark');
 
   // Function to calculate Moving Average
   const calculateMA = (dataList, key, windowSize) => {
@@ -37,6 +62,12 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
     if (!records || records.length === 0) return {};
 
     const dates = records.map(r => r.date);
+
+    const primaryColor = isDark ? '#FDE047' : '#3D6B5E';
+    const secondaryColor = isDark ? '#A2C4F2' : '#2563EB';
+    const primaryAreaColor = isDark ? 'rgba(253, 224, 71, 0.25)' : 'rgba(61, 107, 94, 0.22)';
+    const textColor = isDark ? '#E2E8F0' : '#1E293B';
+    const subtextColor = isDark ? '#94A3B8' : '#475569';
 
     let primaryValues = records.map(r => typeof r[primaryMetric] === 'number' ? r[primaryMetric] : null);
     let secondaryValues = secondaryMetric !== 'none'
@@ -66,10 +97,10 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
         symbolSize: 6,
         lineStyle: {
           width: 2.5,
-          color: '#FDE047',
+          color: primaryColor,
         },
         itemStyle: {
-          color: '#FDE047',
+          color: primaryColor,
         },
         areaStyle: {
           color: {
@@ -79,8 +110,8 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
             x2: 0,
             y2: 1,
             colorStops: [
-              { offset: 0, color: 'rgba(253, 224, 71, 0.25)' },
-              { offset: 1, color: 'rgba(253, 224, 71, 0.00)' },
+              { offset: 0, color: primaryAreaColor },
+              { offset: 1, color: 'rgba(0, 0, 0, 0.00)' },
             ],
           },
         },
@@ -98,11 +129,11 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
         symbolSize: 6,
         lineStyle: {
           width: 2,
-          color: '#A2C4F2',
+          color: secondaryColor,
           type: 'dashed',
         },
         itemStyle: {
-          color: '#A2C4F2',
+          color: secondaryColor,
         },
       });
     }
@@ -111,10 +142,10 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
       {
         type: 'value',
         name: METRIC_LABELS[primaryMetric] || primaryMetric,
-        nameTextStyle: { color: '#FDE047', fontSize: 11 },
-        axisLine: { lineStyle: { color: 'rgba(253, 224, 71, 0.3)' } },
-        splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.05)' } },
-        axisLabel: { color: '#94A3B8', fontSize: 10 },
+        nameTextStyle: { color: primaryColor, fontSize: 11, fontWeight: '600' },
+        axisLine: { lineStyle: { color: primaryColor } },
+        splitLine: { lineStyle: { color: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.06)' } },
+        axisLabel: { color: subtextColor, fontSize: 10 },
       },
     ];
 
@@ -122,10 +153,10 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
       yAxis.push({
         type: 'value',
         name: METRIC_LABELS[secondaryMetric] || secondaryMetric,
-        nameTextStyle: { color: '#A2C4F2', fontSize: 11 },
-        axisLine: { lineStyle: { color: 'rgba(162, 196, 242, 0.3)' } },
+        nameTextStyle: { color: secondaryColor, fontSize: 11, fontWeight: '600' },
+        axisLine: { lineStyle: { color: secondaryColor } },
         splitLine: { show: false },
-        axisLabel: { color: '#94A3B8', fontSize: 10 },
+        axisLabel: { color: subtextColor, fontSize: 10 },
       });
     }
 
@@ -133,18 +164,33 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'axis',
-        backgroundColor: '#2A2E35',
-        borderColor: 'rgba(253, 224, 71, 0.3)',
+        backgroundColor: isDark ? '#2A2E35' : '#FFFFFF',
+        borderColor: isDark ? 'rgba(253, 224, 71, 0.3)' : 'rgba(61, 107, 94, 0.4)',
         borderWidth: 1,
-        textStyle: { color: '#E2E8F0', fontSize: 12 },
+        shadowBlur: 10,
+        shadowColor: 'rgba(0,0,0,0.15)',
+        textStyle: { color: textColor, fontSize: 12 },
         axisPointer: {
           type: 'cross',
-          crossStyle: { color: '#FDE047' },
+          crossStyle: { color: primaryColor },
         },
+        formatter: (params) => {
+          if (!params || params.length === 0) return '';
+          const dateStr = params[0].name;
+          const formattedDate = formatDateWithDay(dateStr);
+          let res = `<div style="font-weight:bold;margin-bottom:6px;border-bottom:1px solid ${isDark ? '#475569' : '#E2E8F0'};padding-bottom:3px;color:${textColor};">${formattedDate}</div>`;
+          params.forEach(p => {
+            res += `<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:3px;font-size:11px;">
+              <span style="color:${subtextColor};">${p.marker} ${p.seriesName}:</span>
+              <strong style="color:${textColor};">${p.value != null ? p.value.toLocaleString('en-IN') : '-'}</strong>
+            </div>`;
+          });
+          return res;
+        }
       },
       legend: {
         data: series.map(s => s.name),
-        textStyle: { color: '#E2E8F0', fontSize: 11 },
+        textStyle: { color: textColor, fontSize: 11 },
         top: 0,
       },
       grid: {
@@ -165,34 +211,34 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
           start: 0,
           end: 100,
           borderColor: 'transparent',
-          backgroundColor: 'rgba(33, 33, 33, 0.6)',
-          fillerColor: 'rgba(253, 224, 71, 0.15)',
-          handleStyle: { color: '#FDE047' },
-          textStyle: { color: '#94A3B8' },
+          backgroundColor: isDark ? 'rgba(33, 33, 33, 0.6)' : 'rgba(241, 245, 249, 0.8)',
+          fillerColor: isDark ? 'rgba(253, 224, 71, 0.15)' : 'rgba(61, 107, 94, 0.15)',
+          handleStyle: { color: primaryColor },
+          textStyle: { color: subtextColor },
         },
       ],
       xAxis: {
         type: 'category',
         data: dates,
-        axisLine: { lineStyle: { color: '#475569' } },
-        axisLabel: { color: '#94A3B8', fontSize: 10 },
+        axisLine: { lineStyle: { color: isDark ? '#475569' : '#CBD5E1' } },
+        axisLabel: { color: subtextColor, fontSize: 10 },
       },
       yAxis: yAxis,
       series: series,
     };
-  }, [records, primaryMetric, secondaryMetric, smoothing]);
+  }, [records, primaryMetric, secondaryMetric, smoothing, isDark]);
 
   return (
-    <div className="portfolio-card p-4 sm:p-6 space-y-4">
+    <div className="portfolio-card p-4 sm:p-6 space-y-4 shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <TrendingUp className="w-5 h-5 text-[#FDE047]" strokeWidth={1.5} />
-          <h3 className="text-base font-bold font-heading text-white">
+          <TrendingUp className="w-5 h-5 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
+          <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">
             Primary Time-Series Trajectory
           </h3>
         </div>
-        <div className="text-xs text-slate-400 flex items-center space-x-1">
-          <Maximize2 className="w-3.5 h-3.5 text-slate-400" strokeWidth={1.5} />
+        <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center space-x-1">
+          <Maximize2 className="w-3.5 h-3.5" strokeWidth={1.5} />
           <span className="hidden sm:inline">Pinch / Scroll to Zoom</span>
         </div>
       </div>
@@ -202,7 +248,6 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
           <ReactECharts
             option={option}
             style={{ height: '100%', width: '100%' }}
-            theme="dark"
           />
         ) : (
           <div className="flex items-center justify-center h-full text-slate-500 text-xs">
@@ -213,3 +258,4 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
     </div>
   );
 }
+

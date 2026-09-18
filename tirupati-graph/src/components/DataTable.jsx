@@ -1,6 +1,23 @@
 import React, { useState, useMemo } from 'react';
 import { Table, Search, ChevronLeft, ChevronRight, ExternalLink, Download } from 'lucide-react';
 
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function getDayOfWeek(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return '';
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+      const dateObj = new Date(year, month, day);
+      return DAY_NAMES[dateObj.getDay()] || '';
+    }
+  }
+  return '';
+}
+
 export default function DataTable({ records, onExportCSV }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,7 +29,8 @@ export default function DataTable({ records, onExportCSV }) {
     const term = searchTerm.toLowerCase();
     return records.filter(r =>
       (r.date && r.date.toLowerCase().includes(term)) ||
-      (r.title && r.title.toLowerCase().includes(term))
+      (r.title && r.title.toLowerCase().includes(term)) ||
+      (getDayOfWeek(r.date).toLowerCase().includes(term))
     );
   }, [records, searchTerm]);
 
@@ -23,13 +41,13 @@ export default function DataTable({ records, onExportCSV }) {
   }, [filteredData, currentPage]);
 
   return (
-    <div className="portfolio-card p-4 sm:p-6 space-y-4">
+    <div className="portfolio-card p-4 sm:p-6 space-y-4 shadow-sm">
       
       {/* Header controls */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center space-x-2">
-          <Table className="w-5 h-5 text-[#FDE047]" strokeWidth={1.5} />
-          <h3 className="text-base font-bold font-heading text-white">
+          <Table className="w-5 h-5 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
+          <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">
             Daily Ledger Database ({filteredData.length} Records)
           </h3>
         </div>
@@ -40,19 +58,19 @@ export default function DataTable({ records, onExportCSV }) {
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" strokeWidth={1.5} />
             <input
               type="text"
-              placeholder="Search date or title..."
+              placeholder="Search date, title, or day..."
               value={searchTerm}
               onChange={e => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-[#2A2E35] border border-slate-700 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-[#FDE047]"
+              className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047]"
             />
           </div>
 
           <button
             onClick={onExportCSV}
-            className="px-3 py-1.5 rounded-xl bg-[#2A2E35] hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-[#FDE047] flex items-center space-x-1.5 transition-colors"
+            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#4E5C58] dark:bg-[#2A2E35] dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-xs font-semibold dark:text-[#FDE047] flex items-center space-x-1.5 transition-colors"
           >
             <Download className="w-3.5 h-3.5" strokeWidth={1.5} />
             <span className="hidden sm:inline">CSV</span>
@@ -61,11 +79,11 @@ export default function DataTable({ records, onExportCSV }) {
       </div>
 
       {/* Table container */}
-      <div className="overflow-x-auto border border-slate-800 rounded-xl">
+      <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="bg-[#2A2E35]/80 text-slate-300 font-heading border-b border-slate-800">
-              <th className="p-3">Date</th>
+            <tr className="bg-slate-100 dark:bg-[#2A2E35]/80 text-slate-700 dark:text-slate-300 font-heading border-b border-slate-200 dark:border-slate-800">
+              <th className="p-3">Date (Day)</th>
               <th className="p-3">Darshan Count</th>
               <th className="p-3">Hundi Revenue</th>
               <th className="p-3">Laddu Sales</th>
@@ -74,33 +92,38 @@ export default function DataTable({ records, onExportCSV }) {
               <th className="p-3">Source Bulletin</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60 font-body">
+          <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 font-body">
             {pageRecords.length > 0 ? (
-              pageRecords.map((r, i) => (
-                <tr key={i} className="hover:bg-[#2A2E35]/40 transition-colors text-slate-200">
-                  <td className="p-3 font-semibold text-[#FDE047] whitespace-nowrap">{r.date}</td>
-                  <td className="p-3 font-mono">{r.darshan_count ? r.darshan_count.toLocaleString('en-IN') : '-'}</td>
-                  <td className="p-3 font-mono text-[#BFD8D2]">{r.hundi_revenue_cr != null ? `₹ ${r.hundi_revenue_cr} Cr` : '-'}</td>
-                  <td className="p-3 font-mono text-[#A2C4F2]">{r.laddu_sales_lac != null ? `${r.laddu_sales_lac} L` : '-'}</td>
-                  <td className="p-3 font-mono text-slate-400">{r.tonsures ? r.tonsures.toLocaleString('en-IN') : '-'}</td>
-                  <td className="p-3 font-mono text-slate-300">{r.approx_wait_hours != null ? `${r.approx_wait_hours} hrs` : '-'}</td>
-                  <td className="p-3 max-w-xs truncate">
-                    {r.link ? (
-                      <a
-                        href={r.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs text-slate-400 hover:text-[#FDE047] inline-flex items-center space-x-1 truncate"
-                      >
-                        <span className="truncate">{r.title || 'Official Post'}</span>
-                        <ExternalLink className="w-3 h-3 flex-shrink-0" strokeWidth={1.5} />
-                      </a>
-                    ) : (
-                      <span className="text-slate-500">{r.title || '-'}</span>
-                    )}
-                  </td>
-                </tr>
-              ))
+              pageRecords.map((r, i) => {
+                const dayName = getDayOfWeek(r.date);
+                return (
+                  <tr key={i} className="hover:bg-slate-50 dark:hover:bg-[#2A2E35]/40 transition-colors text-slate-800 dark:text-slate-200">
+                    <td className="p-3 font-semibold text-[#3D6B5E] dark:text-[#FDE047] whitespace-nowrap">
+                      {r.date} <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 ml-1">({dayName})</span>
+                    </td>
+                    <td className="p-3 font-mono">{r.darshan_count ? r.darshan_count.toLocaleString('en-IN') : '-'}</td>
+                    <td className="p-3 font-mono text-emerald-700 dark:text-[#BFD8D2]">{r.hundi_revenue_cr != null ? `₹ ${r.hundi_revenue_cr} Cr` : '-'}</td>
+                    <td className="p-3 font-mono text-blue-700 dark:text-[#A2C4F2]">{r.laddu_sales_lac != null ? `${r.laddu_sales_lac} L` : '-'}</td>
+                    <td className="p-3 font-mono text-slate-600 dark:text-slate-400">{r.tonsures ? r.tonsures.toLocaleString('en-IN') : '-'}</td>
+                    <td className="p-3 font-mono text-slate-700 dark:text-slate-300">{r.approx_wait_hours != null ? `${r.approx_wait_hours} hrs` : '-'}</td>
+                    <td className="p-3 max-w-xs truncate">
+                      {r.link ? (
+                        <a
+                          href={r.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs text-slate-600 hover:text-[#3D6B5E] dark:text-slate-400 dark:hover:text-[#FDE047] inline-flex items-center space-x-1 truncate"
+                        >
+                          <span className="truncate">{r.title || 'Official Post'}</span>
+                          <ExternalLink className="w-3 h-3 flex-shrink-0" strokeWidth={1.5} />
+                        </a>
+                      ) : (
+                        <span className="text-slate-400 dark:text-slate-500">{r.title || '-'}</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan={7} className="p-8 text-center text-slate-500 text-xs">
@@ -113,7 +136,7 @@ export default function DataTable({ records, onExportCSV }) {
       </div>
 
       {/* Pagination controls */}
-      <div className="flex items-center justify-between text-xs text-slate-400 pt-2">
+      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-2">
         <div>
           Showing {filteredData.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} to {Math.min(currentPage * pageSize, filteredData.length)} of {filteredData.length} records
         </div>
@@ -121,19 +144,19 @@ export default function DataTable({ records, onExportCSV }) {
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            className="p-1.5 rounded-lg bg-[#2A2E35] hover:bg-slate-700 disabled:opacity-40 border border-slate-700"
+            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 dark:bg-[#2A2E35] dark:hover:bg-slate-700 dark:text-white dark:border-slate-700 disabled:opacity-40"
           >
-            <ChevronLeft className="w-4 h-4 text-white" strokeWidth={1.5} />
+            <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
           </button>
-          <span className="font-semibold text-slate-200">
+          <span className="font-semibold text-slate-700 dark:text-slate-200">
             Page {currentPage} of {totalPages}
           </span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            className="p-1.5 rounded-lg bg-[#2A2E35] hover:bg-slate-700 disabled:opacity-40 border border-slate-700"
+            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 dark:bg-[#2A2E35] dark:hover:bg-slate-700 dark:text-white dark:border-slate-700 disabled:opacity-40"
           >
-            <ChevronRight className="w-4 h-4 text-white" strokeWidth={1.5} />
+            <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
           </button>
         </div>
       </div>
@@ -141,3 +164,4 @@ export default function DataTable({ records, onExportCSV }) {
     </div>
   );
 }
+

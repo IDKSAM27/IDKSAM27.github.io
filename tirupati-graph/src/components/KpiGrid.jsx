@@ -41,36 +41,36 @@ export default function KpiGrid({ records }) {
       value: stats.totalDarshan.toLocaleString('en-IN'),
       subtitle: `Avg: ${stats.avgDarshan.toLocaleString('en-IN')} / day`,
       icon: Users,
-      bgColor: 'bg-[#2A2E35]',
-      accentColor: 'text-[#BFD8D2]',
-      borderColor: 'border-[#BFD8D2]/20',
+      bgColor: 'bg-[#BFD8D2]/40 dark:bg-[#2A2E35]',
+      accentColor: 'text-[#2C4A43] dark:text-[#BFD8D2]',
+      borderColor: 'border-[#BFD8D2] dark:border-[#BFD8D2]/20',
     },
     {
       title: 'Hundi Offering Revenue',
       value: `₹ ${stats.totalHundi.toFixed(2)} Cr`,
       subtitle: `Avg: ₹ ${stats.avgHundi} Cr / day`,
       icon: IndianRupee,
-      bgColor: 'bg-[#3B2F3E]',
-      accentColor: 'text-[#FDE047]',
-      borderColor: 'border-[#FDE047]/20',
+      bgColor: 'bg-[#E7CCCC]/40 dark:bg-[#3B2F3E]',
+      accentColor: 'text-[#5C3A3A] dark:text-[#FDE047]',
+      borderColor: 'border-[#E7CCCC] dark:border-[#FDE047]/20',
     },
     {
       title: 'Laddu Prasadams Sold',
       value: `${stats.totalLaddu.toFixed(2)} Lakhs`,
       subtitle: `Avg: ${stats.avgLaddu} Lakhs / day`,
       icon: Cookie,
-      bgColor: 'bg-[#243447]',
-      accentColor: 'text-[#A2C4F2]',
-      borderColor: 'border-[#A2C4F2]/20',
+      bgColor: 'bg-[#A2C4F2]/40 dark:bg-[#243447]',
+      accentColor: 'text-[#1E3A64] dark:text-[#A2C4F2]',
+      borderColor: 'border-[#A2C4F2] dark:border-[#A2C4F2]/20',
     },
     {
       title: 'Avg Compartment Wait Time',
       value: `${stats.avgWaitHours} Hours`,
       subtitle: 'Estimated queue duration',
       icon: Clock,
-      bgColor: 'bg-[#1A2421]',
-      accentColor: 'text-[#E2ECE9]',
-      borderColor: 'border-[#E2ECE9]/20',
+      bgColor: 'bg-[#E2ECE9]/70 dark:bg-[#1A2421]',
+      accentColor: 'text-[#2C4A43] dark:text-[#E2ECE9]',
+      borderColor: 'border-[#BFD8D2] dark:border-[#E2ECE9]/20',
     },
   ];
 
@@ -81,21 +81,21 @@ export default function KpiGrid({ records }) {
         return (
           <div
             key={idx}
-            className={`${card.bgColor} ${card.borderColor} border rounded-2xl p-4 sm:p-5 flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-lg`}
+            className={`${card.bgColor} ${card.borderColor} border rounded-2xl p-4 sm:p-5 flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-md shadow-sm`}
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-medium text-slate-300 tracking-wide uppercase">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 tracking-wide uppercase">
                 {card.title}
               </span>
-              <div className={`p-2 rounded-xl bg-slate-900/40 ${card.accentColor}`}>
+              <div className={`p-2 rounded-xl bg-white/70 dark:bg-slate-900/40 ${card.accentColor}`}>
                 <IconComponent className="w-4 h-4" strokeWidth={1.5} />
               </div>
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-extrabold font-heading text-white tracking-tight">
+              <div className="text-xl sm:text-2xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
                 {card.value}
               </div>
-              <div className="text-[11px] text-slate-400 mt-1 font-body">
+              <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1 font-body">
                 {card.subtitle}
               </div>
             </div>
@@ -105,3 +105,4 @@ export default function KpiGrid({ records }) {
     </div>
   );
 }
+

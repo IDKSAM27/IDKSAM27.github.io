@@ -55,13 +55,13 @@ export default function FilterToolbar({
   ];
 
   return (
-    <div className="portfolio-card p-4 sm:p-5 space-y-4">
+    <div className="portfolio-card p-4 sm:p-5 space-y-4 shadow-sm">
       
       {/* Top row: Section Header & Preset shortcuts */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-        <div className="flex items-center space-x-2 text-slate-200">
-          <SlidersHorizontal className="w-4 h-4 text-[#FDE047]" strokeWidth={1.5} />
-          <h2 className="text-sm font-bold font-heading tracking-wide uppercase text-slate-100">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div className="flex items-center space-x-2 text-slate-800 dark:text-slate-200">
+          <SlidersHorizontal className="w-4 h-4 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
+          <h2 className="text-sm font-bold font-heading tracking-wide uppercase text-slate-900 dark:text-slate-100">
             Interactive Controls & Filters
           </h2>
         </div>
@@ -74,8 +74,8 @@ export default function FilterToolbar({
               onClick={() => setPresetRange(p.value)}
               className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
                 presetRange === p.value
-                  ? 'bg-[#FDE047] text-[#020617] font-bold shadow-sm'
-                  : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300'
+                  ? 'bg-[#4E5C58] text-white dark:bg-[#FDE047] dark:text-[#020617] font-bold shadow-xs'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800/80 dark:hover:bg-slate-700 dark:text-slate-300'
               }`}
             >
               {p.label}
@@ -84,7 +84,7 @@ export default function FilterToolbar({
 
           <button
             onClick={onResetFilters}
-            className="ml-2 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-rose-900/40 text-slate-400 hover:text-rose-300 text-xs font-medium border border-slate-700 transition-colors flex items-center space-x-1"
+            className="ml-2 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 dark:bg-slate-800 dark:hover:bg-rose-900/40 dark:text-slate-400 dark:hover:text-rose-300 text-xs font-medium border border-slate-300 dark:border-slate-700 transition-colors flex items-center space-x-1"
             title="Reset to default view"
           >
             <RotateCcw className="w-3 h-3" strokeWidth={1.5} />
@@ -98,8 +98,8 @@ export default function FilterToolbar({
         
         {/* Year Filter */}
         <div>
-          <label className="block text-[11px] font-semibold text-slate-400 mb-1 flex items-center space-x-1">
-            <Calendar className="w-3 h-3 text-[#BFD8D2]" strokeWidth={1.5} />
+          <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1 flex items-center space-x-1">
+            <Calendar className="w-3 h-3 text-[#3D6B5E] dark:text-[#BFD8D2]" strokeWidth={1.5} />
             <span>Year</span>
           </label>
           <select
@@ -108,7 +108,7 @@ export default function FilterToolbar({
               setSelectedYear(e.target.value);
               setPresetRange('all');
             }}
-            className="w-full bg-[#2A2E35] border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FDE047] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047] transition-colors"
           >
             <option value="all">All Available Years</option>
             {availableYears.map(y => (
@@ -119,7 +119,7 @@ export default function FilterToolbar({
 
         {/* Month Filter */}
         <div>
-          <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+          <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
             Month
           </label>
           <select
@@ -128,7 +128,7 @@ export default function FilterToolbar({
               setSelectedMonth(e.target.value);
               setPresetRange('all');
             }}
-            className="w-full bg-[#2A2E35] border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FDE047] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047] transition-colors"
           >
             {months.map(m => (
               <option key={m.value} value={m.value}>{m.label}</option>
@@ -138,14 +138,14 @@ export default function FilterToolbar({
 
         {/* Primary Metric Axis */}
         <div>
-          <label className="block text-[11px] font-semibold text-[#FDE047] mb-1 flex items-center space-x-1">
+          <label className="block text-[11px] font-semibold text-[#3D6B5E] dark:text-[#FDE047] mb-1 flex items-center space-x-1">
             <BarChart2 className="w-3 h-3" strokeWidth={1.5} />
             <span>Primary Metric (Left Axis)</span>
           </label>
           <select
             value={primaryMetric}
             onChange={e => setPrimaryMetric(e.target.value)}
-            className="w-full bg-[#2A2E35] border border-[#FDE047]/40 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FDE047] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-[#3D6B5E]/40 dark:border-[#FDE047]/40 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047] transition-colors"
           >
             {metricsOptions.map(m => (
               <option key={m.value} value={m.value}>{m.label}</option>
@@ -155,14 +155,14 @@ export default function FilterToolbar({
 
         {/* Secondary Metric Axis */}
         <div>
-          <label className="block text-[11px] font-semibold text-[#A2C4F2] mb-1 flex items-center space-x-1">
+          <label className="block text-[11px] font-semibold text-[#1D4ED8] dark:text-[#A2C4F2] mb-1 flex items-center space-x-1">
             <BarChart2 className="w-3 h-3" strokeWidth={1.5} />
             <span>Secondary Metric (Right Axis)</span>
           </label>
           <select
             value={secondaryMetric}
             onChange={e => setSecondaryMetric(e.target.value)}
-            className="w-full bg-[#2A2E35] border border-[#A2C4F2]/40 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#A2C4F2] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-[#1D4ED8]/40 dark:border-[#A2C4F2]/40 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#A2C4F2] transition-colors"
           >
             <option value="none">None (Single Axis)</option>
             {metricsOptions.map(m => (
@@ -174,20 +174,20 @@ export default function FilterToolbar({
       </div>
 
       {/* Sub-row: Day Type & Smoothing */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800/60 text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-200 dark:border-slate-800/60 text-xs">
         
         {/* Day of Week Filter */}
         <div className="flex items-center space-x-2">
-          <span className="text-[11px] text-slate-400 font-medium">Day Filter:</span>
-          <div className="inline-flex rounded-lg p-0.5 bg-[#2A2E35] border border-slate-700">
+          <span className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">Day Filter:</span>
+          <div className="inline-flex rounded-lg p-0.5 bg-slate-100 border border-slate-300 dark:bg-[#2A2E35] dark:border-slate-700">
             {['all', 'weekday', 'weekend'].map(d => (
               <button
                 key={d}
                 onClick={() => setDayFilter(d)}
                 className={`px-2.5 py-1 text-[11px] rounded-md capitalize transition-colors ${
                   dayFilter === d
-                    ? 'bg-[#4E5C58] text-[#FDE047] font-semibold'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-[#4E5C58] text-white dark:bg-[#4E5C58] dark:text-[#FDE047] font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                 }`}
               >
                 {d}
@@ -198,8 +198,8 @@ export default function FilterToolbar({
 
         {/* Moving Average Smoothing */}
         <div className="flex items-center space-x-2">
-          <span className="text-[11px] text-slate-400 font-medium">Trend Smoothing:</span>
-          <div className="inline-flex rounded-lg p-0.5 bg-[#2A2E35] border border-slate-700">
+          <span className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">Trend Smoothing:</span>
+          <div className="inline-flex rounded-lg p-0.5 bg-slate-100 border border-slate-300 dark:bg-[#2A2E35] dark:border-slate-700">
             {[
               { id: 'none', name: 'Raw' },
               { id: '7d', name: '7-Day MA' },
@@ -210,8 +210,8 @@ export default function FilterToolbar({
                 onClick={() => setSmoothing(s.id)}
                 className={`px-2.5 py-1 text-[11px] rounded-md transition-colors ${
                   smoothing === s.id
-                    ? 'bg-[#4E5C58] text-[#FDE047] font-semibold'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-[#4E5C58] text-white dark:bg-[#4E5C58] dark:text-[#FDE047] font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                 }`}
               >
                 {s.name}
@@ -225,3 +225,4 @@ export default function FilterToolbar({
     </div>
   );
 }
+
