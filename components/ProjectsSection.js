@@ -9,6 +9,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
+    title: "Tirupati (TTD) Daily Analytics Engine",
+    description: "Interactive analytics & visualization engine for Tirumala Tirupati Devasthanams (TTD) daily pilgrim records, hundi offerings, laddu distribution, and wait times.",
+    technologies: ["React.js", "ECharts", "TailwindCSS", "Time-Series"],
+    liveLink: "/ttd",
+    githubLink: "https://github.com/IDKSAM27/Tirupati-graph",
+  },
+  {
     title: "Agent-X: Personal AI Assistant",
     description: "A Flutter-based mobile application integrating a personal AI assistant with task management, calendar events, and news features.",
     technologies: ["Flutter", "Dart", "Firebase", "FastAPI"],
@@ -63,7 +70,6 @@ const ProjectsSection = () => {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Title animation
     gsap.from(container.current.querySelector('.section-title'), {
       scrollTrigger: {
         trigger: container.current,
@@ -76,7 +82,6 @@ const ProjectsSection = () => {
       force3D: true,
     });
 
-    // Project card entrance animations
     const items = container.current.querySelectorAll('.project-card-wrapper');
     items.forEach((item, index) => {
       gsap.from(item, {
@@ -94,7 +99,6 @@ const ProjectsSection = () => {
       });
     });
 
-    // Homelab card entrance — same animation as project cards
     const homelabCard = container.current.querySelector('.homelab-card-wrapper');
     if (homelabCard) {
       gsap.from(homelabCard, {
@@ -115,7 +119,6 @@ const ProjectsSection = () => {
   return (
     <div ref={container} className="w-full py-24 md:py-32 px-4 md:px-12 lg:px-20 overflow-hidden">
       <div className="w-full">
-        {/* Header Section */}
         <div className="mb-20">
           <h2
             className="section-title text-5xl sm:text-6xl md:text-8xl font-heading text-text-light dark:text-text-dark tracking-tighter"
@@ -131,10 +134,7 @@ const ProjectsSection = () => {
           </p>
         </div>
 
-        {/* Layout with Sidebar Label */}
         <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-12">
-
-          {/* Sidebar Label in "Cassie Evans" style */}
           <div className="md:w-32 flex-shrink-0 pt-2">
             <div className="flex items-center gap-4">
               <span
@@ -147,7 +147,6 @@ const ProjectsSection = () => {
             </div>
           </div>
 
-          {/* Project Grid */}
           <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             {projects.map((project, index) => (
               <div key={index} className="project-card-wrapper">
@@ -155,7 +154,6 @@ const ProjectsSection = () => {
               </div>
             ))}
 
-            {/* "More coming" Placeholder card */}
             <a
               href="https://github.com/idksam27"
               target="_blank"
@@ -170,10 +168,8 @@ const ProjectsSection = () => {
               </div>
             </a>
           </div>
-
         </div>
 
-        {/* Homelab showcase with matching card entrance animation */}
         <div className="homelab-card-wrapper" style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}>
           <HomeLabShowcase />
         </div>

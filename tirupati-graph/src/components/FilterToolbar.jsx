@@ -1,0 +1,227 @@
+import React from 'react';
+import { SlidersHorizontal, RotateCcw, Calendar, BarChart2 } from 'lucide-react';
+
+export default function FilterToolbar({
+  selectedYear,
+  setSelectedYear,
+  selectedMonth,
+  setSelectedMonth,
+  primaryMetric,
+  setPrimaryMetric,
+  secondaryMetric,
+  setSecondaryMetric,
+  presetRange,
+  setPresetRange,
+  smoothing,
+  setSmoothing,
+  dayFilter,
+  setDayFilter,
+  availableYears,
+  onResetFilters,
+}) {
+  const months = [
+    { value: 'all', label: 'All Months' },
+    { value: '01', label: 'Jan' },
+    { value: '02', label: 'Feb' },
+    { value: '03', label: 'Mar' },
+    { value: '04', label: 'Apr' },
+    { value: '05', label: 'May' },
+    { value: '06', label: 'Jun' },
+    { value: '07', label: 'Jul' },
+    { value: '08', label: 'Aug' },
+    { value: '09', label: 'Sep' },
+    { value: '10', label: 'Oct' },
+    { value: '11', label: 'Nov' },
+    { value: '12', label: 'Dec' },
+  ];
+
+  const metricsOptions = [
+    { value: 'darshan_count', label: 'Darshan Count' },
+    { value: 'hundi_revenue_cr', label: 'Hundi Revenue (Cr ₹)' },
+    { value: 'laddu_sales_lac', label: 'Laddu Sales (Lakhs)' },
+    { value: 'tonsures', label: 'Tonsures (Kalyanakatta)' },
+    { value: 'annaprasadam_lac', label: 'Annaprasadam Meals (Lakhs)' },
+    { value: 'ashwini_patients', label: 'Ashwini Medical Patients' },
+    { value: 'waiting_compartments', label: 'Waiting Compartments' },
+    { value: 'approx_wait_hours', label: 'Approx Wait Time (Hours)' },
+  ];
+
+  const presets = [
+    { value: 'all', label: 'All Time' },
+    { value: '7d', label: 'Last 7 Days' },
+    { value: '30d', label: 'Last 30 Days' },
+    { value: '90d', label: 'Last 90 Days' },
+    { value: '1y', label: 'Last 1 Year' },
+  ];
+
+  return (
+    <div className="portfolio-card p-4 sm:p-5 space-y-4">
+      
+      {/* Top row: Section Header & Preset shortcuts */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+        <div className="flex items-center space-x-2 text-slate-200">
+          <SlidersHorizontal className="w-4 h-4 text-[#FDE047]" strokeWidth={1.5} />
+          <h2 className="text-sm font-bold font-heading tracking-wide uppercase text-slate-100">
+            Interactive Controls & Filters
+          </h2>
+        </div>
+
+        {/* Preset Quick Range Buttons */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {presets.map(p => (
+            <button
+              key={p.value}
+              onClick={() => setPresetRange(p.value)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+                presetRange === p.value
+                  ? 'bg-[#FDE047] text-[#020617] font-bold shadow-sm'
+                  : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300'
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
+
+          <button
+            onClick={onResetFilters}
+            className="ml-2 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-rose-900/40 text-slate-400 hover:text-rose-300 text-xs font-medium border border-slate-700 transition-colors flex items-center space-x-1"
+            title="Reset to default view"
+          >
+            <RotateCcw className="w-3 h-3" strokeWidth={1.5} />
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Grid of Control Selectors */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        
+        {/* Year Filter */}
+        <div>
+          <label className="block text-[11px] font-semibold text-slate-400 mb-1 flex items-center space-x-1">
+            <Calendar className="w-3 h-3 text-[#BFD8D2]" strokeWidth={1.5} />
+            <span>Year</span>
+          </label>
+          <select
+            value={selectedYear}
+            onChange={e => {
+              setSelectedYear(e.target.value);
+              setPresetRange('all');
+            }}
+            className="w-full bg-[#2A2E35] border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FDE047] transition-colors"
+          >
+            <option value="all">All Available Years</option>
+            {availableYears.map(y => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Month Filter */}
+        <div>
+          <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+            Month
+          </label>
+          <select
+            value={selectedMonth}
+            onChange={e => {
+              setSelectedMonth(e.target.value);
+              setPresetRange('all');
+            }}
+            className="w-full bg-[#2A2E35] border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FDE047] transition-colors"
+          >
+            {months.map(m => (
+              <option key={m.value} value={m.value}>{m.label}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Primary Metric Axis */}
+        <div>
+          <label className="block text-[11px] font-semibold text-[#FDE047] mb-1 flex items-center space-x-1">
+            <BarChart2 className="w-3 h-3" strokeWidth={1.5} />
+            <span>Primary Metric (Left Axis)</span>
+          </label>
+          <select
+            value={primaryMetric}
+            onChange={e => setPrimaryMetric(e.target.value)}
+            className="w-full bg-[#2A2E35] border border-[#FDE047]/40 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#FDE047] transition-colors"
+          >
+            {metricsOptions.map(m => (
+              <option key={m.value} value={m.value}>{m.label}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Secondary Metric Axis */}
+        <div>
+          <label className="block text-[11px] font-semibold text-[#A2C4F2] mb-1 flex items-center space-x-1">
+            <BarChart2 className="w-3 h-3" strokeWidth={1.5} />
+            <span>Secondary Metric (Right Axis)</span>
+          </label>
+          <select
+            value={secondaryMetric}
+            onChange={e => setSecondaryMetric(e.target.value)}
+            className="w-full bg-[#2A2E35] border border-[#A2C4F2]/40 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#A2C4F2] transition-colors"
+          >
+            <option value="none">None (Single Axis)</option>
+            {metricsOptions.map(m => (
+              <option key={m.value} value={m.value}>{m.label}</option>
+            ))}
+          </select>
+        </div>
+
+      </div>
+
+      {/* Sub-row: Day Type & Smoothing */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800/60 text-xs">
+        
+        {/* Day of Week Filter */}
+        <div className="flex items-center space-x-2">
+          <span className="text-[11px] text-slate-400 font-medium">Day Filter:</span>
+          <div className="inline-flex rounded-lg p-0.5 bg-[#2A2E35] border border-slate-700">
+            {['all', 'weekday', 'weekend'].map(d => (
+              <button
+                key={d}
+                onClick={() => setDayFilter(d)}
+                className={`px-2.5 py-1 text-[11px] rounded-md capitalize transition-colors ${
+                  dayFilter === d
+                    ? 'bg-[#4E5C58] text-[#FDE047] font-semibold'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {d}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Moving Average Smoothing */}
+        <div className="flex items-center space-x-2">
+          <span className="text-[11px] text-slate-400 font-medium">Trend Smoothing:</span>
+          <div className="inline-flex rounded-lg p-0.5 bg-[#2A2E35] border border-slate-700">
+            {[
+              { id: 'none', name: 'Raw' },
+              { id: '7d', name: '7-Day MA' },
+              { id: '30d', name: '30-Day MA' },
+            ].map(s => (
+              <button
+                key={s.id}
+                onClick={() => setSmoothing(s.id)}
+                className={`px-2.5 py-1 text-[11px] rounded-md transition-colors ${
+                  smoothing === s.id
+                    ? 'bg-[#4E5C58] text-[#FDE047] font-semibold'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {s.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
