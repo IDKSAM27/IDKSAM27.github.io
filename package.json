@@ -28,6 +28,8 @@
     "@gsap/react": "2.1.2",
     "@next/third-parties": "16.2.12",
     "@opennextjs/cloudflare": "1.20.2",
+    "echarts": "6.1.0",
+    "echarts-for-react": "3.0.6",
     "framer-motion": "12.38.0",
     "fumadocs-core": "16.14.0",
     "fumadocs-mdx": "15.2.2",
