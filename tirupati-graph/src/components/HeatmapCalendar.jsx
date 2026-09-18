@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { Calendar } from 'lucide-react';
 
@@ -27,6 +27,14 @@ function formatDateWithDay(dateStr) {
 
 export default function HeatmapCalendar({ records }) {
   const isDark = typeof window !== 'undefined' && document.documentElement.classList.contains('dark');
+  const [selectedYear, setSelectedYear] = useState('');
+
+  const availableYears = useMemo(() => {
+    if (!records || records.length === 0) return [];
+    return Array.from(new Set(records.map(r => r.date ? r.date.split('-')[0] : ''))).filter(Boolean).sort();
+  }, [records]);
+
+  const activeYear = selectedYear || (availableYears.length > 0 ? availableYears[availableYears.length - 1] : '2026');
 
   const option = useMemo(() => {
     if (!records || records.length === 0) return {};
@@ -34,9 +42,6 @@ export default function HeatmapCalendar({ records }) {
     const heatmapData = records
       .filter(r => r.date && typeof r.darshan_count === 'number')
       .map(r => [r.date, r.darshan_count]);
-
-    const years = Array.from(new Set(records.map(r => r.date.split('-')[0]))).sort();
-    const latestYear = years.length > 0 ? years[years.length - 1] : '2024';
 
     const textColor = isDark ? '#E2E8F0' : '#1E293B';
     const subtextColor = isDark ? '#94A3B8' : '#475569';
@@ -60,7 +65,7 @@ export default function HeatmapCalendar({ records }) {
         calculable: true,
         orient: 'horizontal',
         left: 'center',
-        top: 0,
+        top: -8,
         inRange: {
           color: isDark
             ? ['#2A2E35', '#4E5C58', '#BFD8D2', '#FDE047']
@@ -69,11 +74,11 @@ export default function HeatmapCalendar({ records }) {
         textStyle: { color: subtextColor, fontSize: 10 },
       },
       calendar: {
-        top: 60,
-        left: 40,
-        right: 20,
+        top: 80,
+        left: 65,
+        right: 30,
         cellSize: ['auto', 13],
-        range: latestYear,
+        range: activeYear,
         itemStyle: {
           borderWidth: 1.5,
           borderColor: isDark ? '#212121' : '#F9F6F1',
@@ -89,20 +94,39 @@ export default function HeatmapCalendar({ records }) {
         data: heatmapData,
       },
     };
-  }, [records, isDark]);
+  }, [records, isDark, activeYear]);
 
   return (
     <div className="portfolio-card p-4 sm:p-6 space-y-4 shadow-sm">
-      <div className="flex items-center space-x-2">
-        <Calendar className="w-5 h-5 text-[#3D6B5E] dark:text-[#BFD8D2]" strokeWidth={1.5} />
-        <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">
-          Daily Darshan Density Heatmap
-        </h3>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-center space-x-2">
+          <Calendar className="w-5 h-5 text-[#3D6B5E] dark:text-[#BFD8D2]" strokeWidth={1.5} />
+          <h3 className="text-base font-bold font-sans text-slate-900 dark:text-white">
+            Daily Darshan Density Heatmap
+          </h3>
+        </div>
+        {availableYears.length > 0 && (
+          <div className="flex items-center space-x-2 self-end sm:self-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Year:</span>
+            <select
+              value={activeYear}
+              onChange={e => setSelectedYear(e.target.value)}
+              className="bg-[#4E5C58] text-white dark:bg-[#FDE047] dark:text-[#020617] font-bold text-xs px-3.5 py-1.5 rounded-xl border border-transparent shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#4E5C58]/40 dark:focus:ring-[#FDE047]/40 transition-all cursor-pointer"
+            >
+              {availableYears.map(y => (
+                <option key={y} value={y} className="bg-white text-slate-900 dark:bg-[#2A2E35] dark:text-white font-medium">
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
-      <div className="w-full h-[220px] overflow-x-auto">
+      <div className="w-full h-[250px] overflow-x-auto">
         <ReactECharts option={option} style={{ height: '100%', minWidth: '700px' }} />
       </div>
     </div>
   );
 }
+
 

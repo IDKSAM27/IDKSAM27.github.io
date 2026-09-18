@@ -92,7 +92,7 @@ export default function KpiGrid({ records }) {
               </div>
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+              <div className="text-xl sm:text-2xl font-bold font-sans tracking-wide text-slate-900 dark:text-white">
                 {card.value}
               </div>
               <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1 font-body">

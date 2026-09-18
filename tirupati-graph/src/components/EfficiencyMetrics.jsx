@@ -48,7 +48,7 @@ export default function EfficiencyMetrics({ records }) {
     <div className="portfolio-card p-4 sm:p-6 space-y-4 shadow-sm">
       <div className="flex items-center space-x-2">
         <Gauge className="w-5 h-5 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-        <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">
+        <h3 className="text-base font-bold font-sans text-slate-900 dark:text-white">
           Per-Devotee Operational Efficiency Ratios
         </h3>
       </div>

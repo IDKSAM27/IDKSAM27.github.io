@@ -44,6 +44,22 @@ export function formatDateWithDay(dateStr) {
   return day ? `${dateStr} (${day})` : dateStr;
 }
 
+const MONTH_OPTIONS = [
+  { value: 'all', label: 'All Months' },
+  { value: '01', label: 'January' },
+  { value: '02', label: 'February' },
+  { value: '03', label: 'March' },
+  { value: '04', label: 'April' },
+  { value: '05', label: 'May' },
+  { value: '06', label: 'June' },
+  { value: '07', label: 'July' },
+  { value: '08', label: 'August' },
+  { value: '09', label: 'September' },
+  { value: '10', label: 'October' },
+  { value: '11', label: 'November' },
+  { value: '12', label: 'December' },
+];
+
 export default function TtdPage() {
   const [allRecords, setAllRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,6 +82,7 @@ export default function TtdPage() {
   const [presetRange, setPresetRange] = useState('all');
   const [smoothing, setSmoothing] = useState('none');
   const [dayFilter, setDayFilter] = useState('all');
+  const [heatmapYear, setHeatmapYear] = useState('');
 
   const fetchRecords = async () => {
     setLoading(true);
@@ -94,6 +111,12 @@ export default function TtdPage() {
     });
     return Array.from(yearsSet).sort().reverse();
   }, [allRecords]);
+
+  const heatmapAvailableYears = useMemo(() => {
+    return Array.from(new Set(allRecords.map(r => r.date ? r.date.split('-')[0] : ''))).filter(Boolean).sort();
+  }, [allRecords]);
+
+  const activeHeatmapYear = heatmapYear || (heatmapAvailableYears.length > 0 ? heatmapAvailableYears[heatmapAvailableYears.length - 1] : '2026');
 
   const filteredRecords = useMemo(() => {
     let result = [...allRecords];
@@ -132,6 +155,7 @@ export default function TtdPage() {
     setPresetRange('all');
     setSmoothing('none');
     setDayFilter('all');
+    setHeatmapYear('');
   };
 
   const handleExportCSV = () => {
@@ -194,7 +218,6 @@ export default function TtdPage() {
     const primaryAreaColor = isDark ? 'rgba(253, 224, 71, 0.25)' : 'rgba(61, 107, 94, 0.22)';
     const textColor = isDark ? '#E2E8F0' : '#1E293B';
     const subtextColor = isDark ? '#94A3B8' : '#475569';
-    const borderColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
 
     const calculateMA = (dataList, key, windowSize) => {
       return dataList.map((val, idx) => {
@@ -264,7 +287,7 @@ export default function TtdPage() {
       {
         type: 'value',
         name: METRIC_LABELS[primaryMetric] || primaryMetric,
-        nameTextStyle: { color: primaryColor, fontSize: 11, fontWeight: '600' },
+        nameTextStyle: { color: primaryColor, fontSize: 11, fontWeight: '600', align: 'left', padding: [0, 0, 8, 0] },
         axisLine: { lineStyle: { color: primaryColor } },
         splitLine: { lineStyle: { color: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.06)' } },
         axisLabel: { color: subtextColor, fontSize: 10 },
@@ -275,7 +298,7 @@ export default function TtdPage() {
       yAxis.push({
         type: 'value',
         name: METRIC_LABELS[secondaryMetric] || secondaryMetric,
-        nameTextStyle: { color: secondaryColor, fontSize: 11, fontWeight: '600' },
+        nameTextStyle: { color: secondaryColor, fontSize: 11, fontWeight: '600', align: 'right', padding: [0, 0, 8, 0] },
         axisLine: { lineStyle: { color: secondaryColor } },
         splitLine: { show: false },
         axisLabel: { color: subtextColor, fontSize: 10 },
@@ -313,10 +336,10 @@ export default function TtdPage() {
         top: 0,
       },
       grid: {
-        left: '3%',
-        right: secondaryMetric !== 'none' ? '4%' : '3%',
-        bottom: '12%',
-        top: '12%',
+        left: 20,
+        right: secondaryMetric !== 'none' ? 45 : 20,
+        bottom: 80,
+        top: 60,
         containLabel: true,
       },
       dataZoom: [
@@ -325,6 +348,8 @@ export default function TtdPage() {
           type: 'slider',
           start: 0,
           end: 100,
+          bottom: 12,
+          height: 26,
           borderColor: 'transparent',
           backgroundColor: isDark ? 'rgba(33, 33, 33, 0.6)' : 'rgba(241, 245, 249, 0.8)',
           fillerColor: isDark ? 'rgba(253, 224, 71, 0.15)' : 'rgba(61, 107, 94, 0.15)',
@@ -336,7 +361,7 @@ export default function TtdPage() {
         type: 'category',
         data: dates,
         axisLine: { lineStyle: { color: isDark ? '#475569' : '#CBD5E1' } },
-        axisLabel: { color: subtextColor, fontSize: 10 },
+        axisLabel: { color: subtextColor, fontSize: 10, margin: 12 },
       },
       yAxis,
       series,
@@ -349,9 +374,6 @@ export default function TtdPage() {
     const heatmapData = allRecords
       .filter(r => r.date && typeof r.darshan_count === 'number')
       .map(r => [r.date, r.darshan_count]);
-
-    const years = Array.from(new Set(allRecords.map(r => r.date.split('-')[0]))).sort();
-    const latestYear = years.length > 0 ? years[years.length - 1] : '2024';
 
     const textColor = isDark ? '#E2E8F0' : '#1E293B';
     const subtextColor = isDark ? '#94A3B8' : '#475569';
@@ -373,7 +395,7 @@ export default function TtdPage() {
         calculable: true,
         orient: 'horizontal',
         left: 'center',
-        top: 0,
+        top: -8,
         inRange: {
           color: isDark
             ? ['#2A2E35', '#4E5C58', '#BFD8D2', '#FDE047']
@@ -382,11 +404,11 @@ export default function TtdPage() {
         textStyle: { color: subtextColor, fontSize: 10 },
       },
       calendar: {
-        top: 60,
-        left: 40,
-        right: 20,
+        top: 80,
+        left: 65,
+        right: 30,
         cellSize: ['auto', 13],
-        range: latestYear,
+        range: activeHeatmapYear,
         itemStyle: {
           borderWidth: 1.5,
           borderColor: isDark ? '#212121' : '#F9F6F1',
@@ -398,7 +420,7 @@ export default function TtdPage() {
       },
       series: { type: 'heatmap', coordinateSystem: 'calendar', data: heatmapData },
     };
-  }, [allRecords, isDark]);
+  }, [allRecords, isDark, activeHeatmapYear]);
 
   // Table pagination & search
   const [searchTerm, setSearchTerm] = useState('');
@@ -432,12 +454,12 @@ export default function TtdPage() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 space-y-6">
         
-        {/* Sub-Header Title Bar */}
-        <div className="bg-white/90 dark:bg-[#2A2E35]/70 border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-sm p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4 border-l-[#4E5C58] dark:border-l-[#FDE047] transition-colors">
+        {/* Sub-Header Title Bar - Left Border Removed per Request */}
+        <div className="bg-white/90 dark:bg-[#2A2E35]/70 border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-sm p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
           <div>
             <div className="flex items-center space-x-2">
               <Activity className="w-6 h-6 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-              <h1 className="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold font-sans text-slate-900 dark:text-white tracking-normal">
                 Tirupati (TTD) Daily Analytics Engine
               </h1>
             </div>
@@ -465,14 +487,14 @@ export default function TtdPage() {
         {loading ? (
           <div className="flex flex-col items-center justify-center min-h-[350px] bg-white/90 dark:bg-[#2A2E35]/70 border border-slate-200 dark:border-white/10 rounded-2xl p-12 space-y-4 shadow-sm">
             <div className="w-10 h-10 rounded-full border-2 border-[#4E5C58]/30 dark:border-[#FDE047]/30 border-t-[#4E5C58] dark:border-t-[#FDE047] animate-spin"></div>
-            <p className="text-xs font-semibold text-[#4E5C58] dark:text-[#FDE047] animate-pulse font-heading tracking-wide">
+            <p className="text-xs font-semibold text-[#4E5C58] dark:text-[#FDE047] animate-pulse font-sans tracking-wide">
               Fetching TTD Historical Dataset (790+ Days)...
             </p>
           </div>
         ) : error ? (
           <div className="bg-white/90 dark:bg-[#2A2E35]/70 border border-rose-500/30 rounded-2xl p-8 text-center space-y-3 shadow-sm">
             <AlertCircle className="w-8 h-8 text-rose-500 dark:text-rose-400 mx-auto" strokeWidth={1.5} />
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white font-heading">Failed to Load Dataset</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">Failed to Load Dataset</h3>
             <p className="text-xs text-rose-600 dark:text-rose-300 font-mono">{error}</p>
             <button
               onClick={fetchRecords}
@@ -483,7 +505,7 @@ export default function TtdPage() {
           </div>
         ) : (
           <>
-            {/* KPI Cards */}
+            {/* KPI Cards - Numbers spaced out with font-sans font-bold tracking-wide */}
             {stats && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-[#BFD8D2]/40 dark:bg-[#2A2E35] border border-[#BFD8D2] dark:border-[#BFD8D2]/20 rounded-2xl p-5 flex flex-col justify-between shadow-sm transition-all hover:shadow-md">
@@ -493,7 +515,7 @@ export default function TtdPage() {
                       <Users className="w-4 h-4" strokeWidth={1.5} />
                     </div>
                   </div>
-                  <div className="text-2xl font-extrabold font-heading text-slate-900 dark:text-white">{stats.totalDarshan.toLocaleString('en-IN')}</div>
+                  <div className="text-2xl font-bold font-sans tracking-wide text-slate-900 dark:text-white">{stats.totalDarshan.toLocaleString('en-IN')}</div>
                   <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Avg: {stats.avgDarshan.toLocaleString('en-IN')} / day</div>
                 </div>
 
@@ -504,7 +526,7 @@ export default function TtdPage() {
                       <IndianRupee className="w-4 h-4" strokeWidth={1.5} />
                     </div>
                   </div>
-                  <div className="text-2xl font-extrabold font-heading text-slate-900 dark:text-white">₹ {stats.totalHundi.toFixed(2)} Cr</div>
+                  <div className="text-2xl font-bold font-sans tracking-wide text-slate-900 dark:text-white">₹ {stats.totalHundi.toFixed(2)} Cr</div>
                   <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Avg: ₹ {stats.avgHundi} Cr / day</div>
                 </div>
 
@@ -515,7 +537,7 @@ export default function TtdPage() {
                       <Cookie className="w-4 h-4" strokeWidth={1.5} />
                     </div>
                   </div>
-                  <div className="text-2xl font-extrabold font-heading text-slate-900 dark:text-white">{stats.totalLaddu.toFixed(2)} Lakhs</div>
+                  <div className="text-2xl font-bold font-sans tracking-wide text-slate-900 dark:text-white">{stats.totalLaddu.toFixed(2)} Lakhs</div>
                   <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Avg: {stats.avgLaddu} Lakhs / day</div>
                 </div>
 
@@ -526,18 +548,18 @@ export default function TtdPage() {
                       <Clock className="w-4 h-4" strokeWidth={1.5} />
                     </div>
                   </div>
-                  <div className="text-2xl font-extrabold font-heading text-slate-900 dark:text-white">{stats.avgWaitHours} Hours</div>
+                  <div className="text-2xl font-bold font-sans tracking-wide text-slate-900 dark:text-white">{stats.avgWaitHours} Hours</div>
                   <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Estimated compartment wait</div>
                 </div>
               </div>
             )}
 
-            {/* Filter Toolbar */}
+            {/* Filter Toolbar with Modern Dropdown UI & Full Month Names */}
             <div className="bg-white/90 dark:bg-[#2A2E35]/70 border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-sm p-5 space-y-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div className="flex items-center space-x-2 text-slate-800 dark:text-slate-200">
                   <SlidersHorizontal className="w-4 h-4 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-                  <h2 className="text-xs font-bold font-heading uppercase text-slate-900 dark:text-slate-100">Controls & Parameters</h2>
+                  <h2 className="text-xs font-bold font-sans uppercase text-slate-900 dark:text-slate-100 tracking-normal">Controls & Parameters</h2>
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {[
@@ -575,7 +597,7 @@ export default function TtdPage() {
                   <select
                     value={selectedYear}
                     onChange={e => { setSelectedYear(e.target.value); setPresetRange('all'); }}
-                    className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047]"
+                    className="w-full bg-slate-50 dark:bg-[#1E2228] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4E5C58]/30 dark:focus:ring-[#FDE047]/30 transition-all cursor-pointer"
                   >
                     <option value="all">All Years</option>
                     {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
@@ -587,11 +609,10 @@ export default function TtdPage() {
                   <select
                     value={selectedMonth}
                     onChange={e => { setSelectedMonth(e.target.value); setPresetRange('all'); }}
-                    className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047]"
+                    className="w-full bg-slate-50 dark:bg-[#1E2228] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4E5C58]/30 dark:focus:ring-[#FDE047]/30 transition-all cursor-pointer"
                   >
-                    <option value="all">All Months</option>
-                    {['01','02','03','04','05','06','07','08','09','10','11','12'].map(m => (
-                      <option key={m} value={m}>{m}</option>
+                    {MONTH_OPTIONS.map(m => (
+                      <option key={m.value} value={m.value}>{m.label}</option>
                     ))}
                   </select>
                 </div>
@@ -601,7 +622,7 @@ export default function TtdPage() {
                   <select
                     value={primaryMetric}
                     onChange={e => setPrimaryMetric(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-[#3D6B5E]/40 dark:border-[#FDE047]/40 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047]"
+                    className="w-full bg-slate-50 dark:bg-[#1E2228] border border-[#3D6B5E]/40 dark:border-[#FDE047]/40 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3D6B5E]/30 dark:focus:ring-[#FDE047]/30 transition-all cursor-pointer"
                   >
                     {Object.entries(METRIC_LABELS).map(([k, v]) => (
                       <option key={k} value={k}>{v}</option>
@@ -614,7 +635,7 @@ export default function TtdPage() {
                   <select
                     value={secondaryMetric}
                     onChange={e => setSecondaryMetric(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-[#1D4ED8]/40 dark:border-[#A2C4F2]/40 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#A2C4F2]"
+                    className="w-full bg-slate-50 dark:bg-[#1E2228] border border-[#1D4ED8]/40 dark:border-[#A2C4F2]/40 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/30 dark:focus:ring-[#A2C4F2]/30 transition-all cursor-pointer"
                   >
                     <option value="none">None (Single Axis)</option>
                     {Object.entries(METRIC_LABELS).map(([k, v]) => (
@@ -630,7 +651,7 @@ export default function TtdPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <TrendingUp className="w-5 h-5 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-                  <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">Time-Series Dynamics</h3>
+                  <h3 className="text-base font-bold font-sans text-slate-900 dark:text-white">Time-Series Dynamics</h3>
                 </div>
               </div>
               <div className="w-full h-[400px]">
@@ -644,11 +665,29 @@ export default function TtdPage() {
 
             {/* Heatmap Calendar */}
             <div className="bg-white/90 dark:bg-[#2A2E35]/70 border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-sm p-5 space-y-4">
-              <div className="flex items-center space-x-2">
-                <Calendar className="w-5 h-5 text-[#3D6B5E] dark:text-[#BFD8D2]" strokeWidth={1.5} />
-                <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">Daily Density Calendar Heatmap</h3>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center space-x-2">
+                  <Calendar className="w-5 h-5 text-[#3D6B5E] dark:text-[#BFD8D2]" strokeWidth={1.5} />
+                  <h3 className="text-base font-bold font-sans text-slate-900 dark:text-white">Daily Density Calendar Heatmap</h3>
+                </div>
+                {heatmapAvailableYears.length > 0 && (
+                  <div className="flex items-center space-x-2 self-end sm:self-auto">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Year:</span>
+                    <select
+                      value={activeHeatmapYear}
+                      onChange={e => setHeatmapYear(e.target.value)}
+                      className="bg-[#4E5C58] text-white dark:bg-[#FDE047] dark:text-[#020617] font-bold text-xs px-3.5 py-1.5 rounded-xl border border-transparent shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#4E5C58]/40 dark:focus:ring-[#FDE047]/40 transition-all cursor-pointer"
+                    >
+                      {heatmapAvailableYears.map(y => (
+                        <option key={y} value={y} className="bg-white text-slate-900 dark:bg-[#2A2E35] dark:text-white font-medium">
+                          {y}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
-              <div className="w-full h-[220px] overflow-x-auto">
+              <div className="w-full h-[250px] overflow-x-auto">
                 <ReactECharts option={heatmapOption} style={{ height: '100%', minWidth: '700px' }} />
               </div>
             </div>
@@ -658,7 +697,7 @@ export default function TtdPage() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div className="flex items-center space-x-2">
                   <Table className="w-5 h-5 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-                  <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">Ledger Data ({tableData.length})</h3>
+                  <h3 className="text-base font-bold font-sans text-slate-900 dark:text-white">Ledger Data ({tableData.length})</h3>
                 </div>
                 <div className="relative w-full sm:w-64">
                   <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" strokeWidth={1.5} />
@@ -675,7 +714,7 @@ export default function TtdPage() {
               <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-slate-100 dark:bg-[#2A2E35]/80 text-slate-700 dark:text-slate-300 font-heading border-b border-slate-200 dark:border-slate-800">
+                    <tr className="bg-slate-100 dark:bg-[#2A2E35]/80 text-slate-700 dark:text-slate-300 font-bold font-sans border-b border-slate-200 dark:border-slate-800">
                       <th className="p-3">Date (Day)</th>
                       <th className="p-3">Darshan</th>
                       <th className="p-3">Hundi (Cr)</th>
@@ -737,4 +776,5 @@ export default function TtdPage() {
     </div>
   );
 }
+
 

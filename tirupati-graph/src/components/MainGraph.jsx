@@ -142,7 +142,7 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
       {
         type: 'value',
         name: METRIC_LABELS[primaryMetric] || primaryMetric,
-        nameTextStyle: { color: primaryColor, fontSize: 11, fontWeight: '600' },
+        nameTextStyle: { color: primaryColor, fontSize: 11, fontWeight: '600', align: 'left', padding: [0, 0, 8, 0] },
         axisLine: { lineStyle: { color: primaryColor } },
         splitLine: { lineStyle: { color: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.06)' } },
         axisLabel: { color: subtextColor, fontSize: 10 },
@@ -153,7 +153,7 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
       yAxis.push({
         type: 'value',
         name: METRIC_LABELS[secondaryMetric] || secondaryMetric,
-        nameTextStyle: { color: secondaryColor, fontSize: 11, fontWeight: '600' },
+        nameTextStyle: { color: secondaryColor, fontSize: 11, fontWeight: '600', align: 'right', padding: [0, 0, 8, 0] },
         axisLine: { lineStyle: { color: secondaryColor } },
         splitLine: { show: false },
         axisLabel: { color: subtextColor, fontSize: 10 },
@@ -194,10 +194,10 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
         top: 0,
       },
       grid: {
-        left: '3%',
-        right: secondaryMetric !== 'none' ? '4%' : '3%',
-        bottom: '12%',
-        top: '12%',
+        left: 20,
+        right: secondaryMetric !== 'none' ? 45 : 20,
+        bottom: 80,
+        top: 60,
         containLabel: true,
       },
       dataZoom: [
@@ -210,6 +210,8 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
           type: 'slider',
           start: 0,
           end: 100,
+          bottom: 12,
+          height: 26,
           borderColor: 'transparent',
           backgroundColor: isDark ? 'rgba(33, 33, 33, 0.6)' : 'rgba(241, 245, 249, 0.8)',
           fillerColor: isDark ? 'rgba(253, 224, 71, 0.15)' : 'rgba(61, 107, 94, 0.15)',
@@ -221,7 +223,7 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
         type: 'category',
         data: dates,
         axisLine: { lineStyle: { color: isDark ? '#475569' : '#CBD5E1' } },
-        axisLabel: { color: subtextColor, fontSize: 10 },
+        axisLabel: { color: subtextColor, fontSize: 10, margin: 12 },
       },
       yAxis: yAxis,
       series: series,
@@ -233,7 +235,7 @@ export default function MainGraph({ records, primaryMetric, secondaryMetric, smo
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <TrendingUp className="w-5 h-5 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-          <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">
+          <h3 className="text-base font-bold font-sans text-slate-900 dark:text-white">
             Primary Time-Series Trajectory
           </h3>
         </div>

@@ -21,18 +21,18 @@ export default function FilterToolbar({
 }) {
   const months = [
     { value: 'all', label: 'All Months' },
-    { value: '01', label: 'Jan' },
-    { value: '02', label: 'Feb' },
-    { value: '03', label: 'Mar' },
-    { value: '04', label: 'Apr' },
+    { value: '01', label: 'January' },
+    { value: '02', label: 'February' },
+    { value: '03', label: 'March' },
+    { value: '04', label: 'April' },
     { value: '05', label: 'May' },
-    { value: '06', label: 'Jun' },
-    { value: '07', label: 'Jul' },
-    { value: '08', label: 'Aug' },
-    { value: '09', label: 'Sep' },
-    { value: '10', label: 'Oct' },
-    { value: '11', label: 'Nov' },
-    { value: '12', label: 'Dec' },
+    { value: '06', label: 'June' },
+    { value: '07', label: 'July' },
+    { value: '08', label: 'August' },
+    { value: '09', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' },
   ];
 
   const metricsOptions = [
@@ -61,7 +61,7 @@ export default function FilterToolbar({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center space-x-2 text-slate-800 dark:text-slate-200">
           <SlidersHorizontal className="w-4 h-4 text-[#4E5C58] dark:text-[#FDE047]" strokeWidth={1.5} />
-          <h2 className="text-sm font-bold font-heading tracking-wide uppercase text-slate-900 dark:text-slate-100">
+          <h2 className="text-sm font-bold font-heading tracking-normal uppercase text-slate-900 dark:text-slate-100">
             Interactive Controls & Filters
           </h2>
         </div>
@@ -108,7 +108,7 @@ export default function FilterToolbar({
               setSelectedYear(e.target.value);
               setPresetRange('all');
             }}
-            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#1E2228] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4E5C58]/30 dark:focus:ring-[#FDE047]/30 transition-all cursor-pointer"
           >
             <option value="all">All Available Years</option>
             {availableYears.map(y => (
@@ -128,7 +128,7 @@ export default function FilterToolbar({
               setSelectedMonth(e.target.value);
               setPresetRange('all');
             }}
-            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#1E2228] border border-slate-300 dark:border-slate-700/80 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4E5C58]/30 dark:focus:ring-[#FDE047]/30 transition-all cursor-pointer"
           >
             {months.map(m => (
               <option key={m.value} value={m.value}>{m.label}</option>
@@ -145,7 +145,7 @@ export default function FilterToolbar({
           <select
             value={primaryMetric}
             onChange={e => setPrimaryMetric(e.target.value)}
-            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-[#3D6B5E]/40 dark:border-[#FDE047]/40 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#4E5C58] dark:focus:border-[#FDE047] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#1E2228] border border-[#3D6B5E]/40 dark:border-[#FDE047]/40 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3D6B5E]/30 dark:focus:ring-[#FDE047]/30 transition-all cursor-pointer"
           >
             {metricsOptions.map(m => (
               <option key={m.value} value={m.value}>{m.label}</option>
@@ -162,7 +162,7 @@ export default function FilterToolbar({
           <select
             value={secondaryMetric}
             onChange={e => setSecondaryMetric(e.target.value)}
-            className="w-full bg-slate-50 dark:bg-[#2A2E35] border border-[#1D4ED8]/40 dark:border-[#A2C4F2]/40 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#1D4ED8] dark:focus:border-[#A2C4F2] transition-colors"
+            className="w-full bg-slate-50 dark:bg-[#1E2228] border border-[#1D4ED8]/40 dark:border-[#A2C4F2]/40 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/30 dark:focus:ring-[#A2C4F2]/30 transition-all cursor-pointer"
           >
             <option value="none">None (Single Axis)</option>
             {metricsOptions.map(m => (
