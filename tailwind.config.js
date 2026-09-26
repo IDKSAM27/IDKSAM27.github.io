@@ -40,6 +40,8 @@ module.exports = {
         body: ['var(--font-inter)', 'sans-serif'],
         logo: ['var(--font-pacifico)', 'cursive'],
         fun: ['var(--font-pacifico)', 'cursive'],
+        vintage: ['"EB Garamond"', 'Georgia', 'serif'],
+        cinzel: ['"Cinzel"', 'Georgia', 'serif'],
       },
     },
   },

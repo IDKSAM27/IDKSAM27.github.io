@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&family=Russo+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;700&family=Pacifico&family=Russo+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 
 @config "../tailwind.config.js";
 @import "tailwindcss";
@@ -132,3 +133,144 @@ h6 {
     1px -1px 0 var(--color-accent),
     -1px -1px 0 var(--color-accent);
 }
+
+/* --- VINTAGE EDITORIAL & BOOK STYLING --- */
+.font-vintage {
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', Georgia, serif;
+}
+
+/* Horizontal Gallery Custom Scrollbar */
+.gallery-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.gallery-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 9999px;
+}
+.dark .gallery-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.gallery-scroll::-webkit-scrollbar-thumb {
+  background: rgba(78, 92, 88, 0.3);
+  border-radius: 9999px;
+}
+.dark .gallery-scroll::-webkit-scrollbar-thumb {
+  background: rgba(253, 224, 71, 0.4);
+}
+.gallery-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(78, 92, 88, 0.6);
+}
+.dark .gallery-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(253, 224, 71, 0.7);
+}
+
+/* Realistic 3D Book Spine Shadow */
+.book-spine-depth {
+  box-shadow: 
+    inset 4px 0 8px -2px rgba(0, 0, 0, 0.4),
+    inset 1px 0 2px rgba(255, 255, 255, 0.15),
+    -6px 8px 18px -4px rgba(0, 0, 0, 0.25);
+}
+.dark .book-spine-depth {
+  box-shadow: 
+    inset 4px 0 8px -2px rgba(0, 0, 0, 0.6),
+    inset 1px 0 2px rgba(255, 255, 255, 0.1),
+    -6px 8px 22px -4px rgba(0, 0, 0, 0.5);
+}
+
+/* Prominent Literary Divider */
+.book-divider-line {
+  height: 1.5px;
+  background-color: rgba(78, 92, 88, 0.35);
+}
+.dark .book-divider-line {
+  background-color: rgba(253, 224, 71, 0.45);
+}
+
+/* Editorial Reading Typography for Book Notes */
+.book-prose {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+.book-prose h2 {
+  font-family: var(--font-secondary-stack);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.dark .book-prose h2 {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F1F5F9;
+}
+.book-prose h3 {
+  font-family: var(--font-secondary-stack);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 2.25rem;
+  margin-bottom: 0.875rem;
+}
+.dark .book-prose h3 {
+  color: #E2E8F0;
+}
+.book-prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: #334155;
+}
+.dark .book-prose p {
+  color: #CBD5E1;
+}
+.book-prose ul, .book-prose ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+.book-prose li {
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  color: #334155;
+}
+.dark .book-prose li {
+  color: #CBD5E1;
+}
+.book-prose blockquote {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  border-left: 3px solid var(--color-accent);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.dark .book-prose blockquote {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+.book-prose strong {
+  font-weight: 600;
+  color: #0F172A;
+}
+.dark .book-prose strong {
+  color: #F8FAFC;
+}
+.book-prose hr {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+.dark .book-prose hr {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+

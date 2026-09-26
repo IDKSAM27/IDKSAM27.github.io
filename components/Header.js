@@ -20,6 +20,7 @@ const Header = ({ homeHref = "/", smoothScroll = true, prefetch }) => {
         <HeaderButton href={withHomeBase("/#projects")} smoothScroll={smoothScroll} prefetch={prefetch}>Projects</HeaderButton>
         <HeaderButton href="/engineering" smoothScroll={false} prefetch={prefetch}>Docs</HeaderButton>
         <HeaderButton href={withHomeBase("/blog")} smoothScroll={smoothScroll} prefetch={prefetch}>Blog</HeaderButton>
+        <HeaderButton href={withHomeBase("/books")} smoothScroll={smoothScroll} prefetch={prefetch}>Books</HeaderButton>
         <div className="ml-2"><FunButton /></div>
         <div className="ml-4"><ThemeToggle /></div>
       </nav>
