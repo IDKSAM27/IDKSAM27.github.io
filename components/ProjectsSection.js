@@ -9,13 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
-    title: "Tirupati (TTD) Daily Analytics Engine",
-    description: "Interactive analytics & visualization engine for Tirumala Tirupati Devasthanams (TTD) daily pilgrim records, hundi offerings, laddu distribution, and wait times.",
-    technologies: ["React.js", "ECharts", "TailwindCSS", "Time-Series"],
-    liveLink: "/ttd",
-    githubLink: "https://github.com/IDKSAM27/Tirupati-graph",
-  },
-  {
     title: "Agent-X: Personal AI Assistant",
     description: "A Flutter-based mobile application integrating a personal AI assistant with task management, calendar events, and news features.",
     technologies: ["Flutter", "Dart", "Firebase", "FastAPI"],
@@ -63,6 +56,12 @@ const projects = [
     technologies: ["Python", "requests", "Next.js", "TypeScript"],
     liveLink: "#",
     githubLink: "https://github.com/IDKSAM27/OWASP-Scanner",
+  },
+  {
+    title: "Tirupati (TTD) Daily Analytics Engine",
+    description: "Interactive analytics & visualization engine for Tirumala Tirupati Devasthanams (TTD) daily pilgrim records, hundi offerings, laddu distribution, and wait times.",
+    technologies: ["React.js", "ECharts", "TailwindCSS", "Time-Series"],
+    visitLink: "/ttd",
   },
 ];
 

@@ -8,6 +8,12 @@ try {
   console.error('[Build Config] Unable to precompile blog posts.', error);
 }
 
+try {
+  execSync('node scripts/compile-books.mjs', { stdio: 'inherit' });
+} catch (error) {
+  console.error('[Build Config] Unable to precompile books.', error);
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
