@@ -1,6 +1,7 @@
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { FiGrid, FiCode, FiEdit3, FiSmile, FiBook } from 'react-icons/fi';
-import ScrollLink from './ScrollLink'; 
+import { FiGrid, FiCode, FiEdit3, FiSmile, FiChevronUp } from 'react-icons/fi';
+import ScrollLink from './ScrollLink';
 
 const MobileNavLink = ({ href, icon: Icon, label, smoothScroll = true, prefetch }) => {
   const isInternalLink = smoothScroll && href.startsWith('/#');
@@ -28,6 +29,95 @@ const MobileNavLink = ({ href, icon: Icon, label, smoothScroll = true, prefetch 
   );
 };
 
+/**
+ * MobileNavMore — "More ▴" button with arrow UP.
+ * Pops up the 2 buttons (Docs & Books) ABOVE the button.
+ */
+const MobileNavMore = ({ prefetch }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative flex flex-col items-center justify-center h-full" ref={containerRef}>
+      {/* Funky Animated Popup ABOVE */}
+      {isOpen && (
+        <div
+          className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-50 min-w-[150px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl p-2 flex flex-col gap-1.5"
+          style={{
+            transformOrigin: 'bottom center',
+            animation: 'funkyPopUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+          }}
+        >
+          <style>{`
+            @keyframes funkyPopUp {
+              0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.7) translateY(12px) rotate(4deg);
+              }
+              70% {
+                transform: translateX(-50%) scale(1.04) translateY(-2px) rotate(-1deg);
+              }
+              100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1) translateY(0) rotate(0deg);
+              }
+            }
+          `}</style>
+
+          {/* Docs link */}
+          <Link
+            href="/engineering"
+            prefetch={prefetch}
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading font-semibold text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+          >
+            <span className="text-sm">🛠️</span>
+            <span>Docs</span>
+          </Link>
+
+          {/* Books link */}
+          <Link
+            href="/books"
+            prefetch={prefetch}
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading font-semibold text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+          >
+            <span className="text-sm">📚</span>
+            <span>Books</span>
+          </Link>
+        </div>
+      )}
+
+      {/* Button with Arrow UP */}
+      <button
+        type="button"
+        onClick={() => setIsOpen((o) => !o)}
+        className="flex flex-col items-center justify-center h-full w-full text-slate-500 dark:text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors cursor-pointer focus:outline-none"
+        aria-label="Toggle More menu"
+        aria-expanded={isOpen}
+      >
+        <FiChevronUp
+          size={20}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 scale-125 text-accent-light dark:text-accent-dark' : ''}`}
+        />
+        <span className="mt-0.5 text-[10px] font-heading uppercase tracking-wider">
+          More ▴
+        </span>
+      </button>
+    </div>
+  );
+};
+
 const MobileNav = ({ homeHref = "/", smoothScroll = true, prefetch }) => {
   const homeBase = homeHref.endsWith("/") ? homeHref.slice(0, -1) : homeHref;
   const withHomeBase = (path) => homeBase === "" ? path : `${homeBase}${path}`;
@@ -35,7 +125,6 @@ const MobileNav = ({ homeHref = "/", smoothScroll = true, prefetch }) => {
   const navItems = [
     { href: withHomeBase("/#experience"), icon: FiCode, label: 'Exp' },
     { href: withHomeBase("/#projects"), icon: FiGrid, label: 'Projects' },
-    { href: '/engineering', icon: FiBook, label: 'Docs', smoothScrollOverride: false },
     { href: withHomeBase("/blog"), icon: FiEdit3, label: 'Blog' },
   ];
 
@@ -44,8 +133,14 @@ const MobileNav = ({ homeHref = "/", smoothScroll = true, prefetch }) => {
       <div className="container mx-auto h-full">
         <div className="grid grid-cols-5 h-full">
           {navItems.map((item) => (
-            <MobileNavLink key={item.label} {...item} prefetch={prefetch} smoothScroll={item.smoothScrollOverride !== undefined ? item.smoothScrollOverride : smoothScroll} />
+            <MobileNavLink
+              key={item.label}
+              {...item}
+              prefetch={prefetch}
+              smoothScroll={smoothScroll}
+            />
           ))}
+          <MobileNavMore prefetch={prefetch} />
           <Link
             href="https://fun.sampreetpatil.com"
             className="flex flex-col items-center justify-center h-full text-slate-500 dark:text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors"

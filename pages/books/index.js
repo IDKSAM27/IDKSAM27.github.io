@@ -257,13 +257,29 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
 
         {/* Book Grid */}
         <div className="max-w-6xl mx-auto">
-          {/* Collections row — shown when genre is All or search matches */}
+          {/* Individual volumes first */}
+          {filteredBooks.length > 0 && (
+            <div>
+              {filteredCollections.length > 0 && (
+                <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-5">
+                  Individual Volumes
+                </p>
+              )}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8 items-start">
+                {filteredBooks.map((book) => (
+                  <BookCard key={book.slug} book={book} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Series & Collections row below individual volumes */}
           {filteredCollections.length > 0 && (
-            <div className="mb-10">
+            <div className={filteredBooks.length > 0 ? 'mt-14 pt-10 border-t border-black/10 dark:border-white/10' : ''}>
               <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-5">
                 Series &amp; Collections
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8 items-start">
                 {filteredCollections.map((col) => (
                   <CollectionCard
                     key={col.slug}
@@ -272,28 +288,10 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
                   />
                 ))}
               </div>
-              {/* Thin separator before individual books */}
-              {filteredBooks.length > 0 && (
-                <div className="mt-10 border-t border-black/10 dark:border-white/10" />
-              )}
             </div>
           )}
 
-          {/* Individual books */}
-          {filteredBooks.length > 0 ? (
-            <>
-              {filteredCollections.length > 0 && (
-                <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-5">
-                  Individual Volumes
-                </p>
-              )}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
-                {filteredBooks.map((book) => (
-                  <BookCard key={book.slug} book={book} />
-                ))}
-              </div>
-            </>
-          ) : filteredCollections.length === 0 ? (
+          {filteredBooks.length === 0 && filteredCollections.length === 0 && (
             <div className="py-20 text-center max-w-md mx-auto">
               <p className="font-vintage italic text-base text-slate-500 dark:text-slate-400 mb-4">
                 No volumes match your criteria.
@@ -309,7 +307,7 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
                 Clear all filters
               </button>
             </div>
-          ) : null}
+          )}
         </div>
       </main>
 

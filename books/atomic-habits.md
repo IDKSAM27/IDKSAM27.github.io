@@ -4,7 +4,7 @@ subtitle: "An Easy & Proven Way to Build Good Habits & Break Bad Ones"
 author: "James Clear"
 dateRead: "2024-05-18"
 dateFormatted: "May 2024"
-genre: "Systems & Habits"
+genre: "Non-Fiction"
 rating: 4.5
 pages: 320
 status: "Completed"

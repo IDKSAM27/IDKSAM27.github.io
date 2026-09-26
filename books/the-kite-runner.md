@@ -4,7 +4,7 @@ subtitle: "A Haunting Tale of Friendship, Betrayal, and the Heavy Price of Redem
 author: "Khaled Hosseini"
 dateRead: "2023-03-15"
 dateFormatted: "March 2023"
-genre: "Historical Fiction"
+genre: "Fiction"
 rating: 5
 pages: 371
 status: "Completed"

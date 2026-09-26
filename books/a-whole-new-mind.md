@@ -4,7 +4,7 @@ subtitle: "Why Right-Brainers Will Rule the Future"
 author: "Daniel H. Pink"
 dateRead: "2024-02-10"
 dateFormatted: "February 2024"
-genre: "Psychology & Creativity"
+genre: "Non-Fiction"
 rating: 3.5
 pages: 288
 status: "Completed"

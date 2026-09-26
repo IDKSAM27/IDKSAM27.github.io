@@ -4,7 +4,7 @@ subtitle: "Powerful Lessons in Personal Change and the Architecture of True Char
 author: "Stephen R. Covey"
 dateRead: "2023-12-15"
 dateFormatted: "December 2023"
-genre: "Personal Leadership"
+genre: "Non-Fiction"
 rating: 4.5
 pages: 381
 status: "Completed"

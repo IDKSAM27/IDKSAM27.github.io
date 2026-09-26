@@ -2,16 +2,106 @@ import React from 'react';
 
 /**
  * CollectionCard — a reusable card for book franchise/series collections.
- * Shows a mosaic of up to 7 cover images arranged in a book-grid pattern.
- * Click opens a CollectionModal with the distribute animation.
+ * Adapts cover grid based on cover count (2x2 for 4 books, 2+3 for 5 books, 3+2+2 for 7+ books).
+ * Click opens CollectionModal with distribute animation.
  *
  * Props:
  *   collection  — one entry from collections.json
  *   onClick     — called when the card is clicked
  */
+function MosaicGrid({ covers, coverAccent }) {
+  const count = covers.length;
+
+  if (count <= 4) {
+    // 2x2 grid for 4 covers
+    return (
+      <div className="absolute inset-0 grid grid-cols-2 gap-[2px] p-[6px]">
+        {[0, 1, 2, 3].map((i) =>
+          covers[i] ? (
+            <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
+              <img src={covers[i]} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ) : (
+            <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
+          )
+        )}
+      </div>
+    );
+  }
+
+  if (count === 5) {
+    // 2 top, 3 bottom for 5 covers
+    return (
+      <div className="absolute inset-0 grid grid-rows-2 gap-[2px] p-[6px]">
+        <div className="grid grid-cols-2 gap-[2px]">
+          {[0, 1].map((i) => (
+            <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
+              <img src={covers[i]} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-3 gap-[2px]">
+          {[2, 3, 4].map((i) => (
+            <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
+              <img src={covers[i]} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // 7 covers (3 top, 2 middle, 2 bottom) for 6+ covers
+  return (
+    <div className="absolute inset-0 grid grid-rows-3 gap-[2px] p-[6px]">
+      <div className="grid grid-cols-3 gap-[2px]">
+        {[0, 1, 2].map((i) =>
+          covers[i] ? (
+            <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
+              <img src={covers[i]} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ) : (
+            <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
+          )
+        )}
+      </div>
+      <div className="grid grid-cols-2 gap-[2px]">
+        {[3, 4].map((i) =>
+          covers[i] ? (
+            <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
+              <img src={covers[i]} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ) : (
+            <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
+          )
+        )}
+      </div>
+      <div className="grid grid-cols-2 gap-[2px]">
+        {[5, 6].map((i) =>
+          covers[i] ? (
+            <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
+              <img src={covers[i]} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ) : (
+            <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
+          )
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function CollectionCard({ collection, onClick }) {
-  const { title, author, genre, dateFormatted, coverImages = [], coverColor = '#1A1040', coverAccent = '#FFD700' } = collection;
-  // Show up to 7 covers in the mosaic
+  const {
+    title,
+    author,
+    genre,
+    dateFormatted,
+    coverImages = [],
+    coverColor = '#1A1040',
+    coverAccent = '#FFD700',
+  } = collection;
+
   const covers = coverImages.slice(0, 7);
 
   return (
@@ -30,60 +120,8 @@ export default function CollectionCard({ collection, onClick }) {
           {/* Spine shadow */}
           <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none z-10" />
 
-          {/* Mosaic grid of covers — 3 on top, 2 middle, 2 bottom */}
-          <div className="absolute inset-0 grid grid-rows-3 gap-[2px] p-[6px]">
-            {/* Row 1: 3 covers */}
-            <div className="grid grid-cols-3 gap-[2px]">
-              {[0, 1, 2].map((i) =>
-                covers[i] ? (
-                  <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
-                    <img
-                      src={covers[i]}
-                      alt=""
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
-                  <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
-                )
-              )}
-            </div>
-            {/* Row 2: 2 covers */}
-            <div className="grid grid-cols-2 gap-[2px]">
-              {[3, 4].map((i) =>
-                covers[i] ? (
-                  <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
-                    <img
-                      src={covers[i]}
-                      alt=""
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
-                  <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
-                )
-              )}
-            </div>
-            {/* Row 3: 2 covers */}
-            <div className="grid grid-cols-2 gap-[2px]">
-              {[5, 6].map((i) =>
-                covers[i] ? (
-                  <div key={i} className="relative overflow-hidden rounded-[2px] bg-black/20">
-                    <img
-                      src={covers[i]}
-                      alt=""
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
-                  <div key={i} className="rounded-[2px]" style={{ backgroundColor: coverAccent + '22' }} />
-                )
-              )}
-            </div>
-          </div>
+          {/* Mosaic cover grid */}
+          <MosaicGrid covers={covers} coverAccent={coverAccent} />
 
           {/* Collection label overlay at bottom */}
           <div
@@ -106,7 +144,7 @@ export default function CollectionCard({ collection, onClick }) {
         <div className="mt-1 space-y-1.5 text-left px-0.5">
           {/* Genre & date */}
           <div className="flex items-center justify-between gap-2 text-[10px] font-mono tracking-wide text-slate-500 dark:text-slate-400">
-            <span className="capitalize">{genre}</span>
+            <span className="capitalize truncate min-w-0">{genre}</span>
             <span className="flex-shrink-0 opacity-75">{dateFormatted}</span>
           </div>
 
