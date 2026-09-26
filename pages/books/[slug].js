@@ -8,42 +8,90 @@ import Seo from '../../components/Seo';
 import ImageGallery from '../../components/books/ImageGallery';
 import BookCover from '../../components/books/BookCover';
 import booksData from '../../data/books.json';
+import collectionsData from '../../data/collections.json';
+
+// Flatten all books from all collections into a searchable list
+function getAllCollectionBooks() {
+  const all = [];
+  collectionsData.forEach((col) => {
+    (col.books || []).forEach((book, idx) => {
+      all.push({
+        ...book,
+        _collectionSlug: col.slug,
+        _collectionTitle: col.title,
+        _collectionBooks: col.books,
+        _indexInCollection: idx,
+      });
+    });
+  });
+  return all;
+}
 
 export async function getStaticPaths() {
-  const paths = booksData.map((book) => ({
-    params: {
-      slug: book.slug,
-    },
+  const regularPaths = booksData.map((book) => ({
+    params: { slug: book.slug },
+  }));
+
+  const collectionPaths = getAllCollectionBooks().map((book) => ({
+    params: { slug: book.slug },
   }));
 
   return {
-    paths,
+    paths: [...regularPaths, ...collectionPaths],
     fallback: false,
   };
 }
 
 export async function getStaticProps({ params }) {
+  // Check regular books first
   const bookIndex = booksData.findIndex((b) => b.slug === params.slug);
-  const book = booksData[bookIndex];
+  if (bookIndex !== -1) {
+    const book = booksData[bookIndex];
+    const prevBook = bookIndex > 0 ? booksData[bookIndex - 1] : null;
+    const nextBook = bookIndex < booksData.length - 1 ? booksData[bookIndex + 1] : null;
+    return {
+      props: {
+        bookData: book,
+        prevBook: prevBook ? { slug: prevBook.slug, title: prevBook.title } : null,
+        nextBook: nextBook ? { slug: nextBook.slug, title: nextBook.title } : null,
+        collectionContext: null,
+      },
+    };
+  }
 
-  // Prev and Next books for adjacent navigation
-  const prevBook = bookIndex > 0 ? booksData[bookIndex - 1] : null;
-  const nextBook =
-    bookIndex < booksData.length - 1 ? booksData[bookIndex + 1] : null;
+  // Check collection books
+  const allCollectionBooks = getAllCollectionBooks();
+  const colBook = allCollectionBooks.find((b) => b.slug === params.slug);
+  if (colBook) {
+    const siblings = colBook._collectionBooks;
+    const idx = colBook._indexInCollection;
+    const prevBook =
+      idx > 0
+        ? { slug: siblings[idx - 1].slug, title: siblings[idx - 1].shortTitle || siblings[idx - 1].title }
+        : null;
+    const nextBook =
+      idx < siblings.length - 1
+        ? { slug: siblings[idx + 1].slug, title: siblings[idx + 1].shortTitle || siblings[idx + 1].title }
+        : null;
 
-  return {
-    props: {
-      bookData: book || null,
-      prevBook: prevBook ? { slug: prevBook.slug, title: prevBook.title } : null,
-      nextBook: nextBook ? { slug: nextBook.slug, title: nextBook.title } : null,
-    },
-  };
+    // Strip internal _collection* keys before passing as props
+    const { _collectionSlug, _collectionTitle, _collectionBooks, _indexInCollection, ...bookData } = colBook;
+
+    return {
+      props: {
+        bookData,
+        prevBook,
+        nextBook,
+        collectionContext: { slug: _collectionSlug, title: _collectionTitle },
+      },
+    };
+  }
+
+  return { props: { bookData: null, prevBook: null, nextBook: null, collectionContext: null } };
 }
 
-export default function BookDetailPage({ bookData, prevBook, nextBook }) {
-  if (!bookData) {
-    return null;
-  }
+export default function BookDetailPage({ bookData, prevBook, nextBook, collectionContext }) {
+  if (!bookData) return null;
 
   const {
     title,
@@ -61,6 +109,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
     coverColor,
     coverAccent,
     spineColor,
+    number,
   } = bookData;
 
   return (
@@ -78,17 +127,29 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
 
       <main className="flex-grow container mx-auto px-4 lg:px-12 py-12 sm:py-20">
         <article className="max-w-3xl mx-auto">
-          {/* Back Navigation Link */}
-          <div className="mb-10">
+          {/* Back Navigation — shows breadcrumb if from a collection */}
+          <div className="mb-10 flex items-center gap-3 flex-wrap">
             <Link
               href="/books"
               className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-accent-light dark:hover:text-accent-dark transition-colors group"
             >
-              <span className="transform transition-transform group-hover:-translate-x-1">
-                &larr;
-              </span>
-              <span>Back to Bookshelf</span>
+              <span className="transform transition-transform group-hover:-translate-x-1">&larr;</span>
+              <span>Bookshelf</span>
             </Link>
+            {collectionContext && (
+              <>
+                <span className="text-slate-300 dark:text-slate-600 font-mono text-xs">/</span>
+                <span className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                  {collectionContext.title}
+                </span>
+                {number && (
+                  <>
+                    <span className="text-slate-300 dark:text-slate-600 font-mono text-xs">/</span>
+                    <span className="text-xs font-mono text-slate-400">Book {number}</span>
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           {/* Book Header: Cover + Title + Metadata */}
@@ -112,7 +173,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
 
               {/* Title & Metadata */}
               <div className="flex-1 w-full">
-                {/* Sleek editorial tag: Genre & status */}
+                {/* Genre & status */}
                 <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-3">
                   <span>{genre}</span>
                   <span>&bull;</span>
@@ -124,7 +185,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
                   {title}
                 </h1>
 
-                {/* Subtitle with generous spacing */}
+                {/* Subtitle */}
                 {subtitle && (
                   <p className="font-vintage italic text-lg sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
                     {subtitle}
@@ -135,7 +196,9 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-slate-600 dark:text-slate-400 font-mono py-4 border-y border-black/10 dark:border-white/10">
                   <div>
                     <span className="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">Author</span>
-                    <span className="font-vintage text-sm sm:text-base italic font-semibold text-text-light dark:text-text-dark block truncate">{author}</span>
+                    <span className="font-vintage text-sm sm:text-base italic font-semibold text-text-light dark:text-text-dark block truncate">
+                      {author}
+                    </span>
                   </div>
                   <div>
                     <span className="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">Date Read</span>
@@ -167,7 +230,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
             <ImageGallery book={bookData} />
           </section>
 
-          {/* Prominent Visible Divider */}
+          {/* Divider */}
           <div className="flex items-center justify-center gap-4 my-16">
             <div className="book-divider-line w-28 sm:w-36 rounded-full" />
             <span className="text-accent-light dark:text-accent-dark font-cinzel text-base tracking-widest font-bold">
@@ -176,7 +239,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
             <div className="book-divider-line w-28 sm:w-36 rounded-full" />
           </div>
 
-          {/* Section: My Thoughts & Reflections (Completely unboxed, clean editorial flow) */}
+          {/* Section: My Thoughts & Reflections */}
           {thoughtsHtml && (
             <section className="my-14">
               <div className="mb-6">
@@ -184,7 +247,6 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
                   My Thoughts &amp; Reflections
                 </h2>
               </div>
-
               <div
                 className="book-prose font-vintage text-lg sm:text-xl leading-relaxed text-slate-800 dark:text-slate-200"
                 dangerouslySetInnerHTML={{ __html: thoughtsHtml }}
@@ -192,7 +254,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
             </section>
           )}
 
-          {/* Prominent Visible Divider */}
+          {/* Divider */}
           <div className="flex items-center justify-center gap-4 my-16">
             <div className="book-divider-line w-28 sm:w-36 rounded-full" />
             <span className="text-accent-light dark:text-accent-dark font-cinzel text-base tracking-widest font-bold">
@@ -201,7 +263,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
             <div className="book-divider-line w-28 sm:w-36 rounded-full" />
           </div>
 
-          {/* Section: Summary & Key Takeaways (Clean unboxed editorial breakdown) */}
+          {/* Section: Summary & Key Takeaways */}
           {summaryHtml && (
             <section className="my-14">
               <div className="mb-6">
@@ -209,7 +271,6 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
                   Summary &amp; Key Takeaways
                 </h2>
               </div>
-
               <div
                 className="book-prose"
                 dangerouslySetInnerHTML={{ __html: summaryHtml }}
@@ -217,15 +278,15 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
             </section>
           )}
 
-          {/* Bottom Adjacent Navigation: Sleek typographic links (NO box UI) */}
-          <nav aria-label="Adjacent volumes" className="mt-20 pt-8 border-t border-black/15 dark:border-white/15 flex items-center justify-between gap-4">
+          {/* Adjacent Navigation */}
+          <nav
+            aria-label="Adjacent volumes"
+            className="mt-20 pt-8 border-t border-black/15 dark:border-white/15 flex items-center justify-between gap-4"
+          >
             {prevBook ? (
-              <Link
-                href={`/books/${prevBook.slug}`}
-                className="group flex flex-col items-start text-left focus:outline-none"
-              >
+              <Link href={`/books/${prevBook.slug}`} className="group flex flex-col items-start text-left focus:outline-none">
                 <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 group-hover:text-accent-light dark:group-hover:text-accent-dark transition-colors">
-                  &larr; Previous Volume
+                  &larr; Previous
                 </span>
                 <span className="font-heading font-bold text-base sm:text-lg text-text-light dark:text-text-dark group-hover:text-accent-light dark:group-hover:text-accent-dark group-hover:underline transition-colors mt-1">
                   {prevBook.title}
@@ -237,18 +298,15 @@ export default function BookDetailPage({ bookData, prevBook, nextBook }) {
 
             <Link
               href="/books"
-              className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-text-light dark:hover:text-text-dark transition-colors py-2"
+              className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-text-light dark:hover:text-text-dark transition-colors py-2 flex-shrink-0"
             >
               All Volumes
             </Link>
 
             {nextBook ? (
-              <Link
-                href={`/books/${nextBook.slug}`}
-                className="group flex flex-col items-end text-right focus:outline-none"
-              >
+              <Link href={`/books/${nextBook.slug}`} className="group flex flex-col items-end text-right focus:outline-none">
                 <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 group-hover:text-accent-light dark:group-hover:text-accent-dark transition-colors">
-                  Next Volume &rarr;
+                  Next &rarr;
                 </span>
                 <span className="font-heading font-bold text-base sm:text-lg text-text-light dark:text-text-dark group-hover:text-accent-light dark:group-hover:text-accent-dark group-hover:underline transition-colors mt-1">
                   {nextBook.title}

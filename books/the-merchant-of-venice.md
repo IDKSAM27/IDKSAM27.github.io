@@ -1,11 +1,11 @@
 ---
 title: "The Merchant of Venice"
 subtitle: "Justice, Mercy, and the Cost of Human Bonds"
-author: "William Shakespeare (Paraphrased by Xavier Pinto)"
+author: "William Shakespeare (Xavier Pinto)"
 dateRead: "2023-05-20"
 dateFormatted: "May 2023"
 genre: "Classic Literature"
-rating: 4.5
+rating: 5
 pages: 240
 status: "Completed"
 coverColor: "#22333B"

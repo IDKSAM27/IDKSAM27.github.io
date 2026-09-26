@@ -5,7 +5,7 @@ author: "James Clear"
 dateRead: "2024-05-18"
 dateFormatted: "May 2024"
 genre: "Systems & Habits"
-rating: 5
+rating: 4.5
 pages: 320
 status: "Completed"
 coverColor: "#1E2A38"

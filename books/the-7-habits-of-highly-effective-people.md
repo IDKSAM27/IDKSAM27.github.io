@@ -5,7 +5,7 @@ author: "Stephen R. Covey"
 dateRead: "2023-12-15"
 dateFormatted: "December 2023"
 genre: "Personal Leadership"
-rating: 5
+rating: 4.5
 pages: 381
 status: "Completed"
 coverColor: "#1C3144"

@@ -5,7 +5,7 @@ author: "Daniel H. Pink"
 dateRead: "2024-02-10"
 dateFormatted: "February 2024"
 genre: "Psychology & Creativity"
-rating: 4.5
+rating: 3.5
 pages: 288
 status: "Completed"
 coverColor: "#2E4057"
