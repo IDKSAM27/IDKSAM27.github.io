@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import Link from 'next/link';
 
 const ProjectCard = ({ project }) => {
   const cardRef = useRef(null);
@@ -31,6 +32,30 @@ const ProjectCard = ({ project }) => {
     });
   };
 
+  const renderLink = (href, label) => {
+    const isExternal = href.startsWith('http');
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent-light dark:text-accent-dark font-fun text-xl hover:underline flex items-center gap-2"
+        >
+          {label} <span>↗</span>
+        </a>
+      );
+    }
+    return (
+      <Link
+        href={href}
+        className="text-accent-light dark:text-accent-dark font-fun text-xl hover:underline flex items-center gap-2"
+      >
+        {label} <span>↗</span>
+      </Link>
+    );
+  };
+
   return (
     <div
       ref={cardRef}
@@ -39,7 +64,6 @@ const ProjectCard = ({ project }) => {
       style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
       className="project-card h-full bg-white dark:bg-slate-800 p-2 rounded-lg shadow-xl border-2 border-slate-900 dark:border-slate-700 transition-[border-color,background-color] duration-300 cursor-pointer group"
     >
-
       <div className="h-full bg-slate-50 dark:bg-slate-900/50 rounded p-6 flex flex-col">
         <div className="flex-grow">
           <h3 className="text-2xl font-heading mb-3 text-text-light dark:text-text-dark tracking-tight">
@@ -49,25 +73,22 @@ const ProjectCard = ({ project }) => {
             {project.description}
           </p>
         </div>
-        
+
         <div className="mt-auto">
           <div className="flex flex-wrap gap-2 mb-6">
             {project.technologies.map((tech, i) => (
-              <span key={i} className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] uppercase font-bold px-2 py-1 rounded tracking-widest border border-slate-300 dark:border-slate-600">
+              <span
+                key={i}
+                className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] uppercase font-bold px-2 py-1 rounded tracking-widest border border-slate-300 dark:border-slate-600"
+              >
                 {tech}
               </span>
             ))}
           </div>
-          
+
           <div className="flex items-center justify-between">
-            <a 
-              href={project.githubLink} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-accent-light dark:text-accent-dark font-fun text-xl hover:underline flex items-center gap-2"
-            >
-              GitHub <span>↗</span>
-            </a>
+            {project.visitLink && renderLink(project.visitLink, 'Visit')}
+            {project.githubLink && renderLink(project.githubLink, 'GitHub')}
           </div>
         </div>
       </div>

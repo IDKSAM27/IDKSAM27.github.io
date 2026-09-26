@@ -44,10 +44,10 @@ export default function HeaderMoreDropdown({ prefetch }) {
         />
       </button>
 
-      {/* Funky, Creative Animated Dropdown underneath */}
+      {/* Funky Animated Dropdown underneath — snugly fitted box, matching header font & size */}
       {isOpen && (
         <div
-          className="absolute top-full right-0 mt-2 z-50 min-w-[170px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl p-2 flex flex-col gap-1.5"
+          className="absolute top-full right-0 mt-2 z-50 w-max min-w-[120px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl p-1.5 flex flex-col gap-1"
           style={{
             transformOrigin: 'top right',
             animation: 'funkyPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
@@ -74,12 +74,9 @@ export default function HeaderMoreDropdown({ prefetch }) {
             href="/engineering"
             prefetch={prefetch}
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-heading font-semibold text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:scale-[1.03] active:scale-95 transition-all cursor-pointer group"
+            className="px-4 py-2 rounded-xl text-center font-heading text-lg text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:text-accent-light dark:hover:text-accent-dark hover:scale-[1.04] active:scale-95 transition-all cursor-pointer"
           >
-            <span className="p-1.5 rounded-lg bg-accent-light/15 dark:bg-accent-dark/20 text-accent-light dark:text-accent-dark group-hover:rotate-12 transition-transform">
-              🛠️
-            </span>
-            <span className="tracking-wide">Docs</span>
+            Docs
           </Link>
 
           {/* Books Button */}
@@ -87,12 +84,9 @@ export default function HeaderMoreDropdown({ prefetch }) {
             href="/books"
             prefetch={prefetch}
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-heading font-semibold text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:scale-[1.03] active:scale-95 transition-all cursor-pointer group"
+            className="px-4 py-2 rounded-xl text-center font-heading text-lg text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:text-accent-light dark:hover:text-accent-dark hover:scale-[1.04] active:scale-95 transition-all cursor-pointer"
           >
-            <span className="p-1.5 rounded-lg bg-accent-light/15 dark:bg-accent-dark/20 text-accent-light dark:text-accent-dark group-hover:-rotate-12 transition-transform">
-              📚
-            </span>
-            <span className="tracking-wide">Books</span>
+            Books
           </Link>
         </div>
       )}

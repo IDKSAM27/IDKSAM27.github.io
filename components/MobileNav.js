@@ -30,8 +30,9 @@ const MobileNavLink = ({ href, icon: Icon, label, smoothScroll = true, prefetch 
 };
 
 /**
- * MobileNavMore — "More ▴" button with arrow UP.
+ * MobileNavMore — "More" button with FiChevronUp icon above.
  * Pops up the 2 buttons (Docs & Books) ABOVE the button.
+ * Aligned in pixel-perfect sync with all other mobile nav buttons.
  */
 const MobileNavMore = ({ prefetch }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +53,7 @@ const MobileNavMore = ({ prefetch }) => {
       {/* Funky Animated Popup ABOVE */}
       {isOpen && (
         <div
-          className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-50 min-w-[150px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl p-2 flex flex-col gap-1.5"
+          className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-50 w-max min-w-[120px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl p-1.5 flex flex-col gap-1"
           style={{
             transformOrigin: 'bottom center',
             animation: 'funkyPopUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
@@ -79,10 +80,9 @@ const MobileNavMore = ({ prefetch }) => {
             href="/engineering"
             prefetch={prefetch}
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading font-semibold text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-xl text-center font-heading text-sm text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:text-accent-light dark:hover:text-accent-dark active:scale-95 transition-all cursor-pointer"
           >
-            <span className="text-sm">🛠️</span>
-            <span>Docs</span>
+            Docs
           </Link>
 
           {/* Books link */}
@@ -90,15 +90,14 @@ const MobileNavMore = ({ prefetch }) => {
             href="/books"
             prefetch={prefetch}
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading font-semibold text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-xl text-center font-heading text-sm text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:text-accent-light dark:hover:text-accent-dark active:scale-95 transition-all cursor-pointer"
           >
-            <span className="text-sm">📚</span>
-            <span>Books</span>
+            Books
           </Link>
         </div>
       )}
 
-      {/* Button with Arrow UP */}
+      {/* Button with Arrow UP icon above — perfectly synced with other mobile nav buttons */}
       <button
         type="button"
         onClick={() => setIsOpen((o) => !o)}
@@ -108,10 +107,10 @@ const MobileNavMore = ({ prefetch }) => {
       >
         <FiChevronUp
           size={20}
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 scale-125 text-accent-light dark:text-accent-dark' : ''}`}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-accent-light dark:text-accent-dark' : ''}`}
         />
-        <span className="mt-0.5 text-[10px] font-heading uppercase tracking-wider">
-          More ▴
+        <span className="mt-1 text-[10px] font-heading uppercase tracking-wider">
+          More
         </span>
       </button>
     </div>
