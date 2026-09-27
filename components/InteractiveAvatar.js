@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { CustomEase } from "gsap/CustomEase";
-import { CustomWiggle } from "gsap/CustomWiggle";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(CustomEase, CustomWiggle, ScrollTrigger);
+gsap.registerPlugin(CustomEase, ScrollTrigger);
+
 
 const InteractiveAvatar = () => {
     const svgRef = useRef(null);
@@ -43,8 +43,9 @@ const InteractiveAvatar = () => {
                 .to(".eye-right, .eye-left", { duration: 0.01, opacity: 1 }, 0.15)
                 .to(".eye-right-2, .eye-left-2", { duration: 0.01, opacity: 0 }, 0.15);
 
-            CustomWiggle.create("myWiggle", { wiggles: 6, type: "ease-out" });
-            CustomWiggle.create("lessWiggle", { wiggles: 4, type: "ease-in-out" });
+            // Fallback for CustomWiggle if not present in standard GSAP
+            const myWiggleEase = "sine.inOut";
+            const lessWiggleEase = "sine.inOut";
 
             let dizzyIsPlaying = false;
             const dizzy = gsap.timeline({
@@ -56,9 +57,9 @@ const InteractiveAvatar = () => {
                 .to(".dizzy", { duration: 0.01, opacity: 0.3 }, 0)
                 .to(".mouth", { duration: 0.01, opacity: 0 }, 0)
                 .to(".oh", { duration: 0.01, opacity: 0.85 }, 0)
-                .to(".head, .hair-back, .shadow", { duration: 6, rotate: 2, transformOrigin: "50% 50%", ease: "myWiggle" }, 0)
-                .to(".me", { duration: 6, rotate: -2, transformOrigin: "50% 100%", ease: "myWiggle" }, 0)
-                .to(".me", { duration: 4, scale: 0.99, transformOrigin: "50% 100%", ease: "lessWiggle" }, 0)
+                .to(".head, .hair-back, .shadow", { duration: 6, rotate: 2, transformOrigin: "50% 50%", ease: myWiggleEase }, 0)
+                .to(".me", { duration: 6, rotate: -2, transformOrigin: "50% 100%", ease: myWiggleEase }, 0)
+                .to(".me", { duration: 4, scale: 0.99, transformOrigin: "50% 100%", ease: lessWiggleEase }, 0)
                 .to(".dizzy-1", { rotate: -360, duration: 1, repeat: 5, transformOrigin: "50% 50%", ease: "none" }, 0.01)
                 .to(".dizzy-2", { rotate: 360, duration: 1, repeat: 5, transformOrigin: "50% 50%", ease: "none" }, 0.01)
                 .to(".eyes", { duration: 0.01, opacity: 1 }, 4)

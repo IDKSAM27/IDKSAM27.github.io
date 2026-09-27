@@ -112,7 +112,7 @@ const ComplexComputerGraphic = () => {
                 <div className="item min var"></div>
                 <div className="clearfix"></div>
               </div>
-               <div className="line tab1">
+              <div className="line tab1">
                 <div className="item min var"></div>
                 <div className="clearfix"></div>
               </div>

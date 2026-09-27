@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
-import { CustomWiggle } from 'gsap/CustomWiggle';
 
-gsap.registerPlugin(CustomEase, CustomWiggle);
+gsap.registerPlugin(CustomEase);
 
 const DizzyAvatar = () => {
     const svgRef = useRef(null);
@@ -38,16 +37,15 @@ const DizzyAvatar = () => {
             gsap.to(".dizzy-1", { rotate: -360, duration: 1.5, repeat: -1, transformOrigin: "50% 50%", ease: "none" });
             gsap.to(".dizzy-2", { rotate: 360, duration: 1.5, repeat: -1, transformOrigin: "50% 50%", ease: "none" });
 
-            // Register custom wiggles
-            CustomWiggle.create("myWiggle", { wiggles: 5, type: "ease-in-out" });
-            CustomWiggle.create("lessWiggle", { wiggles: 3, type: "ease-in-out" });
+            const myWiggleEase = "sine.inOut";
+            const lessWiggleEase = "sine.inOut";
 
             // Loop dizzy wiggles infinitely
             const wiggleTl = gsap.timeline({ repeat: -1 });
             wiggleTl
-                .to(".head, .hair-back, .shadow", { duration: 5, rotate: 3, transformOrigin: "50% 50%", ease: "myWiggle" }, 0)
-                .to(".me", { duration: 5, rotate: -3, transformOrigin: "50% 100%", ease: "myWiggle" }, 0)
-                .to(".me", { duration: 4, scale: 0.98, transformOrigin: "50% 100%", ease: "lessWiggle" }, 0);
+                .to(".head, .hair-back, .shadow", { duration: 5, rotate: 3, transformOrigin: "50% 50%", ease: myWiggleEase }, 0)
+                .to(".me", { duration: 5, rotate: -3, transformOrigin: "50% 100%", ease: myWiggleEase }, 0)
+                .to(".me", { duration: 4, scale: 0.98, transformOrigin: "50% 100%", ease: lessWiggleEase }, 0);
 
             // Mouse-tracking logic
             let xPosition, yPosition, storedXPosition = 0, storedYPosition = 0;
