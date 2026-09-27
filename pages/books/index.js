@@ -97,11 +97,10 @@ function SortDropdown({ value, onChange }) {
                 onChange(opt.value);
                 setOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 text-[11px] font-medium tracking-wide transition-colors cursor-pointer ${
-                value === opt.value
+              className={`w-full text-left px-3 py-2 text-[11px] font-medium tracking-wide transition-colors cursor-pointer ${value === opt.value
                   ? 'text-accent-light dark:text-accent-dark bg-black/5 dark:bg-white/5'
                   : 'text-text-light dark:text-text-dark hover:bg-black/5 dark:hover:bg-white/5'
-              }`}
+                }`}
             >
               {opt.label}
             </button>
@@ -190,7 +189,7 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
             Bookshelf &amp; Reading Notes
           </h1>
           <p className="font-vintage italic text-lg sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto">
-            A chronicle of books that shaped my worldview, engineering principles, and creative
+            A chronicle of books that shaped my worldview and creative
             instincts. Complete with margin notes, reflections, and key takeaways.
           </p>
         </div>
@@ -227,11 +226,10 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
             <button
               type="button"
               onClick={() => setSelectedGenre('All')}
-              className={`px-3 py-1.5 rounded-full text-xs transition-all whitespace-nowrap cursor-pointer ${
-                selectedGenre === 'All'
+              className={`px-3 py-1.5 rounded-full text-xs transition-all whitespace-nowrap cursor-pointer ${selectedGenre === 'All'
                   ? 'bg-accent-light text-white dark:bg-accent-dark dark:text-slate-950 font-semibold shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-text-light dark:hover:text-text-dark'
-              }`}
+                }`}
             >
               All ({allBooks.length})
             </button>
@@ -242,11 +240,10 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
                   key={name}
                   type="button"
                   onClick={() => setSelectedGenre(name)}
-                  className={`px-3 py-1.5 rounded-full text-xs transition-all whitespace-nowrap cursor-pointer ${
-                    isSelected
+                  className={`px-3 py-1.5 rounded-full text-xs transition-all whitespace-nowrap cursor-pointer ${isSelected
                       ? 'bg-accent-light text-white dark:bg-accent-dark dark:text-slate-950 font-semibold shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-text-light dark:hover:text-text-dark'
-                  }`}
+                    }`}
                 >
                   {name} ({count})
                 </button>
