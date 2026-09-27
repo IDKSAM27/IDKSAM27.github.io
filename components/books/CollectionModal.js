@@ -81,18 +81,23 @@ function ModalBookCard({ book, index, visible, onNavigate }) {
         transition: `opacity 0.4s ease ${delay}ms, transform 0.4s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms`,
       }}
     >
-      {/* Bigger Book Cover */}
-      <div className="relative w-full aspect-[2/3] rounded-r-md rounded-l-sm overflow-hidden book-spine-depth transform transition-transform duration-300 group-hover:-translate-y-2 shadow-2xl">
-        <img
-          src={book.coverImage}
-          alt={`Cover of ${book.title}`}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-        {/* Spine shadow */}
-        <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/60 via-black/20 to-transparent pointer-events-none" />
+      {/* Bigger Book Cover with 3D perspective animation */}
+      <div className="relative w-full aspect-[2/3] book-3d-wrap">
+        <div className="book-3d-inside" />
+        <div className="book-3d-cover overflow-hidden rounded-r-md rounded-l-sm">
+          <img
+            src={book.coverImage}
+            alt={`Cover of ${book.title}`}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          {/* Spine shadow */}
+          <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/60 via-black/20 to-transparent pointer-events-none" />
+          <div className="book-3d-effect" />
+          <div className="book-3d-light" />
+        </div>
         {/* Book number badge */}
-        <div className="absolute top-2 right-2 bg-black/70 text-white font-mono text-[10px] px-2 py-0.5 rounded-sm leading-none backdrop-blur-md border border-white/10">
+        <div className="absolute top-2 right-2 z-20 bg-black/70 text-white font-mono text-[10px] px-2 py-0.5 rounded-sm leading-none backdrop-blur-md border border-white/10 pointer-events-none">
           #{book.number}
         </div>
       </div>

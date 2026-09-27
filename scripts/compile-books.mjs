@@ -56,8 +56,13 @@ export async function compileBooks() {
       })
   );
 
-  // Sort books by dateRead (descending)
+  // Sort books: Reading books first, then completed books by dateRead (descending)
   const sortedBooks = allBooksData.sort((a, b) => {
+    const isReadingA = (a.status || '').toLowerCase().includes('reading');
+    const isReadingB = (b.status || '').toLowerCase().includes('reading');
+    if (isReadingA && !isReadingB) return -1;
+    if (!isReadingA && isReadingB) return 1;
+
     const dateA = a.dateRead || '1970-01-01';
     const dateB = b.dateRead || '1970-01-01';
     return dateA < dateB ? 1 : -1;

@@ -68,17 +68,20 @@ export default function BookCard({ book }) {
     dateFormatted,
     genre,
     rating,
+    status,
     coverColor,
     coverAccent,
     coverImage,
     subtitle,
   } = book;
 
+  const isReading = status?.toLowerCase().includes('reading');
+
   return (
     <Link href={`/books/${slug}`} className="group block focus:outline-none">
       <div className="flex flex-col">
-        {/* Book Cover with 3D physical lift on hover */}
-        <div className="relative mb-3 flex justify-center transform transition-transform duration-300 ease-out group-hover:-translate-y-2">
+        {/* Book Cover Container */}
+        <div className="relative mb-3 flex justify-center">
           <BookCover
             title={title}
             subtitle={subtitle}
@@ -94,10 +97,16 @@ export default function BookCard({ book }) {
 
         {/* Card details below cover */}
         <div className="mt-1 space-y-1.5 text-left px-0.5">
-          {/* Genre & date — same line, no truncation */}
+          {/* Genre & date/status */}
           <div className="flex items-center justify-between gap-2 text-[10px] font-mono tracking-wide text-slate-500 dark:text-slate-400">
             <span className="text-[10px] capitalize">{genre}</span>
-            <span className="flex-shrink-0 opacity-75 text-[10px]">{dateFormatted}</span>
+            {isReading ? (
+              <span className="flex-shrink-0 text-[9px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 bg-amber-500/15 dark:bg-amber-400/15 px-1.5 py-0.5 rounded border border-amber-500/30">
+                Reading
+              </span>
+            ) : (
+              <span className="flex-shrink-0 opacity-75 text-[10px]">{dateFormatted}</span>
+            )}
           </div>
 
           {/* Book title — full, multi-line, Syne font */}

@@ -7,6 +7,7 @@ import MobileNav from '../../components/MobileNav';
 import Seo from '../../components/Seo';
 import ImageGallery from '../../components/books/ImageGallery';
 import BookCover from '../../components/books/BookCover';
+import BookLoader from '../../components/books/BookLoader';
 import booksData from '../../data/books.json';
 import collectionsData from '../../data/collections.json';
 
@@ -112,6 +113,8 @@ export default function BookDetailPage({ bookData, prevBook, nextBook, collectio
     number,
   } = bookData;
 
+  const isReading = status?.toLowerCase().includes('reading');
+
   return (
     <div className="flex flex-col min-h-screen bg-hero-1-light dark:bg-hero-1-dark text-text-light dark:text-text-dark">
       <Seo
@@ -177,7 +180,9 @@ export default function BookDetailPage({ bookData, prevBook, nextBook, collectio
                 <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-3">
                   <span>{genre}</span>
                   <span>&bull;</span>
-                  <span>{status || 'Completed'}</span>
+                  <span className={isReading ? 'text-amber-600 dark:text-amber-400 font-bold' : ''}>
+                    {status || 'Completed'}
+                  </span>
                 </div>
 
                 {/* Title */}
@@ -201,8 +206,16 @@ export default function BookDetailPage({ bookData, prevBook, nextBook, collectio
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">Date Read</span>
-                    <span className="text-xs text-text-light dark:text-text-dark block">{dateFormatted}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">
+                      {isReading ? 'Status' : 'Date Read'}
+                    </span>
+                    <span className="text-xs text-text-light dark:text-text-dark block">
+                      {isReading ? (
+                        <span className="text-amber-600 dark:text-amber-400 font-semibold">Currently Exploring</span>
+                      ) : (
+                        dateFormatted
+                      )}
+                    </span>
                   </div>
                   {pages && (
                     <div>
@@ -225,57 +238,63 @@ export default function BookDetailPage({ bookData, prevBook, nextBook, collectio
             </div>
           </header>
 
-          {/* Section: Visual Plates & Marginalia */}
-          <section aria-label="Visual plates and gallery" className="my-14">
-            <ImageGallery book={bookData} />
-          </section>
+          {isReading ? (
+            <BookLoader />
+          ) : (
+            <>
+              {/* Section: Visual Plates & Marginalia */}
+              <section aria-label="Visual plates and gallery" className="my-14">
+                <ImageGallery book={bookData} />
+              </section>
 
-          {/* Divider */}
-          <div className="flex items-center justify-center gap-4 my-16">
-            <div className="book-divider-line w-28 sm:w-36 rounded-full" />
-            <span className="text-accent-light dark:text-accent-dark font-cinzel text-base tracking-widest font-bold">
-              ❦ ✦ ❦
-            </span>
-            <div className="book-divider-line w-28 sm:w-36 rounded-full" />
-          </div>
-
-          {/* Section: My Thoughts & Reflections */}
-          {thoughtsHtml && (
-            <section className="my-14">
-              <div className="mb-6">
-                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-text-light dark:text-text-dark font-secondary">
-                  My Thoughts &amp; Reflections
-                </h2>
+              {/* Divider */}
+              <div className="flex items-center justify-center gap-4 my-16">
+                <div className="book-divider-line w-28 sm:w-36 rounded-full" />
+                <span className="text-accent-light dark:text-accent-dark font-cinzel text-base tracking-widest font-bold">
+                  ❦ ✦ ❦
+                </span>
+                <div className="book-divider-line w-28 sm:w-36 rounded-full" />
               </div>
-              <div
-                className="book-prose font-vintage text-lg sm:text-xl leading-relaxed text-slate-800 dark:text-slate-200"
-                dangerouslySetInnerHTML={{ __html: thoughtsHtml }}
-              />
-            </section>
-          )}
 
-          {/* Divider */}
-          <div className="flex items-center justify-center gap-4 my-16">
-            <div className="book-divider-line w-28 sm:w-36 rounded-full" />
-            <span className="text-accent-light dark:text-accent-dark font-cinzel text-base tracking-widest font-bold">
-              ❦ ✦ ❦
-            </span>
-            <div className="book-divider-line w-28 sm:w-36 rounded-full" />
-          </div>
+              {/* Section: My Thoughts & Reflections */}
+              {thoughtsHtml && (
+                <section className="my-14">
+                  <div className="mb-6">
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-text-light dark:text-text-dark font-secondary">
+                      My Thoughts &amp; Reflections
+                    </h2>
+                  </div>
+                  <div
+                    className="book-prose font-vintage text-lg sm:text-xl leading-relaxed text-slate-800 dark:text-slate-200"
+                    dangerouslySetInnerHTML={{ __html: thoughtsHtml }}
+                  />
+                </section>
+              )}
 
-          {/* Section: Summary & Key Takeaways */}
-          {summaryHtml && (
-            <section className="my-14">
-              <div className="mb-6">
-                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-text-light dark:text-text-dark font-secondary">
-                  Summary &amp; Key Takeaways
-                </h2>
+              {/* Divider */}
+              <div className="flex items-center justify-center gap-4 my-16">
+                <div className="book-divider-line w-28 sm:w-36 rounded-full" />
+                <span className="text-accent-light dark:text-accent-dark font-cinzel text-base tracking-widest font-bold">
+                  ❦ ✦ ❦
+                </span>
+                <div className="book-divider-line w-28 sm:w-36 rounded-full" />
               </div>
-              <div
-                className="book-prose"
-                dangerouslySetInnerHTML={{ __html: summaryHtml }}
-              />
-            </section>
+
+              {/* Section: Summary & Key Takeaways */}
+              {summaryHtml && (
+                <section className="my-14">
+                  <div className="mb-6">
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-text-light dark:text-text-dark font-secondary">
+                      Summary &amp; Key Takeaways
+                    </h2>
+                  </div>
+                  <div
+                    className="book-prose"
+                    dangerouslySetInnerHTML={{ __html: summaryHtml }}
+                  />
+                </section>
+              )}
+            </>
           )}
 
           {/* Adjacent Navigation */}

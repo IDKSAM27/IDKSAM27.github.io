@@ -147,9 +147,24 @@ export default function BooksIndex({ allBooks = [], allCollections = [] }) {
     }
 
     result.sort((a, b) => {
-      if (sortBy === 'date-desc') return (a.dateRead || '') < (b.dateRead || '') ? 1 : -1;
-      if (sortBy === 'date-asc') return (a.dateRead || '') > (b.dateRead || '') ? 1 : -1;
-      if (sortBy === 'rating-desc') return (b.rating || 0) - (a.rating || 0);
+      const isReadingA = (a.status || '').toLowerCase().includes('reading');
+      const isReadingB = (b.status || '').toLowerCase().includes('reading');
+
+      if (sortBy === 'date-desc') {
+        if (isReadingA && !isReadingB) return -1;
+        if (!isReadingA && isReadingB) return 1;
+        return (a.dateRead || '') < (b.dateRead || '') ? 1 : -1;
+      }
+      if (sortBy === 'date-asc') {
+        if (isReadingA && !isReadingB) return 1;
+        if (!isReadingA && isReadingB) return -1;
+        return (a.dateRead || '') > (b.dateRead || '') ? 1 : -1;
+      }
+      if (sortBy === 'rating-desc') {
+        if (isReadingA && !isReadingB) return -1;
+        if (!isReadingA && isReadingB) return 1;
+        return (b.rating || 0) - (a.rating || 0);
+      }
       if (sortBy === 'title-asc') return (a.title || '').localeCompare(b.title || '');
       return 0;
     });
