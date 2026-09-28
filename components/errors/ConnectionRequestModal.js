@@ -73,7 +73,7 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
       <div className="relative w-full max-w-md bg-hero-1-light dark:bg-hero-1-dark rounded-3xl shadow-2xl p-6 sm:p-8 border border-slate-900/10 dark:border-accent-dark/25 animate-in fade-in zoom-in duration-200">
         <button
           onClick={handleCloseModal}
@@ -95,7 +95,7 @@ const ConnectionRequestModal = ({ isOpen, onClose }) => {
             <p className="text-slate-600 dark:text-slate-400 mb-6 font-medium">
               {cooldownTime
                 ? `You've already sent a request recently. Please try again in ${cooldownTime} minutes.`
-                : "Enter your details below and I'll be notified that you're trying to connect."}
+                : "Let me know you're interested and I'll bring the lab online."}
             </p>
 
             {status === 'error' && (

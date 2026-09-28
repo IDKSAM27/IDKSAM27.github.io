@@ -24,6 +24,30 @@
     ]
   },
   {
+    "slug": "the-great-gatsby",
+    "summaryHtml": "<h2>Overview</h2>\n<p>Set in the Roaring Twenties on Long Island, F. Scott Fitzgerald's <em>The Great Gatsby</em> explores the decadence, idealism, social upheaval, and excess of the Jazz Age through the eyes of narrator Nick Carraway as he becomes entangled with his enigmatic neighbor, Jay Gatsby, and Gatsby's obsessive pursuit of Daisy Buchanan.</p>",
+    "thoughtsHtml": "",
+    "title": "The Great Gatsby",
+    "subtitle": "The Jazz Age, Idealism, and the Tragic Illusion of the American Dream",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "status": "Reading",
+    "coverColor": "#1D2A44",
+    "coverAccent": "#F3C623",
+    "spineColor": "#121A2D",
+    "coverImage": "/images/book-covers/the-great-gatsby.jpg",
+    "excerpt": "An exquisite masterpiece on wealth, obsession, and the uncontainable passage of time on Long Island's Gold Coast.",
+    "gallery": [
+      {
+        "url": "/images/book-covers/the-great-gatsby.jpg",
+        "title": "The Great Gatsby Cover Edition",
+        "caption": "F. Scott Fitzgerald's timeless classic of the Jazz Age.",
+        "type": "cover",
+        "color": "#1D2A44"
+      }
+    ]
+  },
+  {
     "slug": "1984",
     "summaryHtml": "<h2>Overview</h2>\n<p>Published in 1949, George Orwell’s <em>Nineteen Eighty-Four</em> depicts Oceania, a hyper-totalitarian superstate ruled by the Party and its deified figurehead, Big Brother. The protagonist, Winston Smith, works at the Ministry of Truth, rewriting historical records to match the Party's ever-shifting official narrative. Silently harboring treasonous thoughts, Winston begins a forbidden love affair with Julia, attempting an individualistic rebellion against a regime that monitors every heartbeat.</p>\n<hr>\n<h2>Core Themes &#x26; Analytical Breakdown</h2>\n<h3>1. Newspeak and Linguistic Reductionism</h3>\n<p>The Party's ultimate linguistic project is Newspeak—a language designed not to expand expression, but to systematically eliminate words:</p>\n<blockquote>\n<p><em>\"Don’t you see that the whole aim of Newspeak is to narrow the range of thought? In the end we shall make thoughtcrime literally impossible, because there will be no words in which to express it.\"</em>\r\n— Syme (Chapter 5)</p>\n</blockquote>\n<p>By eliminating shades of meaning and reducing emotional vocabulary to crude binaries, the state stunts the brain's cognitive ability to formulate rebellious ideas.</p>\n<h3>2. Doublethink and the Malleability of History</h3>\n<p>The famous slogans of the Party—<em>War is Peace</em>, <em>Freedom is Slavery</em>, <em>Ignorance is Strength</em>—are supreme exercises in Doublethink: the ability to hold two contradictory beliefs in one's mind simultaneously, and accept both of them as true. Through constant historical revisionism, the Party controls the reality of the present:</p>\n<blockquote>\n<p><em>\"Who controls the past controls the future: who controls the present controls the past.\"</em></p>\n</blockquote>\n<h3>3. Room 101 and the Demolition of Love</h3>\n<p>The regime recognizes that the deepest threat to absolute totalitarianism is genuine human intimacy. Loyalty between two lovers or family members creates an emotional sanctuary outside state dominion. Through systematic torture and terror in Room 101, the Party doesn't stop at breaking Winston's body; they break his bond with Julia until he screams: <em>\"Do it to Julia! Not me!\"</em></p>\n<hr>\n<h2>Key Takeaways</h2>\n<ul>\n<li><strong>Protect the Integrity of Language</strong>: When political or cultural language becomes vague, euphemistic, or hyper-simplified, intellectual freedom is the first casualty.</li>\n<li><strong>Objective Truth Matters</strong>: Freedom is the liberty to declare that $2 + 2 = 4$. Once that foundation is conceded to power, all other liberties vanish.</li>\n<li><strong>Eternal Vigilance over Privacy</strong>: Systems that monitor, track, and score human behavior inevitably erode the private space necessary for independent thought.</li>\n</ul>",
     "thoughtsHtml": "<p>Rereading <em>1984</em> in 2025 is a chilling experience because it no longer feels like distant speculative fiction—it feels like a diagnosis of modern informational warfare. While many focus on the surveillance state (telescreens and Thought Police), Orwell’s most terrifying insight is <em>Newspeak</em> and <em>Doublethink</em>: the deliberate weaponization of language to compress human thought.</p>\n<p>If you don't have words for freedom, rebellion, or nuanced dissent, the mind literally lacks the conceptual scaffolding to question tyranny. O'Brien's interrogation in the Ministry of Love is terrifying precisely because it isn't about physical compliance; the Party doesn't merely want obedience, it demands the complete capitulation of your inner soul. It’s an essential antidote to modern political complacency.</p>",

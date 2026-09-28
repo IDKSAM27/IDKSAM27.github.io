@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaServer, FaLock, FaTimes, FaExternalLinkAlt, FaChevronDown } from 'react-icons/fa';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import ConnectionRequestModal from './errors/ConnectionRequestModal';
 
 const labExPath = "M17.2 0a1.2 1.2 0 0 1 1.2 1.2v4a1.2 1.2 0 0 1-1.2 1.2h-.402v1.212l6.976 9.687a1.2 1.2 0 0 1 .22.576L24 18v4.8a1.2 1.2 0 0 1-1.2 1.2H1.2A1.2 1.2 0 0 1 0 22.8V18c0-.252.08-.497.226-.701l6.975-9.687V6.4H6.8a1.2 1.2 0 0 1-1.194-1.084L5.6 5.2v-4A1.2 1.2 0 0 1 6.8 0zM16 2.4H8V4h.4a1.2 1.2 0 0 1 1.195 1.084l.006.116v2.703c0 .315-.1.622-.283.877L2.4 18.386V21.6h19.2v-3.213L14.681 8.78a1.5 1.5 0 0 1-.277-.743l-.006-.134V5.2a1.2 1.2 0 0 1 1.2-1.2H16zm-.48 14.4a1.2 1.2 0 0 1 0 2.4h-2.88a1.2 1.2 0 0 1 0-2.4zm-6.137-4.449 2.135 2.135a1.2 1.2 0 0 1 0 1.697l-2.135 2.135a1.2 1.2 0 1 1-1.697-1.697l1.286-1.286-1.286-1.286a1.2 1.2 0 0 1-.078-1.612l.078-.086a1.2 1.2 0 0 1 1.697 0";
 
@@ -45,6 +46,7 @@ const HomeLabWidget = () => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [showMoreServices, setShowMoreServices] = useState(false);
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const widgetRef = useRef(null);
   const listRef = useRef(null);
 
@@ -162,15 +164,35 @@ const HomeLabWidget = () => {
                 <span className="font-heading text-lg text-text-light dark:text-text-dark">Lab</span>
               </div>
 
-              <button
-                onClick={() => {
-                  setIsPopoverReady(false);
-                  setIsOpen(false);
-                }}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-100 transition-colors p-1"
-              >
-                <FaTimes size="1.1rem" />
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsRequestModalOpen(true)}
+                  className="relative inline-block cursor-pointer group select-none"
+                >
+                  {/* The Shadow Element */}
+                  <div className="absolute inset-0 bg-text-light dark:bg-gray-300 rounded-md transform translate-x-1 translate-y-1" />
+
+                  {/* Button Face */}
+                  <div className="relative bg-accent-light dark:bg-accent-dark rounded-md border-2 border-text-light dark:border-black px-4 py-1.5 transform transition-transform group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-active:translate-x-1 group-active:translate-y-1">
+                    <span className="block font-fun text-base text-text-light dark:text-slate-950 leading-none">
+                      Request Connection
+                    </span>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsPopoverReady(false);
+                    setIsOpen(false);
+                  }}
+                  className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-100 transition-colors p-1"
+                  aria-label="Close"
+                >
+                  <FaTimes size="1.1rem" />
+                </button>
+              </div>
             </div>
 
             {/* List of Tunnels */}
@@ -180,41 +202,67 @@ const HomeLabWidget = () => {
               className="lab-popover-scroll -mr-[10px] min-h-0 flex-1 space-y-3 overflow-y-auto pr-[9px]"
             >
               {/* Dashboard */}
-              <motion.a
-                href="https://dash.sampreetpatil.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open home lab dashboard"
-                className="group flex items-center gap-3 py-2 text-left text-text-light dark:text-text-dark outline-none focus-visible:ring-2 focus-visible:ring-accent-light dark:focus-visible:ring-accent-dark"
-                whileTap={{ scale: 0.99 }}
-              >
-                <LabMark animateLogo={isPopoverReady} />
-                <span className="min-w-0 flex-1 text-left">
-                  <span className="block font-heading text-xl leading-none tracking-normal text-text-light dark:text-text-dark">
-                    Dashboard
+              {isSandboxOnline ? (
+                <motion.a
+                  href="https://dash.sampreetpatil.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open home lab dashboard"
+                  className="group flex items-center gap-3 py-2 text-left text-text-light dark:text-text-dark outline-none focus-visible:ring-2 focus-visible:ring-accent-light dark:focus-visible:ring-accent-dark"
+                  whileTap={{ scale: 0.99 }}
+                >
+                  <LabMark animateLogo={isPopoverReady} />
+                  <span className="min-w-0 flex-1 text-left">
+                    <span className="block font-heading text-xl leading-none tracking-normal text-text-light dark:text-text-dark">
+                      Dashboard
+                    </span>
+                    <span className="mt-1 block text-sm font-medium leading-snug text-slate-600 dark:text-slate-400">
+                      Homelab control center
+                    </span>
                   </span>
-                  <span className="mt-1 block text-sm font-medium leading-snug text-slate-600 dark:text-slate-400">
-                    Homelab control center
+                  <span className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10">
+                    <FaExternalLinkAlt className="text-xs" />
                   </span>
-                </span>
-                <span className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10">
-                  <FaExternalLinkAlt className="text-xs" />
-                </span>
-              </motion.a>
+                </motion.a>
+              ) : (
+                <div
+                  aria-label="Homelab dashboard is offline"
+                  className="group flex items-center gap-3 py-2 text-left text-text-light dark:text-text-dark opacity-60 cursor-not-allowed select-none"
+                >
+                  <LabMark animateLogo={isPopoverReady} />
+                  <span className="min-w-0 flex-1 text-left">
+                    <span className="block font-heading text-xl leading-none tracking-normal text-slate-400 dark:text-slate-500">
+                      Dashboard
+                    </span>
+                    <span className="mt-1 block text-sm font-medium leading-snug text-slate-400 dark:text-slate-600">
+                      Homelab control center (Offline)
+                    </span>
+                  </span>
+                  <span className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600">
+                    <FaExternalLinkAlt className="text-xs" />
+                  </span>
+                </div>
+              )}
 
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
 
               {/* Public Tunnel */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-3">
-                  <a
-                    href="https://public.sampreetpatil.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
-                  >
-                    public.sampreetpatil.com
-                  </a>
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://public.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    >
+                      public.sampreetpatil.com
+                    </a>
+                  ) : (
+                    <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none">
+                      public.sampreetpatil.com
+                    </span>
+                  )}
                   <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
@@ -245,15 +293,22 @@ const HomeLabWidget = () => {
               {/* Private Tunnel */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-3">
-                  <a
-                    href="https://code.sampreetpatil.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
-                  >
-                    code.sampreetpatil.com
-                    <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
-                  </a>
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://code.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                    >
+                      code.sampreetpatil.com
+                      <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                    </a>
+                  ) : (
+                    <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none flex items-center gap-2">
+                      code.sampreetpatil.com
+                      <FaLock className="text-slate-400 dark:text-slate-600 text-xs sm:text-sm flex-shrink-0" />
+                    </span>
+                  )}
                   <span className={`w-3 h-3 rounded-full flex-shrink-0 ${isSandboxOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                 </div>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
@@ -284,31 +339,51 @@ const HomeLabWidget = () => {
               {/* Music Player */}
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0 flex-1 space-y-1">
-                  <a
-                    href="https://music.sampreetpatil.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
-                  >
-                    music.sampreetpatil.com
-                  </a>
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://music.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    >
+                      music.sampreetpatil.com
+                    </a>
+                  ) : (
+                    <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none">
+                      music.sampreetpatil.com
+                    </span>
+                  )}
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
-                    24-bit / 48 kHz FLAC library.{" "}
-                    <em>(For anyone wondering: FLAC is music, not a breakfast cereal.)</em>
+                    24-bit / 48 kHz FLAC library.{' '}
+                    {isSandboxOnline ? (
+                      <em>(For anyone wondering: FLAC is music, not a breakfast cereal.)</em>
+                    ) : (
+                      <em>(Offline)</em>
+                    )}
                     <br />
                     username: <code className="font-mono text-sm">guest</code>
                     <br />
                     password: <code className="font-mono text-sm">guest</code>
                   </p>
                 </div>
-                <a
-                  href="https://music.sampreetpatil.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
-                >
-                  <FaExternalLinkAlt className="text-xs" />
-                </a>
+                {isSandboxOnline ? (
+                  <a
+                    href="https://music.sampreetpatil.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open music player"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
+                  >
+                    <FaExternalLinkAlt className="text-xs" />
+                  </a>
+                ) : (
+                  <span
+                    aria-label="music.sampreetpatil.com is offline"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600 cursor-not-allowed select-none"
+                  >
+                    <FaExternalLinkAlt className="text-xs" />
+                  </span>
+                )}
               </div>
 
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
@@ -316,26 +391,42 @@ const HomeLabWidget = () => {
               {/* Collaborative Drawing */}
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0 flex-1 space-y-1">
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://draw.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    >
+                      draw.sampreetpatil.com
+                    </a>
+                  ) : (
+                    <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none">
+                      draw.sampreetpatil.com
+                    </span>
+                  )}
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                    Whiteboarding &amp; diagramming {isSandboxOnline ? '' : '(Offline)'}
+                  </p>
+                </div>
+                {isSandboxOnline ? (
                   <a
                     href="https://draw.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all"
+                    aria-label="Open collaborative drawing"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                   >
-                    draw.sampreetpatil.com
+                    <FaExternalLinkAlt className="text-xs" />
                   </a>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
-                    Whiteboarding & diagramming
-                  </p>
-                </div>
-                <a
-                  href="https://draw.sampreetpatil.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
-                >
-                  <FaExternalLinkAlt className="text-xs" />
-                </a>
+                ) : (
+                  <span
+                    aria-label="draw.sampreetpatil.com is offline"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600 cursor-not-allowed select-none"
+                  >
+                    <FaExternalLinkAlt className="text-xs" />
+                  </span>
+                )}
               </div>
 
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
@@ -343,27 +434,44 @@ const HomeLabWidget = () => {
               {/* PDF Tools */}
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0 flex-1 space-y-1">
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://pdf.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                    >
+                      pdf.sampreetpatil.com
+                      <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                    </a>
+                  ) : (
+                    <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none flex items-center gap-2">
+                      pdf.sampreetpatil.com
+                      <FaLock className="text-slate-400 dark:text-slate-600 text-xs sm:text-sm flex-shrink-0" />
+                    </span>
+                  )}
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                    Private PDF tools and document workspace {isSandboxOnline ? '.' : '(Offline).'}
+                  </p>
+                </div>
+                {isSandboxOnline ? (
                   <a
                     href="https://pdf.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                    aria-label="Open PDF tools"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                   >
-                    pdf.sampreetpatil.com
-                    <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                    <FaExternalLinkAlt className="text-xs" />
                   </a>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
-                    Private PDF tools and document workspace.
-                  </p>
-                </div>
-                <a
-                  href="https://pdf.sampreetpatil.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
-                >
-                  <FaExternalLinkAlt className="text-xs" />
-                </a>
+                ) : (
+                  <span
+                    aria-label="pdf.sampreetpatil.com is offline"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600 cursor-not-allowed select-none"
+                  >
+                    <FaExternalLinkAlt className="text-xs" />
+                  </span>
+                )}
               </div>
 
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
@@ -371,27 +479,44 @@ const HomeLabWidget = () => {
               {/* Photos */}
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0 flex-1 space-y-1">
+                  {isSandboxOnline ? (
+                    <a
+                      href="https://photos.sampreetpatil.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                    >
+                      photos.sampreetpatil.com
+                      <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                    </a>
+                  ) : (
+                    <span className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none flex items-center gap-2">
+                      photos.sampreetpatil.com
+                      <FaLock className="text-slate-400 dark:text-slate-600 text-xs sm:text-sm flex-shrink-0" />
+                    </span>
+                  )}
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                    Private photo library (Shared with friends &amp; family) {isSandboxOnline ? '.' : '(Offline).'}
+                  </p>
+                </div>
+                {isSandboxOnline ? (
                   <a
                     href="https://photos.sampreetpatil.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 underline-offset-2 decoration-accent-light dark:decoration-accent-dark hover:underline transition-all flex items-center gap-2"
+                    aria-label="Open photo library"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                   >
-                    photos.sampreetpatil.com
-                    <FaLock className="text-amber-500 text-xs sm:text-sm flex-shrink-0" />
+                    <FaExternalLinkAlt className="text-xs" />
                   </a>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
-                    Private photo library (Shared with friends & family).
-                  </p>
-                </div>
-                <a
-                  href="https://photos.sampreetpatil.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
-                >
-                  <FaExternalLinkAlt className="text-xs" />
-                </a>
+                ) : (
+                  <span
+                    aria-label="photos.sampreetpatil.com is offline"
+                    className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600 cursor-not-allowed select-none"
+                  >
+                    <FaExternalLinkAlt className="text-xs" />
+                  </span>
+                )}
               </div>
 
               <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />
@@ -493,28 +618,44 @@ const HomeLabWidget = () => {
                         {index > 0 && <div className="h-[1px] bg-slate-200 dark:bg-slate-800" />}
                         <div className="flex items-center justify-between gap-3">
                           <div className="min-w-0 flex-1 space-y-1">
+                            {isSandboxOnline ? (
+                              <a
+                                href={service.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-slate-900 underline-offset-2 decoration-accent-light transition-all hover:underline dark:text-slate-50 dark:decoration-accent-dark sm:text-xl"
+                              >
+                                <span className="min-w-0 truncate">{service.hostname}</span>
+                                <FaLock className="flex-shrink-0 text-xs text-amber-500 sm:text-sm" />
+                              </a>
+                            ) : (
+                              <span className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-slate-400 dark:text-slate-600 select-none sm:text-xl">
+                                <span className="min-w-0 truncate">{service.hostname}</span>
+                                <FaLock className="flex-shrink-0 text-xs text-slate-400 dark:text-slate-600 sm:text-sm" />
+                              </span>
+                            )}
+                            <p className="text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
+                              {service.description} {isSandboxOnline ? '' : '(Offline)'}
+                            </p>
+                          </div>
+                          {isSandboxOnline ? (
                             <a
                               href={service.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-slate-900 underline-offset-2 decoration-accent-light transition-all hover:underline dark:text-slate-50 dark:decoration-accent-dark sm:text-xl"
+                              aria-label={`Open ${service.hostname}`}
+                              className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
                             >
-                              <span className="min-w-0 truncate">{service.hostname}</span>
-                              <FaLock className="flex-shrink-0 text-xs text-amber-500 sm:text-sm" />
+                              <FaExternalLinkAlt className="text-xs" />
                             </a>
-                            <p className="text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
-                              {service.description}
-                            </p>
-                          </div>
-                          <a
-                            href={service.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`Open ${service.hostname}`}
-                            className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-accent-light text-accent-light transition-colors hover:bg-accent-light/10 dark:border-accent-dark dark:text-accent-dark dark:hover:bg-accent-dark/10"
-                          >
-                            <FaExternalLinkAlt className="text-xs" />
-                          </a>
+                          ) : (
+                            <span
+                              aria-label={`${service.hostname} is offline`}
+                              className="ml-auto flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border-2 border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600 cursor-not-allowed select-none"
+                            >
+                              <FaExternalLinkAlt className="text-xs" />
+                            </span>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -607,6 +748,12 @@ const HomeLabWidget = () => {
           <p>Check this out</p>
         </TooltipContent>
       </Tooltip>
+
+      {/* Connection Request Modal */}
+      <ConnectionRequestModal
+        isOpen={isRequestModalOpen}
+        onClose={() => setIsRequestModalOpen(false)}
+      />
     </div>
   );
 };

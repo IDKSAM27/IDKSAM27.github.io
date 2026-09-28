@@ -201,7 +201,7 @@ export default function BookDetailPage({ bookData, prevBook, nextBook, collectio
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-slate-600 dark:text-slate-400 font-mono py-4 border-y border-black/10 dark:border-white/10">
                   <div>
                     <span className="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">Author</span>
-                    <span className="font-vintage text-sm sm:text-base italic font-semibold text-text-light dark:text-text-dark block truncate">
+                    <span className="font-vintage text-sm sm:text-base italic font-semibold text-text-light dark:text-text-dark block leading-snug break-words">
                       {author}
                     </span>
                   </div>
