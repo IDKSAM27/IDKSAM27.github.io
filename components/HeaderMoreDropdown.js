@@ -31,15 +31,13 @@ export default function HeaderMoreDropdown({ prefetch }) {
         </span>
         <FiChevronDown
           size={16}
-          className={`text-accent-light dark:text-accent-dark transition-transform duration-300 ${
-            isOpen ? 'rotate-180 scale-110' : 'rotate-0'
-          }`}
+          className={`text-accent-light dark:text-accent-dark transition-transform duration-300 ${isOpen ? 'rotate-180 scale-110' : 'rotate-0'
+            }`}
         />
         {/* Subtle small underline on hover */}
         <span
-          className={`underline absolute bottom-1 left-4 right-4 h-[2px] bg-accent-light dark:bg-accent-dark transition-transform duration-300 ${
-            isOpen ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-          }`}
+          className={`underline absolute bottom-1 left-4 right-4 h-[2px] bg-accent-light dark:bg-accent-dark transition-transform duration-300 ${isOpen ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`}
           style={{ transformOrigin: 'center' }}
         />
       </button>
@@ -86,7 +84,7 @@ export default function HeaderMoreDropdown({ prefetch }) {
             onClick={() => setIsOpen(false)}
             className="px-4 py-2 rounded-xl text-center font-heading text-lg text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:text-accent-light dark:hover:text-accent-dark hover:scale-[1.04] active:scale-95 transition-all cursor-pointer"
           >
-            Books
+            Library
           </Link>
         </div>
       )}

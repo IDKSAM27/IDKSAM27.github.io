@@ -92,7 +92,7 @@ const MobileNavMore = ({ prefetch }) => {
             onClick={() => setIsOpen(false)}
             className="px-4 py-2 rounded-xl text-center font-heading text-sm text-text-light dark:text-text-dark hover:bg-black/10 dark:hover:bg-white/10 hover:text-accent-light dark:hover:text-accent-dark active:scale-95 transition-all cursor-pointer"
           >
-            Books
+            Library
           </Link>
         </div>
       )}
