@@ -45,7 +45,7 @@ export default function HeaderMoreDropdown({ prefetch }) {
       {/* Funky Animated Dropdown underneath — snugly fitted box, matching header font & size */}
       {isOpen && (
         <div
-          className="absolute top-full right-0 mt-2 z-50 w-max min-w-[120px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl p-1.5 flex flex-col gap-1"
+          className="absolute top-full right-0 mt-2 z-50 w-max min-w-[120px] bg-[#F9F6F1] dark:bg-[#212121] border-2 border-black dark:border-white rounded-2xl shadow-2xl px-2 py-1.5 flex flex-col gap-1"
           style={{
             transformOrigin: 'top right',
             animation: 'funkyPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
